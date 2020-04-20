@@ -30,4 +30,11 @@ public class HomeController {
 		return "home";
 	}
 	
+	//main.do
+	@RequestMapping(value = "/main.do", method = RequestMethod.GET)
+	public String mainDo(Model model) {
+		
+		return "main";
+	}
+	
 }

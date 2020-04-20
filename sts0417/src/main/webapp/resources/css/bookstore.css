@@ -1,0 +1,47 @@
+/* Color Theme Swatches in Hex */
+.text-lightgray {
+	color: #D2D2D2;
+}
+
+.text-brown2 {
+	color: #A6988D;
+}
+
+.text-brown3 {
+	color: #D9CCC1;
+}
+
+.text-brown1 {
+	color: #8C7B72;
+}
+
+.text-darkgray {
+	color: #0D0D0D;
+}
+
+.text-gray {
+	color: #909090;
+}
+
+.bg-gray {
+	background-color: #909090 !important;
+}
+.bg-lightgray {
+	background-color: #D2D2D2 !important;
+}
+
+.bg-brown2 {
+	background-color: #A6988D !important;
+}
+
+.bg-brown3 {
+	background-color: #D9CCC1 !important;
+}
+
+.bg-brown1 {
+	background-color: #8C7B72 !important;
+}
+
+.bg-darkgray {
+	background-color: #0D0D0D !important;
+}
