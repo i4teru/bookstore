@@ -19,7 +19,7 @@ public class BookController {
 	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 
 	@Autowired
-	BookinfoDAO dao;
+	BookDAO dao;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -33,6 +33,12 @@ public class BookController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
+	}
+	
+	@RequestMapping("/bookInsert.do")
+	public String book_Insert(BookinfoDTO dto) {
+		dao.dbInsert(dto);
+		return "redirect:home.do";
 	}
 	
 }
