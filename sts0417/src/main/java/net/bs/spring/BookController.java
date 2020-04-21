@@ -21,7 +21,7 @@ public class BookController {
 	@Autowired
 	BookDAO dao;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
@@ -32,11 +32,12 @@ public class BookController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "bookInsert";
 	}
 	
 	@RequestMapping("/bookInsert.do")
 	public String book_Insert(BookinfoDTO dto) {
+		System.out.println(dto.getBi_title());
 		dao.dbInsert(dto);
 		return "redirect:home.do";
 	}
