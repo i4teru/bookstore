@@ -69,9 +69,29 @@ $(document).ready(function(){
 					if ( i == len-1 ) return false; });
 			  });
 		});
+
+});
+
+$(document).on("click", ".selected", function(){
+ 	//var $li_list = $(this).prevAll[class^=li];  
+ 	//console.log($li_list.eq(0));
+ 	//alert($(this).siblings().filter(".li_title").text());
+ 	//$(this).text("dfsdfa");
 });
 
 function addBook(ul_idx){
+
+//	var a = new Array();
+//	var b = a[ul_idx].split("");
+	
+	alert(ul_idx);
+	//var $a = $("ul.bkitem li");
+	var $ul_list = $("#bkitem"+ul_idx).siblings();
+	console.log($ul_list);
+	var c = $(".li_title"+ul_idx).text();
+	console.log(c);
+	//console.log($a);
+
     $("#bi_isbn").val($(".li_isbn"+ul_idx).text());
     $("#bi_title").val($(".li_title"+ul_idx).text());
     $("#bi_image").val($(".li_img"+ul_idx).text());
