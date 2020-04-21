@@ -3,6 +3,10 @@
 	color: #D2D2D2;
 }
 
+.text-bsyellow{
+	color: #f2c641;
+}
+
 .text-brown2 {
 	color: #A6988D;
 }
@@ -16,7 +20,7 @@
 }
 
 .text-darkgray {
-	color: #0D0D0D;
+	color: #4D4D4D;
 }
 
 .text-gray {
@@ -26,8 +30,9 @@
 .bg-gray {
 	background-color: #909090 !important;
 }
+
 .bg-lightgray {
-	background-color: #D2D2D2 !important;
+	background-color: #F2F2F2 !important;
 }
 
 .bg-brown2 {
@@ -44,4 +49,60 @@
 
 .bg-darkgray {
 	background-color: #0D0D0D !important;
+}
+
+.bg-bsyellow{
+	background-color: #f2c641;
+}
+
+/*∏ﬁ¿Œ*/
+.mainbox {
+	background-color: #FFFFFF;
+	border: 1px solid #D9CCC1;
+}
+
+.eventimage {
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	border-spacing: 0px;
+	border: 0px solid;
+}
+
+.mainbox-title {
+	font-weight: bold;
+	font-size: 14pt;
+	color : #8C7B72;
+	padding:5px;
+}
+
+
+.main-best img{
+	
+	max-width:200px;
+	max-height:300px;
+}
+
+.main-notice {
+	list-style: none;
+	padding-left: 0px;
+}
+
+.main-notice li {
+	margin-bottom:10px;
+}
+
+.main-review {
+	max-height:150px;
+	overflow:hidden;
+	border-spacing: 0px !important;
+	border: 0px solid !important;
+}
+.main-review td{
+	vertical-align:top;
+	overflow:hidden;
+}
+
+.main-review-img {
+	max-height:120px;
 }
