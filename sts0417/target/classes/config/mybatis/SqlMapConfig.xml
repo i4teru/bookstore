@@ -6,10 +6,12 @@
 	<typeAliases>
 	   <typeAlias alias="bidto" type="net.bs.spring.BookinfoDTO"/>
 	   <typeAlias alias="ldto" type="net.bs.spring.LoginDTO"/>
+	   <typeAlias alias="rdto" type="net.bs.spring.BookReplyDTO"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="config/mybatis/books.xml" />
 		<mapper resource="config/mybatis/login.xml" />
+		<mapper resource="config/mybatis/book_reply.xml"/>
 	</mappers>
 </configuration>

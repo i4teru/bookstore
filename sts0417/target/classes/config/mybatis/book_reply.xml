@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="book_reply">
+	
+	<insert id="add">
+		insert into bsreply values(114,s_bsreply_seq.nextval, 'sky','hihi',current_timestamp,s_bsreply_seq.nextval,1,0,0,0); 
+	</insert>
+	
+	 <select id="selectAll" parameterType="int" resultType="net.bs.crud.BookReplyDTO">
+		select rownum rn, b.* from bsreply b where bi_num = 114 
+	</select>
+	
+	<!-- 
+	<select id="delete" parameterType="int" resultType="net.hb.crud.reply.BoardReplyDTO">
+		delete from hobby_reply where rhobby_idx = #{rhobby_idx}
+	</select>
+	
+	 <update id="edit" parameterType="net.hb.crud.reply.BoardReplyDTO">
+		 update hobby_reply set rwriter=#{rwriter}, rmemo=#{rmemo}
+		 where rhobby_idx = #{rhobby_idx}
+	</update> -->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
