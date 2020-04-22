@@ -157,7 +157,7 @@ function addBook(ul_idx){ //선택한 책의 데이터들(isbn, 제목 등)을 �
       <div class="modal-content">
       
         <!-- Modal Header -->   
-        <div class="modal-header">
+        <div class="modal-header">  
           <h4 class="modal-title">저장 성공</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
