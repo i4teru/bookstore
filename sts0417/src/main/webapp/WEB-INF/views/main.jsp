@@ -6,7 +6,7 @@
 <title>개발서점</title>
 </head>
 <body>
-
+   
 	<!-- 헤더 분리 -->
 	<c:import url="./header.jsp"></c:import>
 	
