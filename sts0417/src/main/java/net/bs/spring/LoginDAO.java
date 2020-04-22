@@ -21,5 +21,8 @@ public class LoginDAO  {
 		return logindata;
 	}
 	
+	public int checkid(String id) {
+		return temp.selectOne("login.checkid", id);
+	}
 
 }//BoardDAO class END

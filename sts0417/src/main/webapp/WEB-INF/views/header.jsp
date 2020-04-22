@@ -8,8 +8,11 @@
 
 <!-- 부트스트랩, jquery -->
 <link rel="stylesheet" href="./resources/css/bootstrap.min.css">
+<<<<<<< HEAD
 
 <!-- 
+=======
+>>>>>>> refs/remotes/origin/master
 <script src="./resources/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -17,59 +20,9 @@
  
 <!-- 폰트어썸 -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-<style>
 
-.container {
-	min-width:960px;
-}
-
-.aleft {
-	text-align: left;
-}
-
-.acenter {
-	text-align: center;
-}
-
-.aright {
-	text-align: right;
-}
-
-.title {
-	padding-top: 30px;
-	padding-bottom: 30px;
-	vertical-align: middle !important;
-	height: 160px;
-}
-
-.mainsearch {
-	border: 0px;
-}
-
-.mainsearch-group {
-	border: 5px solid #8C7B72;
-	padding: 2px;
-}
-
-.mainlogo {
-	height:60px;
-}
-
-.col-6, .col-3 {
-	margin:auto;
-}
-.row {
-	height:100%;
-}
-.navbar {
-	
-	border-top: 2px solid #E2E2E2;
-	border-bottom: 3px solid #8C7B72;
-}
-
-</style>
-<div class="title">
-	<div class="container">
+<div class="title pt-5">
+	<div class="container mb-3">
 		<div class="row">
 			<!-- 로고 이미지 -->
 			<div class="col-3 aleft">
@@ -93,7 +46,6 @@
 </div>
 
 <!-- 메뉴바 -->
-
 <nav class="navbar navbar-expand-sm navbar-light">
 	<div class="container">
 		<!-- Links -->
