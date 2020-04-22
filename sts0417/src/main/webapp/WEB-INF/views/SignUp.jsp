@@ -50,9 +50,9 @@ var pwd = false;
 					alert("에러"+data);
 					}
 				});
-				}
-			});
+			}
 		});
+	});
 
 //비밀번호 체크
 	$(function(){
@@ -68,7 +68,7 @@ var pwd = false;
 				$('#pwdchk').html("비밀번호가 형식에 맞지 않습니다.");
 				pwd=false;
 			}
-			if(p==pc){
+			if(p!=pc){
 				$('#pwdchk').html("비밀번호가 일치하지 않습니다.");
 				pwd=false;
 			}
@@ -209,7 +209,7 @@ var pwd = false;
 <c:import url="header.jsp"></c:import>
 <form name="loginform" action="signupcomplete.do">
 	<div class="container">
-		<table class="table table-borderless table-sm">
+		<table class="table table-borderless table-sm" style="vertical-align: middle;">
 			<thead>
 				<tr><td>회원가입</td></tr>
 			</thead>
@@ -219,8 +219,8 @@ var pwd = false;
 					<td>
 						<div class="form-group" style="width: 300px">
 							<div class="input-group input-group-sm">
-								<input type="text" name="id" id="id" value="" required>
-								<input type="button" value="중복확인" id="check" >
+								<input type="text" class="form-control form-control-sm" name="id" id="id" value="" required>
+								<input class="btn btn-sm" type="button" value="중복확인" id="check" >
 							</div>
 						</div>
 						<div id="idchk"> </div>
@@ -231,7 +231,7 @@ var pwd = false;
 					<td>
 						<div class="form-group" style="width: 300px;">
 							<div class="input-group input-group-sm">
-								<input type="password" name="password" id="pwd" value="12345678" placeholder="8~20자리" required>
+								<input type="password" class="form-control form-control-sm" name="password" id="pwd" value="12345678" placeholder="8~20자리" required>
 							</div>
 						</div>
 					</td>
@@ -241,7 +241,7 @@ var pwd = false;
 					<td>
 						<div class="form-group" style="width: 300px;">
 							<div class="input-group input-group-sm">
-								<input type="password" id="pwdc" value="12345678" placeholder="비밀번호를 다시 입력하십시오" required>
+								<input type="password" class="form-control form-control-sm" id="pwdc" value="12345678" placeholder="비밀번호를 다시 입력하십시오" required>
 							</div>
 						</div>
 						<div id="pwdchk"></div>
@@ -252,7 +252,7 @@ var pwd = false;
 					<td>
 						<div class="form-group" style="width: 200px;">
 							<div class="input-group input-group-sm">
-								<input type="text" name="email" id="email" value="" placeholder="ex) xxx@xxx.com" pattern="[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]" required>
+								<input type="text" class="form-control form-control-sm" name="email" id="email" value="" placeholder="ex) xxx@xxx.com" pattern="[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]" required>
 							</div>
 						</div>
 						<div id="emailchk"></div>
@@ -263,7 +263,7 @@ var pwd = false;
 					<td>
 						<div class="form-group" style="width: 150px;">
 							<div class="input-group input-group-sm">
-								<input type="text" name="phone" id="phone" value="" placeholder="ex) 010-xxxx-xxxx" required>
+								<input type="text" class="form-control form-control-sm" name="phone" id="phone" value="" placeholder="ex) 010-xxxx-xxxx" required>
 							</div>
 						</div>
 						<div id="phonechk"></div>
@@ -274,7 +274,7 @@ var pwd = false;
 					<td>
 						<div class="form-group" style="width: 150px;">
 							<div class="input-group input-group-sm">
-								<input type="text" name="birthday" id="birthday" required>
+								<input type="text" class="form-control form-control-sm" name="birthday" id="birthday" required>
 							</div>
 						</div>
 					</td>
@@ -293,10 +293,10 @@ var pwd = false;
 				<tr>
 					<td>우편번호</td>
 					<td>
-						<div class="form-group" style="width: 150px;">
+						<div class="form-group" style="width: 200px;">
 							<div class="input-group input-group-sm">
-								<input type="text" name="zipcode" id="zipcode" readonly required>
-								<input type="button" onclick="postCode()" value="우편번호 검색">
+								<input type="text" class="form-control form-control-sm" name="zipcode" id="zipcode" readonly required>
+								<input class="btn btn-sm" type="button" onclick="postCode()" value="우편번호 검색">
 							</div>
 						</div>
 					</td>
@@ -304,9 +304,9 @@ var pwd = false;
 				<tr>
 					<td>주소</td>
 					<td>
-						<div class="form-group" style="width: 150px;">
+						<div class="form-group" style="width: 200px;">
 							<div class="input-group input-group-sm">
-								<input type="text" name="address1" id="address1" readonly required>
+								<input type="text" class="form-control form-control-sm" name="address1" id="address1" readonly required>
 							</div>
 						</div>
 					</td>
@@ -314,9 +314,9 @@ var pwd = false;
 				<tr>
 					<td>상세주소</td>
 					<td>
-						<div class="form-group" style="width: 150px;">
+						<div class="form-group" style="width: 200px;">
 							<div class="input-group input-group-sm">
-								<input type="text" name="address2" id="address2" value=".apt 402호" required>
+								<input type="text" class="form-control form-control-sm" name="address2" id="address2" value=".apt 402호" required>
 							</div>
 						</div>
 						<div id="addresschk"></div>
