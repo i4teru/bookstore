@@ -6,7 +6,7 @@
 	<title>signupfinish</title>
 </head>
 <script type="text/javascript">
-	setTimeout( "location.href='loginhead.do'", 1000) ; 
+	setTimeout( "location.href='login_head.do'", 1000) ; 
 </script>
 <body>
 <h1>
