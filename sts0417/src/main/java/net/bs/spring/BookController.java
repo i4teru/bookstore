@@ -43,7 +43,7 @@ public class BookController {
 			msg = "notyet";
 		}
 		model.addAttribute("msg", msg);
-		return "bookInsert";
+		return "bookInsert";  
 	}
 	
 	@RequestMapping("/bookInsert.do")
