@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 기술된 쿼리문이 SqlMapConfig.xml에서 가져감-> 저장된 SqlMapConfig.xml쿼리문은 dao-context.xml로 -->
+<mapper namespace="order">	
+
+	<insert id="padd">
+	  insert into purchase values(
+	    #{ordernum}, #{userid}, #{buydate}, #{name}, #{receiver}, #{contact}, #{postcode},
+	    #{address1}, #{address2}, #{orderstatus}
+	  )
+	</insert>
+	
+	<insert id="radd">
+		insert into receiver values(
+			#{userid}, #{receiver}, #{contact}, #{postcode}, #{address1}, #{address2}
+		)
+	</insert>
+	
+	<select id="pselect">
+		select * from (
+			select rownum rn, p. * from purchase where ordernum = #{ordernum}
+		) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="rselect">
+		select * from receiver where userid = #{userid}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
