@@ -8,7 +8,7 @@
 
 <!-- 부트스트랩, jquery -->
 <link rel="stylesheet" href="./resources/css/bootstrap.min.css">
-<<<<<<< HEAD
+
 
 <!-- 
 =======
