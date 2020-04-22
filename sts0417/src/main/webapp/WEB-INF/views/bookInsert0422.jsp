@@ -8,21 +8,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>jQuery UI Dialog - Modal message</title>
-  
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
-
-<!-- 아래 세개는 세트 jsp 생성시마다 import -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="./resources/js/bootstrap.min.js"></script>
-
+  
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
   $(window).on("load", function() {
-	var c = "${msg}".trim();//$( "#dialog-message").val();
+	var c = $( "#dialog-message").attr("title");
 	if(c == "insertok"){
-		$("#myModal").modal('show');
-	}
-  });
+    $( "#dialog-message" ).dialog({
+      modal: true,
+      buttons: {
+        "닫기": function() {$( this ).dialog( "close" );},
+        "메인으로": function() { location.href="./main.do";}
+      }
+    });
+	  } else {
+	$("#dialog-message").hide();
+		  }
+  } );
 </script>
 
 <style type="text/css">
@@ -103,9 +108,7 @@ function addBook(ul_idx){ //선택한 책의 데이터들(isbn, 제목 등)을 �
 </head>
 <body>
 <!-- header 추가 -->
-<c:import url="header.jsp"></c:import>
 
-<div class="container">
 <h1>
 	[bookInsert.jsp] 책 입력 Form  
 </h1>
@@ -142,39 +145,12 @@ function addBook(ul_idx){ //선택한 책의 데이터들(isbn, 제목 등)을 �
 </div>
 
 <!-- DB에 저장 완료 했을 때 뜨는 대화창 영역 -->
-<!-- 
 <div id="dialog-message" title="${msg}" >
   <p>
     <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
 	저장에 성공했습니다. 
   </p>
-</div> -->
-
-
- <!-- Bootstrap Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">저장 성공</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-          	데이터 저장에 성공했습니다.
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
 </div>
+
 </body>
 </html>
