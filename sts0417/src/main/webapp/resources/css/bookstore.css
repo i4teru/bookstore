@@ -3,6 +3,10 @@
 	color: #D2D2D2;
 }
 
+.text-bsyellow{
+	color: #f2c641;
+}
+
 .text-brown2 {
 	color: #A6988D;
 }
@@ -16,7 +20,7 @@
 }
 
 .text-darkgray {
-	color: #0D0D0D;
+	color: #4D4D4D;
 }
 
 .text-gray {
@@ -26,8 +30,9 @@
 .bg-gray {
 	background-color: #909090 !important;
 }
+
 .bg-lightgray {
-	background-color: #D2D2D2 !important;
+	background-color: #F2F2F2 !important;
 }
 
 .bg-brown2 {
@@ -44,4 +49,151 @@
 
 .bg-darkgray {
 	background-color: #0D0D0D !important;
+}
+
+.bg-bsyellow{
+	background-color: #f2c641;
+}
+
+/*헤더*/
+.container {
+	min-width:1140px;
+	max-width:1140px;
+}
+
+.aleft {
+	text-align: left;
+}
+
+.acenter {
+	text-align: center;
+}
+
+.aright {
+	text-align: right;
+}
+
+.title {
+	vertical-align: middle !important;
+	height: 160px;
+}
+
+.mainsearch {
+	border: none !important;
+}
+
+.mainsearch-group {
+	border: 5px solid #8C7B72;
+	padding: 2px;
+}
+
+.mainlogo {
+	height:60px;
+}
+
+.col-6, .col-3 {
+	margin:auto;
+}
+.navbar {
+	
+	border-top: 2px solid #E2E2E2;
+	border-bottom: 3px solid #8C7B72;
+}
+
+
+/*메인*/
+.mainbox {
+	background-color: #FFFFFF;
+	border: 1px solid #D9CCC1;
+}
+
+.eventimage {
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	border-spacing: 0px;
+	border: 0px solid;
+}
+
+.mainbox-title {
+	font-weight: bold;
+	font-size: 14pt;
+	color : #8C7B72;
+	padding:10px;
+}
+
+.main-best {
+	margin:auto;
+	padding-top:10px;
+	padding-bottom:10px;
+	font-size: 13pt;
+}
+
+
+.main-best img{
+	
+	max-width:180px;
+	max-height:240px;
+}
+
+.main-new {
+	padding:0px 10px;
+	overflow:hidden;	
+}
+
+.main-new img {
+	max-width:60px;
+	max-height:80px;
+}
+
+.main-notice {
+	list-style: none;
+	padding-left: 12px;
+}
+.main-notice ul {
+	margin-top:10px;
+}
+.main-notice li {
+	margin-bottom:15px;
+}
+
+.main-review {
+	
+	max-height:150px;
+	overflow:hidden;
+	border-spacing: 0px !important;
+	border: 0px solid !important;
+}
+.main-review td{
+	vertical-align:top;
+	overflow:hidden;
+}
+
+.main-review-img {
+	max-height:120px;
+}
+
+/* 푸터 */
+.foot {
+	/*vertical-align: middle !important;*/ 
+	border-top: 1px solid #D2D2D2;
+	color: #6D6D6D;
+}
+
+.footimgwrap {
+	text-align:center;
+	margin-bottom:auto;
+}
+.foot img {
+	width:90%;
+	filter: grayscale(1);
+}
+.foot-name {
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+.mauto {
+	margin-top:auto;
+	margin-bottom:auto;
 }
