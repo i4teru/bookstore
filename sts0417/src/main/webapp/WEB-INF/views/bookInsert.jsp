@@ -170,6 +170,7 @@ function addBook(ul_idx){ //선택한 책의 데이터들(isbn, 제목 등)을 �
         <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-danger" onclick="location.href='./main.do'" >메인으로</button>
         </div>
         
       </div>
