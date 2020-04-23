@@ -4,23 +4,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="book_reply">
 	
-	<insert id="add">
-		insert into bsreply values(114,s_bsreply_seq.nextval, 'sky','hihi',current_timestamp,s_bsreply_seq.nextval,1,0,0,0); 
+	<insert id="add">  <!-- 원댓글은 seq 1 lvl 0 이 되어야 함 / 대댓은 +1 -->
+		insert into bsreply values(#{bi_num}, s_bsreply_seq.nextval, #{r_id}, #{r_content}, current_timestamp, s_bsreply_seq.nextval, 1, 0, #{r_stars}, 0)
 	</insert>
 	
-	 <select id="selectAll" parameterType="int" resultType="net.bs.crud.BookReplyDTO">
-		select rownum rn, b.* from bsreply b where bi_num = 114 
+	<insert id="readd">  <!-- 댓글 입력하는 부분 -->
+		insert into bsreply values(#{bi_num}, s_bsreply_seq.nextval, #{r_id}, #{r_content}, current_timestamp, #{r_num}, 1, 0, #{r_stars}, 0)
+	</insert>
+	
+<!-- <select id="select" parameterType="net.bs.spring.BookReplyDTO" resultType="net.bs.spring.BookReplyDTO">
+		select rownum rn, br.* from bsreply br where bi_num = 110 ORDER BY grp DESC, seq ASC    
+	</select> -->
+		
+	 <select id="select" parameterType="net.bs.spring.BookReplyDTO" resultType="net.bs.spring.BookReplyDTO">
+		select rownum rn, bi_num, r_num, r_id, r_content, to_char(r_datetime, 'yyyy-mm-dd hh24:mi') as r_date, grp, seq, lvl, r_stars, r_hit from bsreply where bi_num = 110 ORDER BY grp DESC, seq ASC
+	</select>
+	<!-- 추후 114부분 #{bi_num} 으로 수정해서 책 디테일번호 받아오기  --> 
+	
+	<delete id="delete" parameterType="int">
+		delete from bsreply where r_num = #{ridx}
+	</delete>
+	
+	<update id="edit" parameterType="net.bs.spring.BookReplyDTO">
+		update bsreply set r_content = #{r_content}, r_datetime = current_timestamp, r_stars = #{r_stars} where r_num = #{ridx} and bi_num = 110  <!-- 110 부분은 나중에 #{bi_num}으로 변경 -->
+	</update>
+	
+	<update id="rehit" parameterType="net.bs.spring.BookReplyDTO">  <!-- 리뷰 추천 -->
+		update bsreply set r_hit = r_hit + 1 where r_num = #{r_num} and bi_num = 110  <!-- 110 부분은 나중에 #{bi_num}으로 변경 -->
+	</update>
+	
+	<select id="replycnt" resultType="int">
+		select count(*) from bsreply where bi_num = 110
 	</select>
 	
-	<!-- 
-	<select id="delete" parameterType="int" resultType="net.hb.crud.reply.BoardReplyDTO">
-		delete from hobby_reply where rhobby_idx = #{rhobby_idx}
-	</select>
-	
-	 <update id="edit" parameterType="net.hb.crud.reply.BoardReplyDTO">
-		 update hobby_reply set rwriter=#{rwriter}, rmemo=#{rmemo}
-		 where rhobby_idx = #{rhobby_idx}
-	</update> -->
 </mapper>
 
 

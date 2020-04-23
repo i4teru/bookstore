@@ -16,6 +16,7 @@ public class BookReplyDTO {
 	private String r_id;
 	private String r_content;
 	private Timestamp r_datetime;
+	private String r_date;
 	private int grp;
 	private int seq;
 	private int lvl;

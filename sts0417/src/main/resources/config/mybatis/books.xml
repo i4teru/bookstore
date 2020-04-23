@@ -3,11 +3,12 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="books">	
+<mapper namespace="books" >	
 
-	<insert id="add">
-	  insert into bookinfo
-	  values(bookinfo_seq.nextval)
+	<insert id="add" parameterType="net.bs.spring.BookinfoDTO">
+	  insert into bookinfo values(bookinfo_seq.nextval, #{bi_isbn},  
+	  	#{bi_title}, #{bi_image}, #{bi_writer}, #{bi_publisher}, #{bi_pdate},
+	   	#{bi_price}, #{bi_sprice}, #{bi_content}, '...', 'is', 0, 0.0, 0, 0, sysdate)
 	</insert>
 	
 </mapper>

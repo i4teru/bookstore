@@ -5,7 +5,8 @@
 <meta charset="UTF-8">
 <title></title>
 	<script type="text/javascript">
-		setTimeout( "location.href='loginhead.do' ", 3000) ; 
+		//setTimeout( "location.href='loginhead.do' ", 3000) ; 
+		setTimeout( "location.href='main.do' ", 3000) ; 
 	</script>
 </head>
 <body>
