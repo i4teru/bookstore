@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jQuery UI Dialog - Modal message</title>
+  <title>책 등록 페이지</title>
   
   <link rel="stylesheet" href="/resources/demos/style.css">
 
@@ -49,12 +49,17 @@ $(document).ready(function(){
 		$.ajax({
 			  method: "GET",
 			  url: "https://dapi.kakao.com/v3/search/book?target=title",
-			  data: { query: $("#bkquery").val() },
+			  data: { query: $("#bkquery").val(),
+				  	  size: 20 },
 			  headers: {Authorization: "KakaoAK 8f3dd6862256234f37e949a43e4e0c2d"}
 			})
 			  .done(function( msg ) {
-				  var len = msg.documents.length;
-				  $("#message").html("총 "+len+"권의 책이 검색되었습니다.<hr>");
+				  var len = msg.documents.length; //한 페이지에 보여지는 권수
+				  var len2 = msg.meta.total_count; //검색된 총 권수
+				  var len3 = msg.meta.pageable_count; //검색된 책 가운데 보여질 수 있는 총 권수
+				  var end = msg.meta.is_end; //
+				  $("#message").html("총 "+len2+"권의 검색 결과 중 "+len+"권의 책만 보여집니다. <hr>"); 
+				  
 
 				$.each(msg.documents, function(i,item) { 
 					var isbn = item.isbn.split(" ")[1];
@@ -67,7 +72,7 @@ $(document).ready(function(){
 				    var sprc = item.sale_price;
 				    var contt = item.contents;
 
-					$("#bklist").append("<ul class='bkitem'>");
+					$("#bklist").append("<ul class='bkitem"+i+"'>");
 					$("#bklist").append("<img src='"+img+"' class='bkimg' />");
 					$("#bklist").append("<li class='hide li_img"+i+"'>"+img+"</li>");
 					$("#bklist").append("<li class='li_title"+i+"'>"+title+"</li>");
@@ -88,6 +93,9 @@ $(document).ready(function(){
 
 function addBook(ul_idx){ //선택한 책의 데이터들(isbn, 제목 등)을 숨은 input 태그의 value로 넣어줌
 	$("#btn_insert").show();
+	$("#message").html("등록 버튼을 누르면 저장됩니다.");
+	$("ul").css("border","");
+	$(".bkitem"+ul_idx).css("border", "1px solid #f00" );
     $("#bi_isbn").val($(".li_isbn"+ul_idx).text());
     $("#bi_title").val($(".li_title"+ul_idx).text());
     $("#bi_image").val($(".li_img"+ul_idx).text());
@@ -106,9 +114,9 @@ function addBook(ul_idx){ //선택한 책의 데이터들(isbn, 제목 등)을 �
 <c:import url="header.jsp"></c:import>
 
 <div class="container">
-<h1>
+<h2>
 	[bookInsert.jsp] 책 입력 Form  
-</h1>
+</h2>
 
 <!-- 등록할 책 검색 영역  -->
 <div>
