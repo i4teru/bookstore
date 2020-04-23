@@ -50,7 +50,7 @@ $(document).ready(function(){
 			  method: "GET",
 			  url: "https://dapi.kakao.com/v3/search/book?target=title",
 			  data: { query: $("#bkquery").val(),
-				  	  size: 20 },
+				  	  size: 15 },
 			  headers: {Authorization: "KakaoAK 8f3dd6862256234f37e949a43e4e0c2d"}
 			})
 			  .done(function( msg ) {
@@ -82,7 +82,7 @@ $(document).ready(function(){
 					$("#bklist").append("<li class='li_pubd"+i+"'>"+pubd+"</li>");
 					$("#bklist").append("<li class='li_prc"+i+"'>"+prc+"</li>");
 					$("#bklist").append("<li class='li_sprc"+i+"'>"+sprc+"</li>");
-					$("#bklist").append("<li class='li_contt"+i+"'>"+contt.substring(0,100)+"...</li>");
+					$("#bklist").append("<li class='li_contt"+i+"'>"+contt.substring(0,145)+"...</li>");
 					$("#bklist").append("<button type='button' onclick='addBook("+i+")'>선택</button>");
 					$("#bklist").append("<hr>");
 					$("#bklist").append("</ul>");
