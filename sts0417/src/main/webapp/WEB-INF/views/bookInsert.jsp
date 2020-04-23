@@ -97,11 +97,11 @@ li {
 	});
 
 	function addBook(ul_idx) { //선택한 책의 데이터들(isbn, 제목 등)을 숨은 input 태그의 value로 넣어줌
-		
+
 		$("ul").css("border", "");
 		//$(".bkitem" + ul_idx).css("border", "1px solid #f00");
 		$("#bi_isbn").val($(".li_isbn" + ul_idx).text());
-		
+
 		$("#bi_title").val($(".li_title" + ul_idx).text());
 		$("#bi_image").val($(".li_img" + ul_idx).text());
 		$("#bi_writer").val($(".li_author" + ul_idx).text());
@@ -111,10 +111,9 @@ li {
 		$("#bi_sprice").val($(".li_sprc" + ul_idx).text());
 		$("#bi_content").val($(".li_contt" + ul_idx).text());
 
-
 		var result = "<hr><h4 class='text-darkgray'>선택된 상품</h4>";
 		result += "<table class='table table-borderless'>";
-		result += "<tr><td rowspan='10' style='width:220px'><img src='"+$("#bi_image").val()+"' class='bkimg' /></td>";
+		result += "<tr><td rowspan='10' style='width:220px'><img src='" + $("#bi_image").val() + "' class='bkimg' /></td>";
 		result += "<th style='width:100px'>제목</th><td>" + $("#bi_title").val() + "</td>";
 		result += "<tr><th>ISBN</th><td>" + $("#bi_isbn").val() + "</td></tr>";
 		result += "<tr><th>저자</th><td>" + $("#bi_writer").val() + "</td></tr>";
@@ -128,8 +127,8 @@ li {
 
 		$("#bklist").html("");
 		$("#message").html(result);
-		$("#btn_insert").css("display","block");
-		
+		$("#btn_insert").css("display", "block");
+
 	}
 </script>
 
@@ -140,12 +139,16 @@ li {
 
 	<div class="bg-lightgray">
 		<div class="container pt-5 pb-5">
-			<div class="mainbox pr-4 pl-4 pt-4 pb-4">
 
+			<div class="mainbox p-3">
+				<div class="pagetitle">
+					<h2 class="text-darkgray">
+						<i class="fas fa-book text-brown1"></i> 도서 등록
+					</h2>
+				</div>
 				<!-- 등록할 책 검색 영역  -->
 				<div>
-					<h3 class="mb-2"><i class="fas fa-book text-brown1"></i>&nbsp 새 책 등록</h3>
-					<div class="input-group" style="width:50%">
+					<div class="input-group" style="width: 50%">
 						<input class="form-control" type="text" id="bkquery" value="">
 						<div class="input-group-append">
 							<button class="btn btn-brown1" id="search">검색</button>
@@ -155,15 +158,18 @@ li {
 
 				<!-- 메시지가 나타나는 곳 -->
 				<div id="message">
-				<p class="mt-5 pb-5 pt-5 text-darkgray acenter">검색된 자료가 없습니다.<br><br>검색창에 ISBN, 책제목, 저자 등을 입력해주세요.</p>
+					<p class="mt-5 pb-5 pt-5 text-darkgray acenter">
+						검색된 자료가 없습니다.<br> <br>검색창에 ISBN, 책제목, 저자 등을 입력해주세요.
+					</p>
 				</div>
 
 				<!-- 선택된 책의 데이터를 DB에 저장 -->
-				<div style="text-align:center">
+				<div style="text-align: center">
 					<form name="biform" action="bookInsert.do" method="get">
 						<input type="hidden" name="bi_isbn" id="bi_isbn" value=""> <input type="hidden" name="bi_title" id="bi_title" value=""> <input type="hidden" name="bi_image" id="bi_image" value=""> <input type="hidden" name="bi_writer" id="bi_writer" value=""> <input
 							type="hidden" name="bi_publisher" id="bi_publisher" value=""> <input type="hidden" name="bi_pdate" id="bi_pdate" value=""> <input type="hidden" name="bi_price" id="bi_price" value=""> <input type="hidden" name="bi_sprice" id="bi_sprice" value=""> <input
-							type="hidden" name="bi_content" id="bi_content" value=""><br> <button class="btn btn-brown1" type="submit" id="btn_insert" style="display:none;margin:auto">선택 상품 등록</button>
+							type="hidden" name="bi_content" id="bi_content" value=""><br>
+						<button class="btn btn-brown1" type="submit" id="btn_insert" style="display: none; margin: auto">선택 상품 등록</button>
 					</form>
 				</div>
 
@@ -183,7 +189,7 @@ li {
 
 				<!-- Bootstrap Modal -->
 				<div class="modal" id="myModal">
-					<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-dialog">
 						<div class="modal-content">
 
 							<!-- Modal Header -->

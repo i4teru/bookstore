@@ -6,10 +6,16 @@
 	<typeAliases>
 	   <typeAlias alias="bidto" type="net.bs.spring.BookinfoDTO"/>
 	   <typeAlias alias="ldto" type="net.bs.spring.LoginDTO"/>
+	   
+	   <!-- 이벤트 -->
+	   <typeAlias alias="edto" type="net.bs.spring.EventDTO"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="config/mybatis/books.xml" />
 		<mapper resource="config/mybatis/login.xml" />
+		
+		<!-- 메인화면 쿼리 -->
+		<mapper resource="config/mybatis/mainsql.xml" />
 	</mappers>
 </configuration>

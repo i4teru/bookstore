@@ -144,6 +144,11 @@
 	border-bottom: 3px solid #8C7B72;
 }
 
+
+.pagetitle {
+	padding: 2em 1em 3em 1em;
+}
+
 /*메인*/
 .mainbox {
 	background-color: #FFFFFF;
@@ -254,3 +259,22 @@
 	font-weight: bold;
 	font-size: 20pt;
 }
+
+/* 회원가입 */
+
+
+
+
+/* 이벤트리스트 */
+
+.eventtable tr:nth-child(2n+1)>td{
+	border:none !important;
+}
+.eventtable td, th{
+	vertical-align:middle !important;
+	text-align:center !important;
+}
+.eventtable img {
+	max-height:150px;
+}
+

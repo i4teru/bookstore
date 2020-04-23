@@ -72,7 +72,7 @@
 		<ul class="navbar-nav">
 			<li class="nav-item"><span class="nav-link disabled"><i class="fas fa-cog"></i>&nbsp;관리자 메뉴</span></li>
 			<li class="nav-item"><a class="nav-link" href="home.do">서적 관리</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">메인 관리</a></li>
+			<li class="nav-item"><a class="nav-link" href="eventlist.do">메인 관리</a></li>
 		</ul>
 	</div>
 </nav>
