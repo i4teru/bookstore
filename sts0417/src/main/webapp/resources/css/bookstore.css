@@ -54,6 +54,9 @@
 .bg-bsyellow {
 	background-color: #f2c641;
 }
+.bg-white {
+	background-color: #fff !important;
+}
 
 /* 버튼컬러 */
 .btn-brown1 {
