@@ -40,7 +40,12 @@
 				</div>
 			</div>
 			<!-- 로그인 -->
-			<div class="col-3 aright">로그인, 로그아웃</div>
+			<div class="col-3 aright">
+			<!-- 로그인 안했을 때 -->
+			<a href="login.do" class="text-darkgray"><i class="fas fa-user-circle"></i> 회원 로그인</a>
+			<!-- 로그인 했을 때 -->
+			<span class="text-darkgray"><!-- aaa님 환영합니다 --></span>
+			</div>
 		</div>
 	</div>
 </div>
@@ -48,11 +53,26 @@
 <!-- 메뉴바 -->
 <nav class="navbar navbar-expand-sm navbar-light">
 	<div class="container">
-		<!-- Links -->
+		<!-- 메뉴 -->
 		<ul class="navbar-nav">
 			<li class="nav-item"><a class="nav-link active" href="#">Link 1</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">Link 2</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">Link 3</a></li>
+		</ul>
+		
+		<!-- 회원메뉴 -->
+		<!-- 로그인했을때만 -->
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user"></i>&nbsp;마이페이지</a></li>
+			<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i>&nbsp;장바구니&nbsp;<span class="badge badge-secondary bg-brown2">2</span></a></li>
+		</ul>
+		
+		<!-- 관리자메뉴 -->
+		<!-- 아이디가 admin일때 혹은 grade가 관리자등급일때 -->
+		<ul class="navbar-nav">
+			<li class="nav-item"><span class="nav-link disabled"><i class="fas fa-cog"></i>&nbsp;관리자 메뉴</span></li>
+			<li class="nav-item"><a class="nav-link" href="home.do">서적 관리</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">메인 관리</a></li>
 		</ul>
 	</div>
 </nav>
