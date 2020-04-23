@@ -20,7 +20,7 @@
   $(window).on("load", function() {
 	var c = "${msg}".trim();//$( "#dialog-message").val();
 	if(c == "insertok"){
-		$("#myModal").modal('show');
+		$("#myModal").modal('show'); 
 	}
   });
 </script>
