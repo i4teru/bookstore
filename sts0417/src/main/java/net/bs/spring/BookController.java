@@ -40,7 +40,7 @@ public class BookController {
 	public String book_register(@RequestParam("msg") String data, Model model) {
 		String msg = data;
 		if(data=="" || data==null) {
-			msg = "notyet";
+			msg = "new";
 		}
 		model.addAttribute("msg", msg);
 		return "bookInsert";  
@@ -52,6 +52,11 @@ public class BookController {
 		dao.dbInsert(dto);
 		return "redirect:bookRegister.do?msg=insertok";
 		//return "bookInsert_test";
+	}
+	
+	@RequestMapping("/bookList.do")
+	public String book_List() {
+		return "bookList";
 	}
 	
 }
