@@ -17,19 +17,8 @@
 	background-color: #eeeeee;
 }
 
-textarea {
-	width: 700px;
-	height: 90px;
-	resize: none;
-	margin-left: 10px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	margin-right: 5px;
-}
-
 .replybtn {
-	margin-bottom: 500px;
-	height: 90px;
+	height: 100px;
 	width: 80px
 }
 
@@ -67,7 +56,6 @@ textarea {
 			$(this).addClass("on").prevAll("a").addClass("on");
 			$("#r_stars").val($(this).attr("value"));  //별 클릭 시 기본 value로 지정 되어 있던 0이 누른 별에 지정된 value로 바뀌게 된다
 		});
-
 		
 	});	
 	
@@ -103,7 +91,7 @@ textarea {
 	<br>
 	<table class="replytable" width="820px" align="center">
 		<tr style="border-bottom: 2px solid #D2B48C;">
-			<td colspan="3"><font style="font-size: 16pt;">리뷰 갯수 ${replycnt}</font></td>
+			<td colspan="3"><font style="font-size: 16pt;">리뷰 갯수 ${replycount}</font></td>
 		</tr>
 	</table>
 	<br>
@@ -112,31 +100,31 @@ textarea {
 			<c:if test="${dto.lvl eq 0}">
 				<tr>
 					<td>${dto.r_id}&nbsp;<c:if test="${dto.r_stars eq '1'}">
-							<font color="#FFCC33" size="2pt"> <i class="fas fa-star"></i> <c:forEach begin="2" end="5">
+							<font class="text-bsyellow" size="2pt"> <i class="fas fa-star "></i> <c:forEach begin="2" end="5">
 									<i class="far fa-star"></i>
 								</c:forEach>
 							</font>
 						</c:if> <c:if test="${dto.r_stars eq '2'}">
-							<font color="#FFCC33" size="2pt"> <c:forEach begin="1" end="2">
+							<font class="text-bsyellow"  size="2pt"> <c:forEach begin="1" end="2">
 									<i class="fas fa-star"></i>
 								</c:forEach> <c:forEach begin="3" end="5">
 									<i class="far fa-star"></i>
 								</c:forEach>
 							</font>
 						</c:if> <c:if test="${dto.r_stars eq '3'}">
-							<font color="#FFCC33" size="2pt"> <c:forEach begin="1" end="3">
+							<font class="text-bsyellow"  size="2pt"> <c:forEach begin="1" end="3">
 									<i class="fas fa-star"></i>
 								</c:forEach> <c:forEach begin="4" end="5">
 									<i class="far fa-star"></i>
 								</c:forEach>
 							</font>
 						</c:if> <c:if test="${dto.r_stars eq '4'}">
-							<font color="#FFCC33" size="2pt"> <c:forEach begin="1" end="4">
+							<font class="text-bsyellow"  size="2pt"> <c:forEach begin="1" end="4">
 									<i class="fas fa-star"></i>
 								</c:forEach> <i class="far fa-star"></i>
 							</font>
 						</c:if> <c:if test="${dto.r_stars eq '5'}">
-							<font color="#FFCC33" size="2pt"> <c:forEach begin="1" end="5">
+							<font class="text-bsyellow"  size="2pt"> <c:forEach begin="1" end="5">
 									<i class="fas fa-star"></i>
 								</c:forEach>
 							</font>
@@ -158,21 +146,32 @@ textarea {
 					<input type="button" onclick="location.href='replyDelete.do?ridx=${dto.r_num}'" value="삭제"> 
 					<!-- <a href="replypreEdit.do?ridx=${dto.r_num}">수정</a>   
 					 <a href="replyDelete.do?ridx=${dto.r_num}">삭제</a>  <!-- 추후 ridx뿐만 아니라 idx(책 디테일번호 bi_num)도 넘겨줘야 한다 -->
-				</td>
+					</td>
 				</tr>
+				
+				<!--              **        대댓 입력                 **                         -->
 				<tr id="replybox_re_${dto.r_num}" style="display: none" class="replybox_re">
 					<td colspan="3">
-						<form action="">
-							<input type="text" style="width: 100%">
+						<form action="reply_reInsert.do">
+							<input type="hidden" name="grp" value="${dto.r_num }">  
+							<input type="hidden" name="lvl" value="${dto.lvl }">
+							<input type="hidden" name="seq" value="${dto.seq }">
+							<input type="hidden" name="bi_num" value="110">
+							<input type="hidden" name="r_id" value="blue">
+							<textarea name="r_content" class="txtbox"  style="width:700px"></textarea>
+							<input type="submit" value="등록" >
+							
 						</form>
 					</td>
 				</tr>
+				<!-- 대댓 입력 끝 -->
+				
 			</c:if>
 
 			<c:if test="${dto.lvl > 0}">
-
 				<tr>
 					<td colspan="3">
+						<!-- 대댓글 테이블을 기존 댓글 테이블 안에 추가해주었다 -->
 						<table align="center" bgcolor="#F8F8FF" style="width: 820px;">
 							<tr>
 								<td rowspan="3" width="${dto.lvl * 30 }px">┕</td>
@@ -186,23 +185,34 @@ textarea {
 							<tr style="border-bottom: 1px solid #eeeeee;">
 								<td colspan=4 align="right">
 								<input type="button" onclick="location.href='replyHit.do?ridx=${dto.r_num}&bi_num=110'" value="추천 ${dto.r_hit}"> 
-								<input type="button" onclick="#" value="답글"> 
 								<input type="button" onclick="replyEdit('${dto.r_content}','${dto.r_stars}','${dto.r_num}')" value="수정"> 
-								<!-- 추후 dto.bi_num 추가 할 것 --> 
+									<!-- 추후 dto.bi_num 추가 할 것 --> 
 								<input type="button" onclick="location.href='replyDelete.do?ridx=${dto.r_num}'" value="삭제"> 
-								<!-- <a href="replypreEdit.do?ridx=${dto.r_num}">수정</a>   
-						 <a href="replyDelete.do?ridx=${dto.r_num}">삭제</a>  <!-- 추후 ridx뿐만 아니라 idx(책 디테일번호 bi_num)도 넘겨줘야 한다 -->
-		 					</td>
-							</tr>
+									<!-- <a href="replypreEdit.do?ridx=${dto.r_num}">수정</a>   
+						 			<a href="replyDelete.do?ridx=${dto.r_num}">삭제</a>  <!-- 추후 ridx뿐만 아니라 idx(책 디테일번호 bi_num)도 넘겨줘야 한다 -->
+						       </td>
+						   </tr>
 						</table>
 					</td>
 				</tr>
+	
 			</c:if>
-
-
-
 		</table>
 	</c:forEach>
+		<div style="text-align: center">	  
+  		<c:if test="${startpage != 1}"><a href="bookreply.do?pageNum=${startpage-10}">[이전]</a></c:if> 	
+  			<c:forEach var="i" begin="${startpage}" end="${endpage}">	
+  				<c:choose>
+  	  					<c:when test="${i==pageNUM}"> 
+  	  				  <font style='color:blue;font-size:14pt'>[${i}]</font> 
+  	  			</c:when>
+  	  					<c:otherwise>
+  	  		 				<a href="bookreply.do?pageNum=${i}">[${i}]</a>
+  	  					</c:otherwise>
+  	  			</c:choose>
+  			</c:forEach> 
+  		<c:if test="${endpage < pagecount}"><a href="bookreply.do?pageNum=${startpage+10}">[다음]</a></c:if> 	 	
+    	</div>				
 	<br>
 	<form action="replyInsert.do">
 		<div class="replybox">
@@ -216,9 +226,11 @@ textarea {
 				<a href="#" value="5">★</a>
 			</p>
 			<input type="hidden" id="r_stars" name="r_stars" value="0">
-			<textarea class="txtbox"></textarea>
+			<textarea class="txtbox" name="r_content"></textarea>
 			<input type="submit" class="replybtn" value="등록">
 		</div>
 	</form>
+	<br>
+	<c:import url="footer.jsp"></c:import>
 </body>
 </html>

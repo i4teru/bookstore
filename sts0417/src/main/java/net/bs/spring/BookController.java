@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -35,11 +36,27 @@ public class BookController {
 		return "bookInsert";
 	}
 	
+	@RequestMapping("/bookRegister.do")
+	public String book_register(@RequestParam("msg") String data, Model model) {
+		String msg = data;
+		if(data=="" || data==null) {
+			msg = "new";
+		}
+		model.addAttribute("msg", msg);
+		return "bookInsert";  
+	}
+	
 	@RequestMapping("/bookInsert.do")
 	public String book_Insert(BookinfoDTO dto) {
 		System.out.println(dto.getBi_title());
 		dao.dbInsert(dto);
-		return "redirect:home.do";
+		return "redirect:bookRegister.do?msg=insertok";
+		//return "bookInsert_test";
+	}
+	
+	@RequestMapping("/bookList.do")
+	public String book_List() {
+		return "bookList";
 	}
 	
 }

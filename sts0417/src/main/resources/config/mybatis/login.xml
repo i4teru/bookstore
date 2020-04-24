@@ -6,11 +6,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="login">	
 	
 	<insert id="accountinsert">
-		insert into account values(#{id}, #{password}, #{email}, #{phone}, to_date(#{birthday},'yyyymmdd'), #{gender}, #{location}, 1, sysdate)
+		insert into account values(#{id}, #{password}, #{email}, #{phone}, to_date(#{birthday},'yyyymmdd'), #{gender}, #{zipcode}, #{address1}, #{address2}, 1, sysdate)
 	</insert>
 	
 	<select id="loginselect" resultType="String">
 		select id from account where id=#{id} and password=#{password}
+	</select>
+	
+	<select id="checkid" resultType="int">
+		select count(*) from account where id=#{userid}
 	</select>
 	
 </mapper>

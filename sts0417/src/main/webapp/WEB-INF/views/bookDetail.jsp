@@ -133,6 +133,7 @@
 
 		</div>
 	</div>
+	<c:import url="bookreply.do"></c:import>
 	<!-- footer 분리 -->
 	<c:import url="footer.jsp"></c:import>
 	</body>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 기술된 쿼리문이 SqlMapConfig.xml에서 가져감-> 저장된 SqlMapConfig.xml쿼리문은 dao-context.xml로 -->
+<mapper namespace="pickitem">	
+
+	<insert id="add">
+	  insert into bookcart values(
+	      #{userid}, #{isbn}, #{amount}, #{status}
+	  )
+	</insert>
+	
+	<select id="count" resultType="int">
+		select count(*) from pickitem where userid = #{userid}
+	</select>
+	
+	<select id="selectAll" resultType="net.bs.spring.pickitemDTO" parameterType="net.bs.spring.pickitemDTO" >
+	  select * from (
+	  	select rownum rn, p. * from pickitem p where userid = #{userid}
+	  ) where rn between #{start} and #{end}
+	</select>
+	
+	<delete id="del" parameterType="int">
+	  delete from pickitem where picknum = #{picknum} and userid = #{userid}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+

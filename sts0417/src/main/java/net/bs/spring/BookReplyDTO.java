@@ -22,4 +22,6 @@ public class BookReplyDTO {
 	private int lvl;
 	private int r_stars;
 	private int r_hit;
+	private int start;
+	private int end;
 }//ReplyDTO  class END

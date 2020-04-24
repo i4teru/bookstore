@@ -7,22 +7,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>책 등록 페이지</title>
-  
+  <title>jQuery UI Dialog - Modal message</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
-
-<!-- 아래 세개는 세트 jsp 생성시마다 import -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="./resources/js/bootstrap.min.js"></script>
-
+  
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
   $(window).on("load", function() {
-	var c = "${msg}".trim();//$( "#dialog-message").val();
+	var c = $( "#dialog-message").attr("title");
 	if(c == "insertok"){
-		$("#myModal").modal('show'); 
-	}
-  });
+    $( "#dialog-message" ).dialog({
+      modal: true,
+      buttons: {
+        "닫기": function() {$( this ).dialog( "close" );},
+        "메인으로": function() { location.href="./main.do";}
+      }
+    });
+	  } else {
+	$("#dialog-message").hide();
+		  }
+  } );
 </script>
 
 <style type="text/css">
@@ -49,17 +54,12 @@ $(document).ready(function(){
 		$.ajax({
 			  method: "GET",
 			  url: "https://dapi.kakao.com/v3/search/book?target=title",
-			  data: { query: $("#bkquery").val(),
-				  	  size: 20 },
+			  data: { query: $("#bkquery").val() },
 			  headers: {Authorization: "KakaoAK 8f3dd6862256234f37e949a43e4e0c2d"}
 			})
 			  .done(function( msg ) {
-				  var len = msg.documents.length; //한 페이지에 보여지는 권수
-				  var len2 = msg.meta.total_count; //검색된 총 권수
-				  var len3 = msg.meta.pageable_count; //검색된 책 가운데 보여질 수 있는 총 권수
-				  var end = msg.meta.is_end; //
-				  $("#message").html("총 "+len2+"권의 검색 결과 중 "+len+"권의 책만 보여집니다. <hr>"); 
-				  
+				  var len = msg.documents.length;
+				  $("#message").html("총 "+len+"권의 책이 검색되었습니다.<hr>");
 
 				$.each(msg.documents, function(i,item) { 
 					var isbn = item.isbn.split(" ")[1];
@@ -72,7 +72,7 @@ $(document).ready(function(){
 				    var sprc = item.sale_price;
 				    var contt = item.contents;
 
-					$("#bklist").append("<ul class='bkitem"+i+"'>");
+					$("#bklist").append("<ul class='bkitem'>");
 					$("#bklist").append("<img src='"+img+"' class='bkimg' />");
 					$("#bklist").append("<li class='hide li_img"+i+"'>"+img+"</li>");
 					$("#bklist").append("<li class='li_title"+i+"'>"+title+"</li>");
@@ -93,9 +93,6 @@ $(document).ready(function(){
 
 function addBook(ul_idx){ //선택한 책의 데이터들(isbn, 제목 등)을 숨은 input 태그의 value로 넣어줌
 	$("#btn_insert").show();
-	$("#message").html("등록 버튼을 누르면 저장됩니다.");
-	$("ul").css("border","");
-	$(".bkitem"+ul_idx).css("border", "1px solid #f00" );
     $("#bi_isbn").val($(".li_isbn"+ul_idx).text());
     $("#bi_title").val($(".li_title"+ul_idx).text());
     $("#bi_image").val($(".li_img"+ul_idx).text());
@@ -111,12 +108,10 @@ function addBook(ul_idx){ //선택한 책의 데이터들(isbn, 제목 등)을 �
 </head>
 <body>
 <!-- header 추가 -->
-<c:import url="header.jsp"></c:import>
 
-<div class="container">
-<h2>
+<h1>
 	[bookInsert.jsp] 책 입력 Form  
-</h2>
+</h1>
 
 <!-- 등록할 책 검색 영역  -->
 <div>
@@ -150,40 +145,12 @@ function addBook(ul_idx){ //선택한 책의 데이터들(isbn, 제목 등)을 �
 </div>
 
 <!-- DB에 저장 완료 했을 때 뜨는 대화창 영역 -->
-<!-- 
 <div id="dialog-message" title="${msg}" >
   <p>
     <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
 	저장에 성공했습니다. 
   </p>
-</div> -->
-
-
- <!-- Bootstrap Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->   
-        <div class="modal-header">  
-          <h4 class="modal-title">저장 성공</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-          	데이터 저장에 성공했습니다.
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-          <button type="button" class="btn btn-danger" onclick="location.href='./main.do'" >메인으로</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
 </div>
+
 </body>
 </html>

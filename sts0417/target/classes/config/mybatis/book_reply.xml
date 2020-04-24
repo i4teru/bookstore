@@ -9,17 +9,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="readd">  <!-- 댓글 입력하는 부분 -->
-		insert into bsreply values(#{bi_num}, s_bsreply_seq.nextval, #{r_id}, #{r_content}, current_timestamp, #{r_num}, 1, 0, #{r_stars}, 0)
+		insert into bsreply values(#{bi_num}, s_bsreply_seq.nextval, #{r_id}, #{r_content}, current_timestamp, #{grp}, #{seq}+1 , #{lvl}+1, 0, 0)
 	</insert>
 	
 <!-- <select id="select" parameterType="net.bs.spring.BookReplyDTO" resultType="net.bs.spring.BookReplyDTO">
 		select rownum rn, br.* from bsreply br where bi_num = 110 ORDER BY grp DESC, seq ASC    
 	</select> -->
 		
-	 <select id="select" parameterType="net.bs.spring.BookReplyDTO" resultType="net.bs.spring.BookReplyDTO">
+<!--  <select id="select" parameterType="net.bs.spring.BookReplyDTO" resultType="net.bs.spring.BookReplyDTO">
 		select rownum rn, bi_num, r_num, r_id, r_content, to_char(r_datetime, 'yyyy-mm-dd hh24:mi') as r_date, grp, seq, lvl, r_stars, r_hit from bsreply where bi_num = 110 ORDER BY grp DESC, seq ASC
 	</select>
-	<!-- 추후 114부분 #{bi_num} 으로 수정해서 책 디테일번호 받아오기  --> 
+	 추후 114부분 #{bi_num} 으로 수정해서 책 디테일번호 받아오기  --> 
+	 
+	 
+	<select id="select" parameterType="net.bs.spring.BookReplyDTO" resultType="net.bs.spring.BookReplyDTO"> 
+	 	select * from ( select br.*, rownum rn
+ 		from (select  bi_num, r_num, r_id, r_content, to_char(r_datetime, 'yyyy-mm-dd hh24:mi') as r_date, grp, seq, lvl, r_stars, r_hit
+		from bsreply ORDER BY grp DESC, seq ASC)br)
+		where rn between #{start} and #{end}
+	</select>
 	
 	<delete id="delete" parameterType="int">
 		delete from bsreply where r_num = #{ridx}
@@ -37,19 +45,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from bsreply where bi_num = 110
 	</select>
 	
+	<select id="replycount" resultType="int">
+		select count(*) from bsreply where bi_num = 110 and lvl = 0
+	</select>
+	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

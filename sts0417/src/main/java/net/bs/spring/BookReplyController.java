@@ -29,11 +29,58 @@ public class BookReplyController {
 		return "redirect:/bookreply.do";	
 	}
 	
+
+	@RequestMapping(value="/reply_reInsert.do")
+	public String reply_re_insert(BookReplyDTO dto) {
+		rdao.dbReinsert(dto);
+		return "redirect:/bookreply.do";
+	}
+	
+	
 	@RequestMapping(value="/bookreply.do")
-	public String reply_select(  BookReplyDTO dto ,Model model) {
+	public String reply_select( BookReplyDTO dto , HttpServletRequest request, Model model) {
 		int replycnt = rdao.dbReplycnt();  //¸®ºä(´ñ±Û)ÀÇ °¹¼ö @RequestParam("bi_num") int bi_num,¿Í °ýÈ£¿¡ bi_num ³Ö¾îÁÙ °Í
-		List<BookReplyDTO> BR = rdao.dbSelect(dto);		
+		int replycount = rdao.dbReplycount();
+		
+		String pnum;
+		int pageNUM, pagecount;
+		int start, end;
+		int startpage, endpage;
+		int temp;
+		
+		pnum=request.getParameter("pageNum");
+		
+		if(pnum == "" || pnum == null) {
+			pnum = "1";
+		}
+		
+		pageNUM = Integer.parseInt(pnum);
+		
+		start = (pageNUM-1)*10+1;
+		end = pageNUM*10;
+		
+		if(replycnt%10==0) {
+			pagecount = replycnt/10;
+		}else {
+			pagecount = (replycnt/10)+1; 
+		}
+		
+		temp = (pageNUM-1) % 10;
+		
+		startpage = pageNUM - temp;
+		endpage = startpage + 9;
+		
+		if(endpage > pagecount) {
+			endpage = pagecount;
+		}
+		
+		List<BookReplyDTO> BR = rdao.dbSelect(start, end);
+		model.addAttribute("replycount",replycount);
 		model.addAttribute("replycnt",replycnt);
+		model.addAttribute("pagecount",pagecount);
+		model.addAttribute("startpage",startpage);
+		model.addAttribute("endpage", endpage);
+		model.addAttribute("pageNUM", pageNUM);
 		model.addAttribute("BR", BR);
 		return "book_reply";
 	}
