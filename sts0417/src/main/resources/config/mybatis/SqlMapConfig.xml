@@ -7,6 +7,8 @@
 	   <typeAlias alias="bidto" type="net.bs.spring.BookinfoDTO"/>
 	   <typeAlias alias="ldto" type="net.bs.spring.LoginDTO"/>
 	   <typeAlias alias="rdto" type="net.bs.spring.BookReplyDTO"/>
+	   <typeAlias alias="pdto" type="net.bs.spring.pickitemDTO"/>
+	   <typeAlias alias="odto" type="net.bs.spring.orderDTO"/>
 	   
 	   <!-- 이벤트 -->
 	   <typeAlias alias="edto" type="net.bs.spring.EventDTO"/>
@@ -16,6 +18,8 @@
 		<mapper resource="config/mybatis/books.xml" />
 		<mapper resource="config/mybatis/login.xml" />
 		<mapper resource="config/mybatis/book_reply.xml"/>
+		<mapper resource="config/mybatis/pickitem.xml"/>
+		<mapper resource="config/mybatis/order.xml"/>
 		
 		<!-- 메인화면 쿼리 -->
 		<mapper resource="config/mybatis/mainsql.xml" />

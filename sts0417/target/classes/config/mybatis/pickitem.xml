@@ -5,25 +5,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 기술된 쿼리문이 SqlMapConfig.xml에서 가져감-> 저장된 SqlMapConfig.xml쿼리문은 dao-context.xml로 -->
 <mapper namespace="pickitem">	
 
-	<insert id="add">
-	  insert into bookcart values(
-	      #{userid}, #{isbn}, #{amount}, #{status}
-	  )
-	</insert>
-	
-	<select id="count" resultType="int">
-		select count(*) from pickitem where userid = #{userid}
-	</select>
-	
 	<select id="selectAll" resultType="net.bs.spring.pickitemDTO" parameterType="net.bs.spring.pickitemDTO" >
 	  select * from (
-	  	select rownum rn, p. * from pickitem p where userid = #{userid}
-	  ) where rn between #{start} and #{end}
+	  	select rownum rn, c. *, i. * from bookcart c inner join bookinfo i
+	  	on c.bnum = i.bi_num
+	  	where c.userid = #{userid}
+	  ) where rn between 1 and #{end}
+	</select>
+	 
+	<select id="count" resultType="int" parameterType="String">
+		<!-- select count(c.isbn) from bookcart c inner join
+		bookinfo i on c.isbn = i.bi_isbn
+		where c.userid = #{userid}-->
+		select count(*) from bookcart where userid = #{userid}
 	</select>
 	
-	<delete id="del" parameterType="int">
-	  delete from pickitem where picknum = #{picknum} and userid = #{userid}
+	
+	<delete id="del" parameterType="net.bs.spring.pickitemDTO">
+	  delete from bookcart where bnum = #{bnum} and userid = #{userid}
 	</delete>
+	
+	<update id="del2" parameterType="net.bs.spring.pickitemDTO">
+		update bookcart set amount = amount-1 where bnum = #{bnum} and userid = #{userid}
+	</update>
+
+<insert id="add">
+	  insert into bookcart values(
+	      #{userid}, #{isbn}, #{amount}, #{status}, #{bnum}
+	  )
+	</insert>
 	
 </mapper>
 

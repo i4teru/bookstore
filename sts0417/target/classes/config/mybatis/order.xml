@@ -5,27 +5,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 기술된 쿼리문이 SqlMapConfig.xml에서 가져감-> 저장된 SqlMapConfig.xml쿼리문은 dao-context.xml로 -->
 <mapper namespace="order">	
 
-	<insert id="padd">
+	<select id="preorder" parameterType="net.bs.spring.pickitemDTO" resultType="net.bs.spring.pickitemDTO">
+		select c.*, i.* from bookcart c inner join bookinfo i
+		on c.bnum = i.bi_num
+		 where c.bnum = #{bnum} and c.userid = #{userid}
+	</select>
+
+	<insert id="padd" parameterType="net.bs.spring.orderDTO">
 	  insert into purchase values(
-	    #{ordernum}, #{userid}, #{buydate}, #{name}, #{receiver}, #{contact}, #{postcode},
-	    #{address1}, #{address2}, #{orderstatus}
+	    #{ordernum} + order_seq.nextval, #{userid}, sysdate, #{orderstatus}
 	  )
 	</insert>
 	
-	<insert id="radd">
+	<insert id="radd" parameterType="net.bs.spring.orderDTO">
 		insert into receiver values(
 			#{userid}, #{receiver}, #{contact}, #{postcode}, #{address1}, #{address2}
+			, rnum_seq.nextval
 		)
 	</insert>
 	
-	<select id="pselect">
-		select * from (
-			select rownum rn, p. * from purchase where ordernum = #{ordernum}
-		) where rn between #{start} and #{end}
+	<select id="pcount" resultType="int">
+		select count(*) from purchase where userid = #{userid}
 	</select>
 	
-	<select id="rselect">
+	<select id="pselect" resultType="net.bs.spring.orderDTO">
+		select * from (
+			select rownum rn, p. * from purchase where ordernum = #{ordernum}
+		) where rn between 1 and #{end}
+	</select>
+	
+	<select id="rselect" resultType="net.bs.spring.orderDTO">
 		select * from receiver where userid = #{userid}
+	</select>
+	
+	<select id="selectAll" resultType="net.bs.spring.orderDTO">
+		select p.*, r.* from purchase p inner join receiver r
+		on p.userid = r.userid
+	</select>
+	
+	<select id="rcnt" resultType="int">
+		select count(*) from receiver where userid = #{userid}
+	</select>
+	
+	<delete id="rdelete" parameterType="net.bs.spring.orderDTO">
+		delete from receiver where userid = #{userid} and rnum = #{rnum}
+	</delete>
+	
+	<select id="loginDetail" resultType="net.bs.spring.LoginDTO">
+		select * from account where id = #{id}
 	</select>
 	
 </mapper>
