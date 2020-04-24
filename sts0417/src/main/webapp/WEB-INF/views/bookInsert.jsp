@@ -57,8 +57,8 @@ li {
 				var len = msg.documents.length; //한 페이지에 보여지는 권수
 				var len2 = msg.meta.total_count; //검색된 총 권수
 				var len3 = msg.meta.pageable_count; //검색된 책 가운데 보여질 수 있는 총 권수
-				var end = msg.meta.is_end; //
-				$("#message").html("<hr>총 " + len2 + "권의 검색 결과 중 " + len + "권의 책만 보여집니다.");
+				var end = msg.meta.is_end; //마지막 페이지인가
+				$("#message").html("<hr>총 " + len2 + "권의 검색 결과 중 " + len + "권의 책이 출력되었습니다.");
 
 				$.each(msg.documents, function(i, item) {
 					var isbn = item.isbn.split(" ")[1];
@@ -177,16 +177,7 @@ li {
 				<table id="bklist" class="table table-borderless" style="width: 100%;">
 
 				</table>
-				<!-- DB에 저장 완료 했을 때 뜨는 대화창 영역 -->
-				<!-- 
-<div id="dialog-message" title="${msg}" >
-  <p>
-    <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
-	저장에 성공했습니다. 
-  </p>
-</div> -->
-
-
+				
 				<!-- Bootstrap Modal -->
 				<div class="modal" id="myModal">
 					<div class="modal-dialog">

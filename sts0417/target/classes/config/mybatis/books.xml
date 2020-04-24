@@ -8,21 +8,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="add" parameterType="net.bs.spring.BookinfoDTO">
 	  insert into bookinfo values(bookinfo_seq.nextval, #{bi_isbn},  
 	  	#{bi_title}, #{bi_image}, #{bi_writer}, #{bi_publisher}, #{bi_pdate},
-	   	#{bi_price}, #{bi_sprice}, #{bi_content}, '...', 'is', 0, 0.0, 0, 0, sysdate)
+	   	#{bi_price}, #{bi_sprice}, #{bi_content}, '...', 'is', 0, 0, 0, 0, sysdate)
 	</insert>
 	
 	<select id="select_s1" resultType="net.bs.spring.BookinfoDTO">
 		select * from 
 			(select rownum rn, b.* from 
-				(select * from bookinfo b where regexp_like(bi_title||bi_content, '아두이노|안드로이드')) b order by bi_num desc) 
+				(select * from bookinfo where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드')) b order by bi_num desc) 
 		where rn between 1 and 5
 	</select> 
 	
 	<select id="select_s2" resultType="net.bs.spring.BookinfoDTO">
 	select * from 
 		(select rownum rn, b.* from 
-			(select * from bookinfo b 
-				where regexp_like(bi_title||bi_content, '웹디자인|html|css|javascript|jQuery|자바스크립트|제이쿼리', 'i')) b 
+			(select * from bookinfo 
+				where regexp_like(bi_title||bi_content, '웹디자인|html|css|javascript|jQuery|bootstrap|자바스크립트|제이쿼리|부트스트랩', 'i')) b 
 				order by bi_num desc) 
 	where rn between 1 and 5
 	</select>
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_s3" resultType="net.bs.spring.BookinfoDTO">
 	select * from 
 		(select rownum rn, b.* from 
-			(select * from bookinfo b 
+			(select * from bookinfo 
 				where regexp_like(bi_title||bi_content, '프로그래밍|C언어|java|자바|JSP|Ajax|xml' , 'i') 
 				 	and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i')) b 
 				order by bi_num desc)  
@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_s4" resultType="net.bs.spring.BookinfoDTO">
 	select * from 
 		(select rownum rn, b.* from 
-			(select * from bookinfo b where regexp_like(bi_title||bi_content, '오라클|데이터베이스|db|mysql|oracle' , 'i')) b 
+			(select * from bookinfo where regexp_like(bi_title||bi_content, '오라클|데이터베이스|db|mysql|oracle' , 'i')) b 
 				order by bi_num desc) 
 	where rn between 1 and 5
 	</select>
@@ -48,13 +48,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_s5" resultType="net.bs.spring.BookinfoDTO">
 	select * from 
 		(select rownum rn, b.* from 
-			(select * from bookinfo b where regexp_like(bi_title||bi_content, '웹 서비스|스프링|프레임워크' , 'i')) b   
+			(select * from bookinfo where regexp_like(bi_title||bi_content, '웹 서비스|스프링|프레임워크' , 'i')) b   
 				order by bi_num desc) 
 	where rn between 1 and 5
 	</select>
 		
 	<select id="count_rbs" resultType="int">
 		select count(*) from bookinfo
+	</select>
+	
+	<!-- 0424 섹션별 리스트 추가 by kjr -->
+	<select id="count_s1" resultType="int">
+		select count(*) from bookinfo where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드')
+	</select>
+	
+	<select id="select_s1All" resultType="net.bs.spring.BookinfoDTO">
+		select * from 
+			(select rownum rn, b.* from 
+				(select * from bookinfo b where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드')) b ) 
+		where rn between 1 and 10			
+	</select> 
+	
+	<!-- 0424 ===========책 디테일 ================ by minji  -->
+	<select id="select_detail" resultType="net.bs.spring.BookinfoDTO">
+		select * from bookinfo where bi_num = #{idx}   <!-- 나중에  리스트랑 연결 시킬때는  1을 #{idx}로 바꿔야 함 -->
 	</select>
 	
 </mapper>

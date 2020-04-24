@@ -45,4 +45,22 @@ public class BookDAO {
 		return cnt;		
 	}
 	
+	//0424 섹션별 리스트 출력용 추가 by kjr
+	public int s1Count() {
+		int s1cnt = temp.selectOne("books.count_s1");
+		return s1cnt;
+	}
+	
+	public List<BookinfoDTO> sc1SelectAll() {
+		return temp.selectList("books.select_s1All");
+	}
+	
+	//0424 =================디테일============= by minji
+	public BookinfoDTO dbDetail(int idx) {
+		return temp.selectOne("books.select_detail", idx);
+	}
+	
+	/*public BookinfoDTO dbDetail(int idx) {   리스트에서 디테일 페이지로 넘어올때 사용 할 부분
+		return temp.selectOne("books.select_detail", idx);
+	}*/
 }

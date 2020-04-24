@@ -71,4 +71,22 @@ public class BookController {
 		return "bookList";
 	}
 	
+	//여기서부터 섹션별 리스트 추가 작업(0424 kjr)
+	@RequestMapping("/bookSection1.do")
+	public String book_Section1(Model model) {
+		List<BookinfoDTO> S1L = dao.sc1SelectAll();
+		model.addAttribute("S1L", S1L);
+		model.addAttribute("S1Total", dao.s1Count());
+		return "bookSection1";
+	}
+	
+	//===========책 디테일=========(0424 minji)
+	
+	@RequestMapping("/bookdetail.do")
+	public String book_detail( Model model) {
+		int idx=1;  //리스트랑 합칠때 idx는 파라메타로 값 받아와야 함(@RequestParam("idx")int idx, Model model)
+		model.addAttribute("dto", dao.dbDetail(idx));
+		return "bookDetail";
+	}
+	
 }

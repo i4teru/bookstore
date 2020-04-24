@@ -5,14 +5,14 @@
 <head>
 <title>책 목록 페이지</title>
 <style type="text/css">
-a {
-	color: gray;
-	text-decoration: none;
-}
-
+a:link {
+	text-decoration: none; color: blue;}
+a:visited {
+	text-decoration: none; color: green;}
+a:active {
+	text-decoration: none; color: gray;}
 a:hover {
-	text-decoration: none;
-}
+	text-decoration: underline; color: red;}
 
 .right {
 	text-align: right;
@@ -36,11 +36,11 @@ a:hover {
 				<table class="w-100 noppading nomargin">
 					<tr>
 						<td>
-						<button type="button" class="btn rounded btn-outline-primary" onclick="location.href='#section1'">모바일/임베디드</button>
-						<button type="button" class="btn rounded btn-outline-secondary" onclick="location.href='#section2'">웹디자인</button>
-						<button type="button" class="btn rounded btn-outline-success" onclick="location.href='#section3'">프로그래밍 언어</button>
-						<button type="button" class="btn rounded btn-outline-info" onclick="location.href='#section4'">데이터베이스</button>
-						<button type="button" class="btn rounded btn-outline-danger" onclick="location.href='#section5'">웹서비스 개발</button>
+						<button type="button" class="btn btn-outline-primary" onclick="location.href='#section1'">모바일/임베디드</button>
+						<button type="button" class="btn btn-outline-secondary" onclick="location.href='#section2'">웹디자인</button>
+						<button type="button" class="btn btn-outline-success" onclick="location.href='#section3'">프로그래밍 언어</button>
+						<button type="button" class="btn btn-outline-info" onclick="location.href='#section4'">데이터베이스</button>
+						<button type="button" class="btn btn-outline-danger" onclick="location.href='#section5'">웹서비스 개발</button>
 						</td>
 					</tr>
 					<tr>
@@ -57,7 +57,7 @@ a:hover {
 						<table class="w-100">
 							<tr>
 								<td><i class="fa fa-book text-primary" aria-hidden="true"></i> 모바일/임베디드 </td>
-								<td class="right"><a href="#">+더보기</a></td>
+								<td class="right"><a href="bookSection1.do">+더보기</a></td>
 							</tr>
 						</table>
 					</div>
@@ -76,7 +76,7 @@ a:hover {
 											<td class="text-brown2"><small>${dto.bi_writer } / ${dto.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${dto.bi_sprice }원</td>
+											<td class="text-darkgray" style="text-align: right">${dto.bi_price }원</td>
 										</tr>
 									</table>
 								</div>
@@ -112,7 +112,7 @@ a:hover {
 											<td class="text-brown2"><small>${dto.bi_writer } / ${dto.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${dto.bi_sprice }원</td>
+											<td class="text-darkgray" style="text-align: right">${dto.bi_price }원</td>
 										</tr>
 									</table>
 
@@ -149,7 +149,7 @@ a:hover {
 											<td class="text-brown2"><small>${dto.bi_writer } / ${dto.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${dto.bi_sprice }원</td>
+											<td class="text-darkgray" style="text-align: right">${dto.bi_price }원</td>
 										</tr>
 									</table>
 
@@ -186,7 +186,7 @@ a:hover {
 											<td class="text-brown2"><small>${dto.bi_writer } / ${dto.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${dto.bi_sprice }원</td>
+											<td class="text-darkgray" style="text-align: right">${dto.bi_price }원</td>
 										</tr>
 									</table>
 
@@ -223,7 +223,7 @@ a:hover {
 											<td class="text-brown2"><small>${dto.bi_writer } / ${dto.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${dto.bi_sprice }원</td>
+											<td class="text-darkgray" style="text-align: right">${dto.bi_price }원</td>
 										</tr>
 									</table>
 
