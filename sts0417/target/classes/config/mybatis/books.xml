@@ -11,6 +11,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   	#{bi_price}, #{bi_sprice}, #{bi_content}, '...', 'is', 0, 0.0, 0, 0, sysdate)
 	</insert>
 	
+	<select id="select_s1" resultType="net.bs.spring.BookinfoDTO">
+		select * from 
+			(select rownum rn, b.* from 
+				(select * from bookinfo b where regexp_like(bi_title||bi_content, '아두이노|안드로이드')) b order by bi_num desc) 
+		where rn between 1 and 5
+	</select> 
+	
+	<select id="select_s2" resultType="net.bs.spring.BookinfoDTO">
+	select * from 
+		(select rownum rn, b.* from 
+			(select * from bookinfo b 
+				where regexp_like(bi_title||bi_content, '웹디자인|html|css|javascript|jQuery|자바스크립트|제이쿼리', 'i')) b 
+				order by bi_num desc) 
+	where rn between 1 and 5
+	</select>
+	
+	<select id="select_s3" resultType="net.bs.spring.BookinfoDTO">
+	select * from 
+		(select rownum rn, b.* from 
+			(select * from bookinfo b 
+				where regexp_like(bi_title||bi_content, '프로그래밍|C언어|java|자바|JSP|Ajax|xml' , 'i') 
+				 	and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i')) b 
+				order by bi_num desc)  
+	where rn between 1 and 5
+	</select>
+	
+	<select id="select_s4" resultType="net.bs.spring.BookinfoDTO">
+	select * from 
+		(select rownum rn, b.* from 
+			(select * from bookinfo b where regexp_like(bi_title||bi_content, '오라클|데이터베이스|db|mysql|oracle' , 'i')) b 
+				order by bi_num desc) 
+	where rn between 1 and 5
+	</select>
+	
+	<select id="select_s5" resultType="net.bs.spring.BookinfoDTO">
+	select * from 
+		(select rownum rn, b.* from 
+			(select * from bookinfo b where regexp_like(bi_title||bi_content, '웹 서비스|스프링|프레임워크' , 'i')) b   
+				order by bi_num desc) 
+	where rn between 1 and 5
+	</select>
+		
+	<select id="count_rbs" resultType="int">
+		select count(*) from bookinfo
+	</select>
+	
 </mapper>
 
 

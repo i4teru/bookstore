@@ -7,16 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginDTO {
+public class EventDTO {
 	
 	//계정 데이터
 	private int grade, gender, zipcode;
 	private String id, password, email, phone, birthday, address1, address2;
 	private Date  signupdate;
-
-	//공지사항 데이터
-	private int rn, start, end, pagecount, pageNUM, total, notice_num;
-	private String notice_content, notice_title;
-	private Date upload_date;
 	
 }//class END

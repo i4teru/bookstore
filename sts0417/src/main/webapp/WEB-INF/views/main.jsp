@@ -71,11 +71,11 @@
 						<span class="badge bg-bsyellow text-light">NEW</span> 신규 입고
 					</div>
 					<div class="mainbox main-new">
-						<c:forEach begin="1" end="4">
+						<c:forEach items="${newBooks}" var="newBook">
 						<table class="mt-2 mb-1 mauto">
 							<tr>
-								<td><img src="./resources/images/bookimg1.jpg"></td>
-								<td class="text-darkgray"><b>모두의 아두이노</b><br><small class="text-brown2">다카모토 다카요리 / 길벗</small></td>
+								<td><img src="${ newBook.bi_image }"></td>
+								<td class="text-darkgray"><b>${ newBook.bi_title }</b><br><small class="text-brown2">${ newBook.bi_writer } / ${ newBook.bi_publisher }</small></td>
 							</tr>
 						</table>
 						</c:forEach>

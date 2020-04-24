@@ -2,6 +2,7 @@ package net.bs.spring;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class BookController {
 	}
 	
 	@RequestMapping("/bookInsert.do")
-	public String book_Insert(BookinfoDTO dto) {
+	public String book_insert(BookinfoDTO dto) {
 		System.out.println(dto.getBi_title());
 		dao.dbInsert(dto);
 		return "redirect:bookRegister.do?msg=insertok";
@@ -55,7 +56,18 @@ public class BookController {
 	}
 	
 	@RequestMapping("/bookList.do")
-	public String book_List() {
+	public String book_List(Model model) {
+		List<BookinfoDTO> Sc1 = dao.sc1Select();
+		List<BookinfoDTO> Sc2 = dao.sc2Select();
+		List<BookinfoDTO> Sc3 = dao.sc3Select();
+		List<BookinfoDTO> Sc4 = dao.sc4Select();     
+		List<BookinfoDTO> Sc5 = dao.sc5Select();
+		model.addAttribute("Sc1", Sc1);
+		model.addAttribute("Sc2", Sc2);
+		model.addAttribute("Sc3", Sc3);
+		model.addAttribute("Sc4", Sc4);
+		model.addAttribute("Sc5", Sc5);
+		model.addAttribute("RBTotal", dao.rbCount());
 		return "bookList";
 	}
 	

@@ -1,0 +1,14 @@
+//이벤트 테이블
+
+drop sequence bs_event_seq;
+drop table bs_event;
+
+create sequence bs_event_seq;
+create table bs_event (
+	num number not null primary key,
+	title varchar2(200) not null,
+	url varchar2(200) not null,
+	image varchar2(200) not null,
+	startdate date not null,
+	enddate date not null
+);
