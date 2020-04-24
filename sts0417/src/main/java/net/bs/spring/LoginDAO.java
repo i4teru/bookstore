@@ -52,5 +52,13 @@ public class LoginDAO  {
 	public void dbdeletenotice(int num) {
 		temp.delete("login.dbdeletenotice", num);
 	}
+	
+	public LoginDTO dbaccountdata(String id) {
+		return temp.selectOne("login.dbaccountdata", id);
+	}
+	
+	public void dbaccountedit(LoginDTO dto) {
+		temp.update("login.dbeditaccount", dto);
+	}
 
 }//BoardDAO class END

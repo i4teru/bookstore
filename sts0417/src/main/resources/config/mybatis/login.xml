@@ -41,5 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete notice where notice_num=#{num}
 	</delete>
 	
+	<select id="dbaccountdata" resultType="net.bs.spring.LoginDTO">
+		select name, id, password, email, phone, to_char(birthday, 'yyyy-mm-dd')as birthday, gender, zipcode, address1, address2, grade, signup_date from account where id=#{id} 
+	</select>
+	
+	<update id="dbeditaccount" parameterType="net.bs.spring.LoginDTO">
+		update account set name=#{name}, email=#{email}, phone=#{phone}, birthday=to_date(#{birthday}, 'yyyy-mm-dd'), zipcode=#{zipcode}, address1=#{address1}, address2=#{address2} where id=#{id}
+	</update>
+	
 </mapper>
 

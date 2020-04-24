@@ -36,17 +36,42 @@ public class LoginController {
 	}
 
 	@RequestMapping("/login.do")
-	public String login_table() {
+	public String login_table(HttpSession session, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html; charset=utf-8");
+		if(session.getAttribute("userid")!=null) {
+			response.getWriter().append(
+					"<script>" + "alert('이미 로그인 되어있습니다, 먼저 로그아웃 하십시오');" + "window.history.back();" + "</script>")
+					.flush();
+			return "redirect:/login_head.do";
+		}else {
 		return "login";
+		}
 	}
 
 	@RequestMapping("/noticeup.do")
 	public String notice_write() {
 		return "notice_write";
 	}
+	
+	@RequestMapping("/mypage.do")
+	public String my_page(HttpSession session, HttpServletResponse response, Model model) throws Exception {
+		if(session.getAttribute("userid")==null) {
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().append(
+					"<script>" + "alert('로그인 후에 이용가능합니다.');" + "</script>")
+					.flush();
+			return "login";
+		}
+		String id=(String)session.getAttribute("userid");
+		LoginDTO dto = dao.dbaccountdata(id);
+		model.addAttribute("dto", dto);
+		model.addAttribute("id", id);
+		return "mypage";
+	}
 
 	@RequestMapping("/signupcomplete.do")
 	public String signup_complete(LoginDTO dto) {
+		logger.info("넘어온 이름" + dto.getName());
 		logger.info("넘어온 아이디" + dto.getId());
 		logger.info("넘어온 비밀번호" + dto.getPassword());
 		logger.info("넘어온 데이터" + dto.getEmail());
@@ -63,6 +88,7 @@ public class LoginController {
 
 	@RequestMapping("/logincheck.do")
 	public String login_check(LoginDTO dto, HttpServletResponse response, HttpSession session) throws Exception {
+		response.setContentType("text/html; charset=utf-8");
 		logger.info("입력된 아이디" + dto.getId());
 		logger.info("입력된 비밀번호" + dto.getPassword());
 
@@ -71,9 +97,8 @@ public class LoginController {
 		session.setAttribute("userid", result);
 
 		if (result == null || result == "" || result.equals("")) {
-			response.setContentType("text/html; charset=utf-8");
 			response.getWriter().append(
-					"<script>" + "alert('LoginController 아이디,비번 일치하지않습니다');" + "window.history.back();" + "</script>")
+					"<script>" + "alert('아이디,비번 일치하지않습니다. 다시입력하십시오');" + "window.history.back();" + "</script>")
 					.flush();
 			return "redirect:/login.do";
 		}
@@ -159,7 +184,7 @@ public class LoginController {
 		return "notice_detail";
 	}
 	
-	@RequestMapping("notice_edit.do")
+	@RequestMapping("/notice_edit.do")
 	public String notice_edit(Model model, LoginDTO dto) {
 		int num=dto.getNotice_num();
 		logger.info("넘어온 번호" + num);
@@ -169,10 +194,17 @@ public class LoginController {
 		return "redirect:/notice_detail.do?num=" + num;
 	}
 	
-	@RequestMapping("notice_delete.do")
+	@RequestMapping("/notice_delete.do")
 	public String notice_delete(@RequestParam("num") int num ) {
 		dao.dbdeletenotice(num);
 		return "redirect:/notice.do";
 	}
-
+	
+	@RequestMapping("/editaccount.do")
+	public String edit_account(LoginDTO dto) {
+		dao.dbaccountedit(dto);
+		return "login_head";
+	}
+	
+	
 }

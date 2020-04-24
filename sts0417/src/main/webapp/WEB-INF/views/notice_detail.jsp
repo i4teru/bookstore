@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	$(function(){
 		$("#edit").click(function(){
-			$("#edittable").html("<div class='container'><form action='notice_edit.do'><table class='table table-borderless table-sm'><tr><td>번호</td><td>제목</td><td>등록일</td></tr><tr><td>${dto.notice_num}<input type='text' name='notice_num' value='${dto.notice_num}' hidden></td><td><input type='text' class='form-control form-control-sm' name='notice_title' value='${dto.notice_title}'></td><td>'${dto.upload_date}'</td></tr><tr><td colspan='3'>내용</td></tr><tr><td colspan='3'><textarea rows='10' cols='30' class='form-control form-control-sm' name='notice_content'>${dto.notice_content}</textarea><td></tr><tr><td><input type='submit' class='btn btn-sm' value='저장'</td><td><input type='button' value='취소' class='btn btn-sm' onclick='location.reload()'</td></tr></table></form></div>");
+			$("#edittable").html("<div class='container'><form action='notice_edit.do'><table class='table table-borderless table-sm'><tr><td>번호</td><td>제목</td><td>등록일</td></tr><tr><td>${dto.notice_num}<input type='text' name='notice_num' value='${dto.notice_num}' hidden></td><td><input type='text' class='form-control form-control-sm' name='notice_title' value='${dto.notice_title}'></td><td>'${dto.upload_date}'</td></tr><tr><td colspan='3'>내용</td></tr><tr><td colspan='3'><textarea rows='10' cols='30' class='form-control form-control-sm' name='notice_content'>${dto.notice_content}</textarea><td></tr><tr><td><input type='submit' class='btn btn-sm' value='저장'></td><td><input type='button' value='취소' class='btn btn-sm' onclick='location.reload()'></td></tr></table></form></div>");
 			});
 		$("#delete").click(function(){
 			if(confirm("삭제하시겠습니까")){
