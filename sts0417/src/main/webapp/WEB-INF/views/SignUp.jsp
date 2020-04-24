@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,83 +14,80 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <style>
-
 </style>
 <script>
-var idchk = false;
-var pwd = false;
+	var idchk = false;
+	var pwd = false;
+	var addresschked = false;
 
-//아이디 중복체크
-	$(function(){
-		$('#check').click(function(){
-			
-			if($("#id").val()==""||$("#id").val()==null){
+	//아이디 중복체크
+	$(function() {
+		$('#check').click(function() {
+			if ($("#id").val() == "" || $("#id").val() == null) {
 				$("#idchk").html("아이디를 입력하십시오.");
-				idchk=false;
-				}
-			else{
-			$.ajax ({
-				"url" : "idcheck.do",
-				"data" : {userid : $('#id').val()},	
-				"type" : "get",
-				"success" : function(data){
-					console.log(data.trim());
-					if(data.trim()=="O"){
-						$("#idchk").html("사용가능한 아이디입니다.");
-						idchk=true;
-						}
-					else{
-						$('#idchk').html("이미사용중인 아이디 입니다.");
-						idchk=false;
-						}
-					alert("성공"+data);
+				idchk = false;
+			} else {
+				$.ajax({
+					"url" : "idcheck.do",
+					"data" : {
+						userid : $('#id').val()
 					},
-				"error":function(data){
-					alert("에러"+data);
+					"type" : "get",
+					"success" : function(data) {
+						console.log(data.trim());
+						if (data.trim() == "O") {
+							$("#idchk").html("사용가능한 아이디입니다.");
+							idchk = true;
+						} else {
+							$('#idchk').html("이미사용중인 아이디 입니다.");
+							idchk = false;
+						}
+					},
+					"error" : function(data) {
+						alert("에러" + data);
 					}
 				});
 			}
 		});
 	});
 
-//비밀번호 체크
-	$(function(){
-		$('#pwd').on('keypress keydown keyup focusout', function(){
-			var p=$('#pwd').val();
-			var pc=$('#pwdc').val();
-			
-			if(p==null||p==""){
+	//비밀번호 체크
+	$(function() {
+		$('#pwd').on('keypress keydown keyup focusout', function() {
+			var p = $('#pwd').val();
+			var pc = $('#pwdc').val();
+
+			if (p == null || p == "") {
 				$('#pwdchk').html("비밀번호가 공백입니다");
-				pwd=false;
+				pwd = false;
 			}
-			if(p.length>20||p.length<8||pc.length>20||pc.length<8){
+			if (p.length > 20 || p.length<8||pc.length>20 || pc.length < 8) {
 				$('#pwdchk').html("비밀번호가 형식에 맞지 않습니다.");
-				pwd=false;
+				pwd = false;
 			}
-			if(p!=pc){
+			if (p != pc) {
 				$('#pwdchk').html("비밀번호가 일치하지 않습니다.");
-				pwd=false;
+				pwd = false;
 			}
-			});
-		$('#pwdc').on('keypress keydown keyup focusout', function(){
-			var p=$('#pwd').val();
-			var pc=$('#pwdc').val();
-			if(p==pc){
+		});
+		$('#pwdc').on('keypress keydown keyup focusout', function() {
+			var p = $('#pwd').val();
+			var pc = $('#pwdc').val();
+			if (p == pc) {
 				$('#pwdchk').html("");
-				pwd=true;
-			}
-			else{
+				pwd = true;
+			} else {
 				$('#pwdchk').html("비밀번호가 일치하지 않습니다.");
-				pwd=false;
+				pwd = false;
 			}
-			if(p.length>20||p.length<8||pc.length>20||pc.length<8){
+			if (p.length > 20 || p.length<8||pc.length>20 || pc.length < 8) {
 				$('#pwdchk').html("비밀번호가 형식에 맞지 않습니다.");
-				pwd=false;
+				pwd = false;
 			}
 		});
 	});
 
-//다음 우편번호
+	//다음 우편번호
 	function postCode() {
 		new daum.Postcode(
 				{
@@ -122,7 +118,33 @@ var pwd = false;
 		addresschked = true;
 	}
 
-//아이디 유효성 검사
+	//이름 입력
+	function nameCheck() {
+		var txt = $("#name");
+
+		if (txt.val().length == 0) {
+			$("#namechk").text("이름을 입력해주세요.");
+			return false;
+		} else {
+			$("#namechk").text("");
+			return true;
+		}
+	}
+
+	//생일 입력
+	function birthCheck() {
+		var txt = $("#birthday");
+
+		if (txt.val().length == 0) {
+			$("#birthchk").text("생년월일을 입력해주세요.");
+			return false;
+		} else {
+			$("#birthchk").text("");
+			return true;
+		}
+	}
+	
+	//아이디 유효성 검사
 	function idCheck() {
 		if (!idchk) {
 			$("#idchk").text("아이디 중복여부를 확인해주세요.");
@@ -132,8 +154,8 @@ var pwd = false;
 			return true;
 		}
 	}
-	
-//이메일 유효성 검사
+
+	//이메일 유효성 검사
 	function emailCheck() {
 		var txt = $("#email");
 		var msg = $("#emailchk");
@@ -153,189 +175,188 @@ var pwd = false;
 		}
 	}
 
-//연락처 유효성 검사
+	//연락처 유효성 검사
 	function phoneCheck() {
-		var phone=$("#phone")
-		var reg = /^\d{3}-\d{3,4}-\d{4}$/;;
-		var flag=true;
+		var phone = $("#phone")
+		var reg = /^\d{3}-\d{3,4}-\d{4}$/;
+		;
+		var flag = true;
 
-		if(!reg.test(phone.val())){
+		if (!reg.test(phone.val())) {
 			flag = false;
 			phone.focus();
 		}
-		if(flag){
+		if (flag) {
 			$("#phonechk").text("");
 			return true;
-		}else{
+		} else {
 			$("#phonechk").text("유효하지 않은 전화번호 입니다.");
 		}
 	}
 
-//주소 유효성 검사
+	//주소 유효성 검사
 	function addressCheck() {
+		var zip = $("#zipcode");
 		var txt = $("#address2");
 		var msg = $("#addresschk");
 		
 		if (!addresschked) {
 			msg.text("우편번호를 검색해서 주소를 입력하세요.");
 			return false;
-		} else if (txt.val().length == 0) {
+		} else if (zip.val().length == 0||txt.val().length == 0) {
 			msg.text("상세주소를 입력하세요.");
 			return false;
-		
+
 		} else {
 			msg.text("");
 			return true;
 		}
 	}
 
-//전체 유효성 검사
+	//전체 유효성 검사
 	function Checked() {
-		if (idCheck() &&
-			pwd &&
-			emailCheck() &&
-			phoneCheck() &&
-			addressCheck()) {
+		if (nameCheck() && idCheck() && pwd && emailCheck() && phoneCheck() && birthCheck() && addressCheck()) {
 			loginform.submit();
 		}
 	}
-
-
+	
 </script>
 
 </head>
 
 <body>
-<c:import url="header.jsp"></c:import>
-<form name="loginform" action="signupcomplete.do">
-	<div class="container">
-		<table class="table table-borderless table-sm" style="vertical-align: middle;">
-			<thead>
-				<tr><td>회원가입</td></tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>아이디</td>
-					<td>
-						<div class="form-group" style="width: 300px">
-							<div class="input-group input-group-sm">
-								<input type="text" class="form-control form-control-sm" name="id" id="id" value="" required>
-								<input class="btn btn-sm" type="button" value="중복확인" id="check" >
+	<c:import url="header.jsp"></c:import>
+	<form name="loginform" action="signupcomplete.do">
+		<div class="container">
+			<table class="table table-borderless table-sm">
+				<tbody>
+					<tr>
+						<td>이름</td>
+						<td>
+							<div class="form-group" style="width: 300px">
+								<div class="input-group input-group-sm">
+									<input type="text" class="form-control form-control-sm" name="name" id="name" value="이름" required>
+								</div>
 							</div>
-						</div>
-						<div id="idchk"> </div>
-					</td>
-				</tr>
-				<tr>
-					<td>패스워드</td>
-					<td>
-						<div class="form-group" style="width: 300px;">
-							<div class="input-group input-group-sm">
-								<input type="password" class="form-control form-control-sm" name="password" id="pwd" value="12345678" placeholder="8~20자리" required>
+							<div id="namechk"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>아이디</td>
+						<td>
+							<div class="form-group" style="width: 300px">
+								<div class="input-group input-group-sm">
+									<input type="text" class="form-control form-control-sm" name="id" id="id" value="aaa" required> <input class="btn btn-sm" type="button" value="중복확인" id="check">
+								</div>
 							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>패스워드 확인</td>
-					<td>
-						<div class="form-group" style="width: 300px;">
-							<div class="input-group input-group-sm">
-								<input type="password" class="form-control form-control-sm" id="pwdc" value="12345678" placeholder="비밀번호를 다시 입력하십시오" required>
+							<div id="idchk"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>패스워드</td>
+						<td>
+							<div class="form-group" style="width: 300px;">
+								<div class="input-group input-group-sm">
+									<input type="password" class="form-control form-control-sm" name="password" id="pwd" value="12345678" placeholder="8~20자리" required>
+								</div>
 							</div>
-						</div>
-						<div id="pwdchk"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>이메일</td>
-					<td>
-						<div class="form-group" style="width: 200px;">
-							<div class="input-group input-group-sm">
-								<input type="text" class="form-control form-control-sm" name="email" id="email" value="" placeholder="ex) xxx@xxx.com" pattern="[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]" required>
+						</td>
+					</tr>
+					<tr>
+						<td>패스워드 확인</td>
+						<td>
+							<div class="form-group" style="width: 300px;">
+								<div class="input-group input-group-sm">
+									<input type="password" class="form-control form-control-sm" id="pwdc" value="12345678" placeholder="비밀번호를 다시 입력하십시오" required>
+								</div>
 							</div>
-						</div>
-						<div id="emailchk"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>전화번호</td>
-					<td>
-						<div class="form-group" style="width: 150px;">
-							<div class="input-group input-group-sm">
-								<input type="text" class="form-control form-control-sm" name="phone" id="phone" value="" placeholder="ex) 010-xxxx-xxxx" required>
+							<div id="pwdchk"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>이메일</td>
+						<td>
+							<div class="form-group" style="width: 200px;">
+								<div class="input-group input-group-sm">
+									<input type="text" class="form-control form-control-sm" name="email" id="email" value="xxx@xxx.com" placeholder="ex) xxx@xxx.com" pattern="[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]"
+										required>
+								</div>
 							</div>
-						</div>
-						<div id="phonechk"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>생년월일</td>
-					<td>
-						<div class="form-group" style="width: 150px;">
-							<div class="input-group input-group-sm">
-								<input type="text" class="form-control form-control-sm" name="birthday" id="birthday" required>
+							<div id="emailchk"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>전화번호</td>
+						<td>
+							<div class="form-group" style="width: 150px;">
+								<div class="input-group input-group-sm">
+									<input type="text" class="form-control form-control-sm" name="phone" id="phone" value="010-1234-1234" placeholder="ex) 010-xxxx-xxxx" required>
+								</div>
 							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>성별</td>
-					<td>
-						<div class="form-group" style="width: 150px;">
-							<div class="input-group input-group-sm">
-								<label for="gender1"><input type="radio" name="gender" value="1" id="gender1" checked="checked">남</label>
-								<label for="gender0"><input type="radio" name="gender" value="0" id="gender0">여</label>
+							<div id="phonechk"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>생년월일</td>
+						<td>
+							<div class="form-group" style="width: 150px;">
+								<div class="input-group input-group-sm">
+									<input type="text" class="form-control form-control-sm" name="birthday" id="birthday" required>
+								</div>
 							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>우편번호</td>
-					<td>
-						<div class="form-group" style="width: 200px;">
-							<div class="input-group input-group-sm">
-								<input type="text" class="form-control form-control-sm" name="zipcode" id="zipcode" readonly required>
-								<input class="btn btn-sm" type="button" onclick="postCode()" value="우편번호 검색">
+							<div id="birthchk"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>성별</td>
+						<td>
+							<div class="form-group" style="width: 150px;">
+								<div class="input-group input-group-sm">
+									<label for="gender1"><input type="radio" name="gender" value="1" id="gender1" checked="checked">남</label>
+									<label for="gender0"><input type="radio" name="gender" value="0" id="gender0">여</label>
+								</div>
 							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>주소</td>
-					<td>
-						<div class="form-group" style="width: 200px;">
-							<div class="input-group input-group-sm">
-								<input type="text" class="form-control form-control-sm" name="address1" id="address1" readonly required>
+						</td>
+					</tr>
+					<tr>
+						<td>우편번호</td>
+						<td>
+							<div class="form-group" style="width: 200px;">
+								<div class="input-group input-group-sm">
+									<input type="text" class="form-control form-control-sm" name="zipcode" id="zipcode" readonly required> <input class="btn btn-sm" type="button" onclick="postCode()" value="우편번호 검색">
+								</div>
 							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>상세주소</td>
-					<td>
-						<div class="form-group" style="width: 200px;">
-							<div class="input-group input-group-sm">
-								<input type="text" class="form-control form-control-sm" name="address2" id="address2" value=".apt 402호" required>
+						</td>
+					</tr>
+					<tr>
+						<td>주소</td>
+						<td>
+							<div class="form-group" style="width: 200px;">
+								<div class="input-group input-group-sm">
+									<input type="text" class="form-control form-control-sm" name="address1" id="address1" readonly required>
+								</div>
 							</div>
-						</div>
-						<div id="addresschk"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input class="btn bg-hurry" id="btnJoin" type="button"
-							style="margin: 30px; width: 200px; height: 50px;" value="회원가입" onclick="Checked()">
-					</td>
-					<td>
-						<input class="btn bg-hurry" id="btnJoin" type="button"
-							style="margin: 30px; width: 200px; height: 50px;" value="취소" onclick="history.back()">
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</form>
+						</td>
+					</tr>
+					<tr>
+						<td>상세주소</td>
+						<td>
+							<div class="form-group" style="width: 200px;">
+								<div class="input-group input-group-sm">
+									<input type="text" class="form-control form-control-sm" name="address2" id="address2" value=".apt 402호" required>
+								</div>
+							</div>
+							<div id="addresschk"></div>
+						</td>
+					</tr>
+					<tr>
+						<td><input class="btn bg-hurry" id="btnJoin" type="button" style="margin: 30px; width: 200px; height: 50px;" value="회원가입" onclick="Checked()"></td>
+						<td><input class="btn bg-hurry" id="btnJoin" type="button" style="margin: 30px; width: 200px; height: 50px;" value="취소" onclick="history.back()"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>
 
 
 </body>
