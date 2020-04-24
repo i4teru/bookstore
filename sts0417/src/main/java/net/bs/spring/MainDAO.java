@@ -38,7 +38,19 @@ public class MainDAO {
 	
 	public List<EventDTO> getEvents(int liststart, int listend){
 		
-		return temp.selectList("mainsql.getEvents", new EventDTO(liststart, listend));
+		EventDTO edto = new EventDTO();
+		edto.setListstart(liststart);
+		edto.setListend(listend);
+		
+		return temp.selectList("mainsql.getEvents", edto);
+	}
+	
+	public List<EventDTO> getMainEvents(){
+		return temp.selectList("mainsql.getMainEvents");
+	}
+	
+	public int mainEventCount() {
+		return temp.selectOne("mainsql.mainEventCount");
 	}
 
 }//

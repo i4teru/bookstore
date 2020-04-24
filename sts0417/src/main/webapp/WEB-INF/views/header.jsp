@@ -71,8 +71,8 @@
 		<!-- 아이디가 admin일때 혹은 grade가 관리자등급일때 -->
 		<ul class="navbar-nav">
 			<li class="nav-item"><span class="nav-link disabled"><i class="fas fa-cog"></i>&nbsp;관리자 메뉴</span></li>
-			<li class="nav-item"><a class="nav-link" href="home.do">서적 관리</a></li>
-			<li class="nav-item"><a class="nav-link" href="eventlist.do">메인 관리</a></li>
+			<li class="nav-item"><a class="nav-link" href="home.do">도서 관리</a></li>
+			<li class="nav-item"><a class="nav-link" href="eventlist.do">이벤트 관리</a></li>
 		</ul>
 	</div>
 </nav>

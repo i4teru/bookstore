@@ -57,6 +57,35 @@
 .bg-white {
 	background-color: #fff !important;
 }
+/* 페이지네이션 컬러 */
+.pagination > li > a
+{
+    background-color: white;
+    color: #8C7B72;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #FFF;
+    background-color: #D9CCC1;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #A6988D !Important;
+    border: solid 1px #A6988D !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #A6988D !Important;
+    border: solid 1px #A6988D;
+}
 
 /* 버튼컬러 */
 .btn-brown1 {
@@ -160,9 +189,22 @@
 	padding: 0px;
 	margin: 0px;
 	border-spacing: 0px;
-	border: 0px solid;
+	border: none !important;
+	text-align:center;
 }
-
+.eventimage img {
+	border:none;
+	padding:0 !important;
+	margin:0 !important;
+}
+.eventimage ul {
+	list-style:none;
+	color:#D9CCC1;
+	padding:0px;
+}
+.event-active {
+	font-weight:bold;
+}
 .mainbox-title {
 	font-weight: bold;
 	font-size: 14pt;

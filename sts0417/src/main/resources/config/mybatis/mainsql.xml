@@ -23,17 +23,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- num number not null primary key, title varchar2(200) not null, url 
 			varchar2(200) not null, image varchar2(200) not null, startdate date not 
 			null, enddate date not null -->
-		insert into bs_event values (bs_event_seq.nextval, #{title}, #{url}, #{image}, #{startdate}, #{enddate})
+		insert into bs_event values (bs_event_seq.nextval, #{title}, #{url},
+		#{image}, to_date(#{startdate}, 'yyyy-mm-dd'), to_date(#{enddate},
+		'yyyy-mm-dd'))
 	</insert>
-	
+
 	<!-- 이벤트 개수 -->
 	<select id="eventCount" resultType="int">
 		select count(*) from bs_event
 	</select>
-	
+
 	<!-- 이벤트 불러오기 -->
-	<select id="getEvents" parameterType="net.bs.spring.EventDTO" resultType="net.bs.spring.EventDTO">
-		select * from (select rownum rn, e.* from (select * from bs_event order by num desc) e) where rn between #{liststart} end #{listend}
+	<select id="getEvents" parameterType="net.bs.spring.EventDTO"
+		resultType="net.bs.spring.EventDTO">
+		select rn, num, title, url, image, to_char(startdate,
+		'yyyy-mm-dd') as startdate, to_char(enddate, 'yyyy-mm-dd') as enddate
+		from (select rownum rn, e.* from (select * from bs_event order by num
+		desc) e) where rn between #{liststart} and #{listend}
+	</select>
+
+	<!-- 메인화면 이벤트 불러오기 -->
+	<select id="getMainEvents" resultType="net.bs.spring.EventDTO">
+	<![CDATA[
+		select rn, title, url, image from ( select rownum rn, e.* from (select * from bs_event where startdate <= sysdate and enddate >= sysdate) e) where rn <= 7
+		]]>
+	</select>
+	
+	<!-- 메인화면 이벤트 개수 (최대7) -->
+	<select id="mainEventCount" resultType="int">
+	<![CDATA[
+		select count(*) from ( select rownum rn, e.* from (select * from bs_event where startdate <= sysdate and enddate >= sysdate) e) where rn <= 7
+		]]>
 	</select>
 </mapper>
 

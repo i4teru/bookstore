@@ -26,9 +26,5 @@ public class EventDTO {
 	//select¿ë
 	private int liststart, listend;
 	
-	public EventDTO(int liststart, int listend) {
-		this.liststart = liststart;
-		this.listend = listend;
-	}
 	
 }//class END

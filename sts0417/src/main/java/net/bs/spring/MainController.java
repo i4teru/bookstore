@@ -28,7 +28,12 @@ public class MainController {
 	//main.do
 	@RequestMapping(value = "/main.do", method = RequestMethod.GET)
 	public String mainDo(Model model) {
-
+		
+		
+		// 이벤트 목록 불러오기
+		model.addAttribute("mainEventCount", dao.mainEventCount());
+		model.addAttribute("mainEvents", dao.getMainEvents());
+		
 		// 신규 입고 도서 불러오기
 		model.addAttribute("newBooks", dao.getNewBooks());
 
@@ -48,21 +53,34 @@ public class MainController {
 		} catch (Exception e) {
 			page = 1;
 		}
+		
+		//전체 이벤트 개수 받아오기
+				int total = dao.eventCount();
+
+				int pagecount = ((total - 1) / maxcount) * maxcount + 1;
+
+				if (page > pagecount)
+					page = pagecount;
+				System.out.println("전체페이지"+pagecount);
 
 		int liststart = (page - 1) * maxcount + 1;
 		int listend = liststart + maxcount - 1;
 		
-		//전체 이벤트 개수 받아오기
-		int total = dao.eventCount();
-		
-		int pagecount = ((total-1)/maxcount)*maxcount+1;
-		
-		int pagestart = ((page-1)/maxcount)*maxcount+1;
+		int pagestart = ((page - 1) / maxcount) * maxcount + 1;
 		int pageend = pagestart + 9;
 
+		if (pageend > pagecount)
+			pageend = pagecount;
+
 		System.out.println(page);
-		
+		System.out.println(liststart + "~" + listend);
+
 		model.addAttribute("events", dao.getEvents(liststart, listend));
+		model.addAttribute("pagecount", pagecount);
+		model.addAttribute("pagestart", pagestart);
+		model.addAttribute("pageend", pageend);
+		model.addAttribute("total", total);
+		model.addAttribute("page", page);
 
 		return "eventlist";
 	}

@@ -8,9 +8,29 @@
 <script src="./resources/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<script>
+	var eventcount = ${mainEventCount};
+	var currentevent = 1;
+
+	$(function() {
+		setInterval(function() {
+			currentevent += 1;
+			if (currentevent > eventcount)
+				currentevent = 1;
+			$(".e-li").removeClass("event-active");
+			$("#e-li-" + currentevent).addClass("event-active");
+
+			$(".e-img").css("display", "none");
+			$("#e-img-" + currentevent).css("display", "block");
+
+		}, 3000);
+
+	});
+</script>
 </head>
 <body>
-   
+
 	<!-- 헤더 분리 -->
 	<c:import url="./header.jsp"></c:import>
 
@@ -24,10 +44,33 @@
 					<tr>
 						<td class="bg-brown1">
 							<ul>
-								<li>신규 오픈 이벤트</li>
+								<c:forEach items="${mainEvents}" varStatus="e" var="mainEvent">
+									<c:choose>
+										<c:when test="${e.count ==1 }">
+
+											<li class="p-2 e-li event-active" id="e-li-${e.count}">${mainEvent.title }</li>
+										</c:when>
+										<c:otherwise>
+
+											<li class="p-2 e-li" id="e-li-${e.count}">${mainEvent.title }</li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
 							</ul>
 						</td>
-						<td style="width: 880px"><img src="./resources/images/event1.png"></td>
+						<td class="bg-brown2" style="width: 880px"><c:forEach items="${mainEvents}" varStatus="e" var="mainEvent">
+								<c:choose>
+									<c:when test="${e.count ==1 }">
+
+										<img class="e-img" id="e-img-${e.count}" src="./resources/event/${ mainEvent.image }">
+									</c:when>
+									<c:otherwise>
+
+										<img class="e-img" id="e-img-${e.count}" style="display:none" src="./resources/event/${ mainEvent.image }">
+									</c:otherwise>
+								</c:choose>
+								
+							</c:forEach></td>
 					</tr>
 				</table>
 
@@ -72,12 +115,12 @@
 					</div>
 					<div class="mainbox main-new">
 						<c:forEach items="${newBooks}" var="newBook">
-						<table class="mt-2 mb-1 mauto">
-							<tr>
-								<td><img src="${ newBook.bi_image }"></td>
-								<td class="text-darkgray"><b>${ newBook.bi_title }</b><br><small class="text-brown2">${ newBook.bi_writer } / ${ newBook.bi_publisher }</small></td>
-							</tr>
-						</table>
+							<table class="mt-2 mb-1 mauto">
+								<tr>
+									<td><img src="${ newBook.bi_image }"></td>
+									<td class="text-darkgray"><b>${ newBook.bi_title }</b><br> <small class="text-brown2">${ newBook.bi_writer } / ${ newBook.bi_publisher }</small></td>
+								</tr>
+							</table>
 						</c:forEach>
 					</div>
 				</div>
@@ -135,5 +178,5 @@
 	</div>
 	<!-- footer 분리 -->
 	<c:import url="footer.jsp"></c:import>
-	</body>
+</body>
 </html>
