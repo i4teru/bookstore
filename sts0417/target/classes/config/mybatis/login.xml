@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="login">	
 	
-	<insert id="dbaccountinsert" parameterType="net.tis.aaa.LoginDTO">
+	<insert id="dbaccountinsert" parameterType="net.bs.spring.LoginDTO">
 		insert into account values(#{name}, #{id}, #{password}, #{email}, #{phone}, to_date(#{birthday},'yyyymmdd'), #{gender}, #{zipcode}, #{address1}, #{address2}, 1, sysdate)
 	</insert>
 	

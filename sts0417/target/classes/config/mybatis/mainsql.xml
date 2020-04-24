@@ -3,13 +3,38 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="mainsql" >	
+<mapper namespace="mainsql">
 
 	<!-- 최근 책 불러오기 -->
 	<select id="newBooks" resultType="net.bs.spring.BookinfoDTO">
-		select * from (select rownum rn, bi.* from (select * from bookinfo order by bi_rdate desc) bi) where rn between 1 and 4
+		select * from (select rownum
+		rn, bi.* from (select * from bookinfo order by bi_rdate desc) bi)
+		where rn between 1 and 4
+	</select>
+
+	<!-- 이벤트 이미지 중복체크 -->
+	<select id="checkImage" resultType="int">
+		select count(*) from bs_event
+		where image = #{image}
+	</select>
+
+	<!-- 이벤트 삽입 -->
+	<insert id="insertEvent" parameterType="net.bs.spring.EventDTO">
+		<!-- num number not null primary key, title varchar2(200) not null, url 
+			varchar2(200) not null, image varchar2(200) not null, startdate date not 
+			null, enddate date not null -->
+		insert into bs_event values (bs_event_seq.nextval, #{title}, #{url}, #{image}, #{startdate}, #{enddate})
+	</insert>
+	
+	<!-- 이벤트 개수 -->
+	<select id="eventCount" resultType="int">
+		select count(*) from bs_event
 	</select>
 	
+	<!-- 이벤트 불러오기 -->
+	<select id="getEvents" parameterType="net.bs.spring.EventDTO" resultType="net.bs.spring.EventDTO">
+		select * from (select rownum rn, e.* from (select * from bs_event order by num desc) e) where rn between #{liststart} end #{listend}
+	</select>
 </mapper>
 
 

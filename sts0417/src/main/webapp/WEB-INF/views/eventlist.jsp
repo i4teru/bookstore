@@ -7,6 +7,8 @@
 <script src="./resources/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+
 </head>
 <body>
 	<c:import url="header.jsp"></c:import>
@@ -29,16 +31,16 @@
 						<th>시작일</th>
 						<th>종료일</th>
 					</tr>
-					<c:forEach begin="1" end="10" var="i">
+					<c:forEach items="${ events }" var="event">
 						<tr>
-							<td rowspan="2">${i}</td>
-							<td>신규가입 이벤트</td>
-							<td>notice.do?notice_num=1</td>
-							<td rowspan="2">2020-04-23</td>
-							<td rowspan="2">2020-05-20</td>
+							<td rowspan="2">${ event.num }</td>
+							<td>${ event.title }</td>
+							<td>${ event.url }</td>
+							<td rowspan="2">${ event.startdate }</td>
+							<td rowspan="2">${ event.enddate }</td>
 						</tr>
 						<tr>
-							<td colspan="2"><img src="./resources/images/event1.png"></td>
+							<td colspan="2"><img src="./resources/event/${ event.image }"></td>
 						</tr>
 					</c:forEach>
 				</table>
