@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="login">	
 	
-	<insert id="dbaccountinsert">
+	<insert id="dbaccountinsert" parameterType="net.bs.spring.LoginDTO">
 		insert into account values(#{id}, #{password}, #{email}, #{phone}, to_date(#{birthday},'yyyymmdd'), #{gender}, #{zipcode}, #{address1}, #{address2}, 1, sysdate)
 	</insert>
 	
@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into notice values( #{notice_title}, #{notice_content}, sysdate)
 	</insert>
 	
-	<select id="dbshownotice"  resultType="net.tis.aaa.LoginDTO">
+	<select id="dbshownotice"  resultType="net.bs.spring.LoginDTO">
 		select * from (select rownum rn, n.* from notice n) where rn between #{start} and #{end} 
 	</select>
 	
@@ -29,11 +29,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from notice
 	</select>
 	
-	<select id="dbshownotice_detail"  resultType="net.tis.aaa.LoginDTO">
+	<select id="dbshownotice_detail"  resultType="net.bs.spring.LoginDTO">
 		select * from (select rownum rn, n.* from notice n) where notice_num=#{num}
 	</select>
 	
-	<update id="dbupdatenotice" parameterType="net.tis.aaa.LoginDTO">
+	<update id="dbupdatenotice" parameterType="net.bs.spring.LoginDTO">
 		 update notice set notice_title=#{notice_title}, notice_content=#{notice_content} where notice_num=#{notice_num}
 	</update>
 	
