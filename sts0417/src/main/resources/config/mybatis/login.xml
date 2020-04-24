@@ -5,23 +5,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="login">	
 	
-	<insert id="accountinsert">
+	<insert id="dbaccountinsert">
 		insert into account values(#{id}, #{password}, #{email}, #{phone}, to_date(#{birthday},'yyyymmdd'), #{gender}, #{zipcode}, #{address1}, #{address2}, 1, sysdate)
 	</insert>
 	
-	<select id="loginselect" resultType="String">
+	<select id="dbloginselect" resultType="String">
 		select id from account where id=#{id} and password=#{password}
 	</select>
 	
-	<select id="checkid" resultType="int">
+	<select id="dbcheckid" resultType="int">
 		select count(*) from account where id=#{userid}
 	</select>
 	
+	<insert id="dbnoticeinsert">
+		insert into notice values( #{notice_title}, #{notice_content}, sysdate)
+	</insert>
+	
+	<select id="dbshownotice"  resultType="net.tis.aaa.LoginDTO">
+		select * from (select rownum rn, n.* from notice n) where rn between #{start} and #{end} 
+	</select>
+	
+	<select id="dbcountnotice" resultType="int">
+		select count(*) from notice
+	</select>
+	
+	<select id="dbshownotice_detail"  resultType="net.tis.aaa.LoginDTO">
+		select * from (select rownum rn, n.* from notice n) where notice_num=#{num}
+	</select>
+	
+	<update id="dbupdatenotice" parameterType="net.tis.aaa.LoginDTO">
+		 update notice set notice_title=#{notice_title}, notice_content=#{notice_content} where notice_num=#{notice_num}
+	</update>
+	
+	<delete id="dbdeletenotice">
+		delete notice where notice_num=#{num}
+	</delete>
+	
 </mapper>
-
-
-
-
-
-
 
