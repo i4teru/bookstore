@@ -36,33 +36,30 @@ public class LoginController {
 	}
 
 	@RequestMapping("/login.do")
-	public String login_table(HttpSession session, HttpServletResponse response) throws Exception {
-		response.setContentType("text/html; charset=utf-8");
-		if(session.getAttribute("userid")!=null) {
-			response.getWriter().append(
-					"<script>" + "alert('이미 로그인 되어있습니다, 먼저 로그아웃 하십시오');" + "window.history.back();" + "</script>")
-					.flush();
-			return "redirect:/login_head.do";
-		}else {
-		return "login";
+	public String login_table(HttpSession session, Model model, HttpServletRequest request) throws Exception {
+
+		String msg = request.getParameter("msg");
+		if (msg != null && msg.equals("err"))
+			model.addAttribute("msg", "로그인에 실패했습니다.<br>아이디와 비밀번호를 확인해주세요.");
+		else
+			model.addAttribute("msg", "");
+
+		if (session.getAttribute("userid") != null) {
+			//이미 로그인이 되어있으면
+			return "redirect:/main.do";
+		} else {
+			return "login";
 		}
 	}
 
-	@RequestMapping("/noticeup.do")
-	public String notice_write() {
-		return "notice_write";
-	}
-	
 	@RequestMapping("/mypage.do")
 	public String my_page(HttpSession session, HttpServletResponse response, Model model) throws Exception {
-		if(session.getAttribute("userid")==null) {
+		if (session.getAttribute("userid") == null) {
 			response.setContentType("text/html; charset=utf-8");
-			response.getWriter().append(
-					"<script>" + "alert('로그인 후에 이용가능합니다.');" + "</script>")
-					.flush();
+			response.getWriter().append("<script>" + "alert('로그인 후에 이용가능합니다.');" + "</script>").flush();
 			return "login";
 		}
-		String id=(String)session.getAttribute("userid");
+		String id = (String) session.getAttribute("userid");
 		LoginDTO dto = dao.dbaccountdata(id);
 		model.addAttribute("dto", dto);
 		model.addAttribute("id", id);
@@ -87,40 +84,43 @@ public class LoginController {
 	}
 
 	@RequestMapping("/logincheck.do")
-	public String login_check(LoginDTO dto, HttpServletResponse response, HttpSession session) throws Exception {
+	public String login_check(LoginDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		response.setContentType("text/html; charset=utf-8");
-		logger.info("입력된 아이디" + dto.getId());
-		logger.info("입력된 비밀번호" + dto.getPassword());
 
 		String result = dao.dblogin(dto);
-		logger.info("로그인된 아이디는" + result);
-		session.setAttribute("userid", result);
 
-		if (result == null || result == "" || result.equals("")) {
-			response.getWriter().append(
-					"<script>" + "alert('아이디,비번 일치하지않습니다. 다시입력하십시오');" + "window.history.back();" + "</script>")
-					.flush();
-			return "redirect:/login.do";
+		if (result == null) {
+			//로그인 실패시
+			return "redirect:/login.do?msg=err";
+		} else {
+			//로그인 성공시
+			LoginDTO ldto = dao.dbaccountdata(result);
+			session.setAttribute("userid", result);
+			session.setAttribute("username", ldto.getName());
+			session.setAttribute("usergrade", ldto.getGrade());
+			System.out.println(ldto.getName() + " , " + ldto.getGrade());
+			return "redirect:/main.do";
 		}
-		return "login_finish";
+
 	}
 
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session, HttpServletResponse response) throws IOException {
-		response.setContentType("text/html; charset=utf-8");
+
 		session.invalidate();
-		response.getWriter().append("<script>" + "alert('로그아웃 되었습니다');" + "location.href='login_head.do'" + "</script>")
-				.flush();
-		logger.info("로그아웃되었습니다.");
-		return "login_head";
+
+		return "redirect:/main.do";
 	}
 
 	@RequestMapping("/idcheck.do")
 	public void idcheck(@RequestParam String userid, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int result = dao.dbcheckid(userid);
 		String idchk = "";
-		if (result > 0) { idchk = "X"; }
-		else { idchk = "O"; }
+		if (result > 0) {
+			idchk = "X";
+		} else {
+			idchk = "O";
+		}
 		logger.info("userid: " + userid);
 		logger.info("idchk: " + idchk);
 		logger.info("result: " + result);
@@ -136,34 +136,48 @@ public class LoginController {
 		return "notice_finish";
 	}
 
+	@RequestMapping("/noticeup.do")
+	public String notice_write() {
+		return "notice_write";
+	}
+
 	@RequestMapping("/notice.do")
 	public String notice_table(HttpServletRequest request, Model model) {
-		String pnum="";
-		int pageNUM=0, pagecount=0;
-		int start=0, end=0;
-		int startpage=0, endpage=0;
-		int total=0;
-		
-		pnum=request.getParameter("pageNum");
-		if(pnum==""||pnum==null) { pnum="1"; }
-		
+		String pnum = "";
+		int pageNUM = 0, pagecount = 0;
+		int start = 0, end = 0;
+		int startpage = 0, endpage = 0;
+		int total = 0;
+
+		pnum = request.getParameter("pageNum");
+		if (pnum == "" || pnum == null) {
+			pnum = "1";
+		}
+
 		pageNUM = Integer.parseInt(pnum);
-		total=dao.dbcountnotice();
-		start=(pageNUM-1)*10+1;
-		end=(pageNUM*10);
-		
-		if(total%10==0) { pagecount=total/10; }
-		else { pagecount=(total/10)+1; }
-		int temp =(pageNUM-1)%10;
-		startpage=pageNUM-temp;
-		endpage=startpage+9;
-		logger.info("total: "+total);
-		logger.info("pagecount: "+pagecount);
-		logger.info("startpage: "+startpage);
-		logger.info("endpage: "+endpage);
-		logger.info("pageNUM: "+pageNUM);
-		if(endpage>pagecount) { endpage=pagecount;}
-		
+		total = dao.dbcountnotice();
+		if (total == 0)
+			total = 1;
+		start = (pageNUM - 1) * 10 + 1;
+		end = (pageNUM * 10);
+
+		if (total % 10 == 0) {
+			pagecount = total / 10;
+		} else {
+			pagecount = (total / 10) + 1;
+		}
+		int temp = (pageNUM - 1) % 10;
+		startpage = pageNUM - temp;
+		endpage = startpage + 9;
+		logger.info("total: " + total);
+		logger.info("pagecount: " + pagecount);
+		logger.info("startpage: " + startpage);
+		logger.info("endpage: " + endpage);
+		logger.info("pageNUM: " + pageNUM);
+		if (endpage > pagecount) {
+			endpage = pagecount;
+		}
+
 		List<LoginDTO> list = dao.dbshownotice(start, end);
 		model.addAttribute("list", list);
 		model.addAttribute("total", total);
@@ -173,38 +187,38 @@ public class LoginController {
 		model.addAttribute("startpage", startpage);
 		model.addAttribute("endpage", endpage);
 		model.addAttribute("pagecount", pagecount);
+
 		return "notice_table";
 	}
-	
+
 	@RequestMapping("/notice_detail")
 	public String notice_detail(Model model, HttpServletRequest request) {
 		int num = Integer.parseInt(request.getParameter("num"));
-		logger.info("notice_title: "+num);
+		logger.info("notice_title: " + num);
 		model.addAttribute("dto", dao.dbshownotice_detail(num));
 		return "notice_detail";
 	}
-	
+
 	@RequestMapping("/notice_edit.do")
 	public String notice_edit(Model model, LoginDTO dto) {
-		int num=dto.getNotice_num();
+		int num = dto.getNotice_num();
 		logger.info("넘어온 번호" + num);
 		logger.info("넘어온 제목" + dto.getNotice_title());
 		logger.info("넘어온 데이터" + dto.getNotice_content());
 		dao.dbupdatenotice(dto);
 		return "redirect:/notice_detail.do?num=" + num;
 	}
-	
+
 	@RequestMapping("/notice_delete.do")
-	public String notice_delete(@RequestParam("num") int num ) {
+	public String notice_delete(@RequestParam("num") int num) {
 		dao.dbdeletenotice(num);
 		return "redirect:/notice.do";
 	}
-	
+
 	@RequestMapping("/editaccount.do")
 	public String edit_account(LoginDTO dto) {
 		dao.dbaccountedit(dto);
 		return "login_head";
 	}
-	
-	
+
 }

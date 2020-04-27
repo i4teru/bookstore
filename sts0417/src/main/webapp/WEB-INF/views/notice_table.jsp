@@ -5,48 +5,58 @@
 <title>공지사항</title>
 </head>
 <body>
-	<c:import url="header.jsp"></c:import>
-	<div class="container">
-		<table class="table table-borderless table-sm">
-			<tr>
-				<td>번호</td>
-				<td>제목</td>
-				<td>등록일</td>
-			</tr>
-			<c:forEach var="ntc" items="${list}">
-				<tr>
-					<td>${ntc.rn}</td>
-					<td>${ntc.notice_num}
-					<td><a href="notice_detail.do?num=${ntc.notice_num}">${ntc.notice_title}</a></td>
-					<td>${ntc.upload_date}</td>
-				</tr>
-			</c:forEach>
+	<c:import url="/header.do"></c:import>
+	<div class="container-fluid bg-lightgray">
+		<div class="container pt-5 pb-5">
+			<div class="mainbox p-3">
+				<div class="pagetitle">
+					<h2 class="text-darkgray">
+						<i class="fas fa-bullhorn text-brown1"></i> 공지사항
+					</h2>
+				</div>
 
-			<tr>
-				<td colspan="3" align="center">
-					<c:if test="${startpage>10}">
-						<a href="notice.do?pageNum=${startpage+10}">이전</a>
+				<div class="aright pb-3">
+					<button class="btn btn-brown1" type="button" onclick="location.href='noticeup.do'">새 공지사항</button>
+				</div>
+				<table class="table">
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>등록일</th>
+					</tr>
+					<c:forEach var="ntc" items="${list}">
+						<tr>
+							<td class="acenter">${ntc.notice_num}
+							<td><a href="notice_detail.do?num=${ntc.notice_num}">${ntc.notice_title}</a></td>
+							<td class="acenter">${ntc.upload_date}</td>
+						</tr>
+					</c:forEach>
+				</table>
+
+
+				<ul class="pagination justify-content-center p-5">
+					<c:if test="${ startpage != 1 }">
+						<li class="page-item"><a class="page-link" href="notice.do?pageNum=${startpage-10}">이전</a></li>
 					</c:if>
-					<c:forEach var="i" begin="${startpage}" end="${endpage}" step="1">
+					<c:forEach begin="${startpage}" end="${endpage}" var="p">
 						<c:choose>
-							<c:when test="${i==pageNUM}">
-								<font style="color: #8C7B72; font-size: 15px">
-									<b>${i}</b>
-								</font>
+							<c:when test="${pageNUM==p}">
+								<li class="page-item active"><a class="page-link" href="notice.do?pageNum=${p}">${p}</a></li>
 							</c:when>
 							<c:otherwise>
-								<a href="notice.do?pageNum=${i}">${i} </a>
+								<li class="page-item"><a class="page-link" href="notice.do?pageNum=${p}">${p}</a></li>
 							</c:otherwise>
 						</c:choose>
-					</c:forEach> 
-					<c:if test="${endpage<pagecount}">
-						<a href="notice.do?pageNum=${startpage+10}">다음</a>
+					</c:forEach>
+					<c:if test="${endpage < pagecount}">
+						<li class="page-item"><a class="page-link" href="notice.do?pageNum=${endpage+10}">다음</a></li>
 					</c:if>
-				</td>
-			</tr>
-		</table>
-		<input type="button" class="btn btn-sm" value="뒤로가기" onclick="location.href('login_head.do')">
-	</div>
+				</ul>
 
+			</div>
+		</div>
+
+	</div>
+	<c:import url="footer.jsp"></c:import>
 </body>
 </html>

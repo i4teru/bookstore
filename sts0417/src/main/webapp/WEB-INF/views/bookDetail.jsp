@@ -5,9 +5,9 @@
 <head>
 <title>개발서점</title>
 
-<script src="./resources/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="./resources/js/bootstrap.min.js"></script>
 
 <style type="text/css">
 img.border-shadow {
@@ -20,13 +20,13 @@ img.border-shadow {
 </head>
 <body>
 	<!-- 헤더 분리 -->
-	<c:import url="./header.jsp"></c:import>
+	<c:import url="/header.do"></c:import>
 	<div class="container">
 		<br>
 		<br>
 		<br>
 
-		<table align="center" style="width: 100%; height: 550px;">
+		<table class="acenter" style="width: 100%; height: 550px;">
 			<tr style="border-bottom: 1px solid #BBBBBB; border-top: 1px solid #BBBBBB;">
 				<td rowspan="2" width="27%" style="border-right: 1px solid #BBBBBB;"><img class="border-shadow" alt="image" src="${dto.bi_image}" width="90%" height="90%"></td>
 				<td height="250px;">

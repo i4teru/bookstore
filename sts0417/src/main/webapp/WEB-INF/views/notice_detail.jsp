@@ -24,7 +24,7 @@
 
 
 <body>
-	<c:import url="header.jsp"></c:import>
+	<c:import url="/header.do"></c:import>
 	<div class="container">
 		<div id="edittable">
 		<table class="table table-borderless table-sm">

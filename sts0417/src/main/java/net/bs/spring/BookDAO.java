@@ -63,4 +63,13 @@ public class BookDAO {
 	/*public BookinfoDTO dbDetail(int idx) {   리스트에서 디테일 페이지로 넘어올때 사용 할 부분
 		return temp.selectOne("books.select_detail", idx);
 	}*/
+	
+	//0426 리뷰 등록했을 때 해당 책의 리뷰수랑 총누적별점 업뎃 by kjr
+	public void dbUpdate(int point, int data) {
+		BookinfoDTO dto = new BookinfoDTO();
+		dto.setBi_stars(point);
+		dto.setBi_num(data);
+		System.out.println(dto.getBi_stars()+","+dto.getBi_num());
+		temp.update("books.add_ratings", dto);
+	}
 }

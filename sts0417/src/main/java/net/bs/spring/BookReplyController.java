@@ -20,13 +20,19 @@ public class BookReplyController {
 
 	@Autowired
 	BookReplyDAO rdao;
+	//BookDAO dao; //0426 by kjr 리뷰 달 때 bookinfo테이블에도 업데이트 하려고 추가
 	
 	private static final Logger logger = LoggerFactory.getLogger(BookReplyController.class);
 	
 	@RequestMapping(value="/replyInsert.do")
 	public String reply_insert(BookReplyDTO dto) {
 		rdao.dbInsert(dto);
-		return "redirect:/bookreply.do";	
+		//int point = dto.getR_stars();
+		//int data = dto.getBi_num();
+		//dao.dbUpdate(point, data); //0426 by kjr 리뷰 저장 후에 bookinfo에 리뷰수랑 별점 업데이트	(실패)	
+		
+		//0425 by kjr 리뷰 저장 후에는 다시 해당 책의 디테일 페이지로 돌아오도록 idx값 지정해줌
+		return "redirect:/bookdetail.do?idx="+dto.getBi_num();	
 	}
 	
 
@@ -39,6 +45,9 @@ public class BookReplyController {
 	
 	@RequestMapping(value="/bookreply.do")
 	public String reply_select( BookReplyDTO dto , HttpServletRequest request, Model model) {
+		//0425 bi_num 담기 위해서 data변수 추가 by kjr 
+		//bookdetail.do에서 bookreply.do를 import했기 때문에 idx값(bi_num) 그대로 받아서 쓸 수 있음
+		int data = Integer.parseInt(request.getParameter("idx")); //bi_num
 		int replycnt = rdao.dbReplycnt();  //리뷰(댓글)의 갯수 @RequestParam("bi_num") int bi_num,와 괄호에 bi_num 넣어줄 것
 		int replycount = rdao.dbReplycount();
 		
@@ -74,7 +83,7 @@ public class BookReplyController {
 			endpage = pagecount;
 		}
 		
-		List<BookReplyDTO> BR = rdao.dbSelect(start, end);
+		List<BookReplyDTO> BR = rdao.dbSelect(start, end, data);
 		model.addAttribute("replycount",replycount);
 		model.addAttribute("replycnt",replycnt);
 		model.addAttribute("pagecount",pagecount);
@@ -88,7 +97,8 @@ public class BookReplyController {
 	@RequestMapping(value="/replyDelete.do")
 	public String reply_delete(@RequestParam("ridx") int ridx) {
 		rdao.dbDelete(ridx);
-		return "redirect:/bookreply.do";
+		return "redirect:/bookdetail.do";
+		//return "bookDetail";
 	}
 	
 	/*@RequestMapping(value="/replypreEdit.do")

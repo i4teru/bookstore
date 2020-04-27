@@ -18,14 +18,16 @@ a:hover {
 	text-align: right;
 }
 </style>
-<script src="./resources/js/bootstrap.min.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="./resources/js/bootstrap.min.js"></script>
+
 </head>
 <body>
    
 	<!-- 헤더 영역 -->
-	<c:import url="./header.jsp"></c:import>
+	<c:import url="/header.do"></c:import>
 
 	<!-- 리스트 메인 -->
 	<div class="container-fluid bg-lightgray pt-3 pb-3">
@@ -67,7 +69,7 @@ a:hover {
 								<div class="col">
 									<table class="main-best m-3">
 										<tr>
-											<td style="text-align: center"><img src="${dto.bi_image}"></td>
+											<td style="text-align: center"><a href="bookdetail.do?idx=${dto.bi_num }"><img src="${dto.bi_image}"></a></td>
 										</tr>
 										<tr>
 											<td class="text-darkgray"><b>${dto.bi_title }</b></td>
@@ -76,7 +78,7 @@ a:hover {
 											<td class="text-brown2"><small>${dto.bi_writer } / ${dto.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${dto.bi_price }원</td>
+											<td class="text-darkgray" style="text-align: right">${dto.bi_cprice }원</td>
 										</tr>
 									</table>
 								</div>
@@ -103,7 +105,7 @@ a:hover {
 								<div class="col">
 									<table class="main-best m-3">
 										<tr>
-											<td style="text-align: center"><img src="${dto.bi_image }"></td>
+											<td style="text-align: center"><a href="bookdetail.do?idx=${dto.bi_num }"><img src="${dto.bi_image }"></a></td>
 										</tr>
 										<tr>
 											<td class="text-darkgray"><b>${dto.bi_title }</b></td>
@@ -112,7 +114,7 @@ a:hover {
 											<td class="text-brown2"><small>${dto.bi_writer } / ${dto.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${dto.bi_price }원</td>
+											<td class="text-darkgray" style="text-align: right">${dto.bi_cprice }원</td>
 										</tr>
 									</table>
 
@@ -140,7 +142,7 @@ a:hover {
 								<div class="col">
 									<table class="main-best m-3">
 										<tr>
-											<td style="text-align: center"><img src="${dto.bi_image }"></td>
+											<td style="text-align: center"><a href="bookdetail.do?idx=${dto.bi_num }"><img src="${dto.bi_image }"></a></td>
 										</tr>
 										<tr>
 											<td class="text-darkgray"><b>${dto.bi_title }</b></td>
@@ -149,7 +151,7 @@ a:hover {
 											<td class="text-brown2"><small>${dto.bi_writer } / ${dto.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${dto.bi_price }원</td>
+											<td class="text-darkgray" style="text-align: right">${dto.bi_cprice }원</td>
 										</tr>
 									</table>
 
@@ -177,7 +179,7 @@ a:hover {
 								<div class="col">
 									<table class="main-best m-3">
 										<tr>
-											<td style="text-align: center"><img src="${dto.bi_image }"></td>
+											<td style="text-align: center"><a href="bookdetail.do?idx=${dto.bi_num }"><img src="${dto.bi_image }"></a></td>
 										</tr>
 										<tr>
 											<td class="text-darkgray"><b>${dto.bi_title }</b></td>
@@ -186,7 +188,7 @@ a:hover {
 											<td class="text-brown2"><small>${dto.bi_writer } / ${dto.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${dto.bi_price }원</td>
+											<td class="text-darkgray" style="text-align: right">${dto.bi_cprice }원</td>
 										</tr>
 									</table>
 
@@ -214,7 +216,7 @@ a:hover {
 								<div class="col">
 									<table class="main-best  m-3">
 										<tr>
-											<td style="text-align: center"><img src="${dto.bi_image }"></td>
+											<td style="text-align: center"><a href="bookdetail.do?idx=${dto.bi_num }"><img src="${dto.bi_image }"></a></td>
 										</tr>
 										<tr>
 											<td class="text-darkgray"><b>${dto.bi_title }</b></td>
@@ -223,7 +225,7 @@ a:hover {
 											<td class="text-brown2"><small>${dto.bi_writer } / ${dto.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${dto.bi_price }원</td>
+											<td class="text-darkgray" style="text-align: right">${dto.bi_cprice }원</td>
 										</tr>
 									</table>
 

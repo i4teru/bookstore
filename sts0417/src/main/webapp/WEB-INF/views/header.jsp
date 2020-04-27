@@ -9,15 +9,6 @@
 <!-- 부트스트랩, jquery -->
 <link rel="stylesheet" href="./resources/css/bootstrap.min.css">
 
-
-<!-- 
-=======
->>>>>>> refs/remotes/origin/master
-<script src="./resources/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
- -->
- 
 <!-- 폰트어썸 -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
@@ -41,10 +32,28 @@
 			</div>
 			<!-- 로그인 -->
 			<div class="col-3 aright">
-			<!-- 로그인 안했을 때 -->
-			<a href="login.do" class="text-darkgray"><i class="fas fa-user-circle"></i> 회원 로그인</a>
-			<!-- 로그인 했을 때 -->
-			<span class="text-darkgray"><!-- aaa님 환영합니다 --></span>
+
+				<!-- 로그인 했을 때 -->
+				<div style="margin: auto">
+					<c:if test="${ userid!='' }">
+						<p class="text-darkgray">
+							<b>${username}<small>(${userid})</small></b>
+							<button class="btn btn-sm btn-brown1" type="button" onclick="location.href='logout.do'">
+								<i class="fas fa-sign-out-alt"></i> 로그아웃
+							</button>
+						</p>
+					</c:if>
+
+					<!-- 로그인 안했을 때 -->
+					<c:if test="${ userid=='' }">
+						<button class="btn btn-sm btn-brown1" type="button" onclick="location.href='login.do'">
+							<i class="fas fa-sign-in-alt"></i> 로그인
+						</button>
+						<button class="btn btn-sm btn-light" type="button" onclick="location.href='signup.do'">
+							<i class="fas fa-user-plus"></i> 회원가입
+						</button>
+					</c:if>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -59,21 +68,33 @@
 			<li class="nav-item"><a class="nav-link" href="#">Link 2</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">Link 3</a></li>
 		</ul>
-		
+
+
+
 		<!-- 회원메뉴 -->
-		<!-- 로그인했을때만 -->
+
 		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user"></i>&nbsp;마이페이지</a></li>
-			<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i>&nbsp;장바구니&nbsp;<span class="badge badge-secondary bg-brown2">2</span></a></li>
+			<!-- 비로그인시 기본메시지 -->
+			<c:if test="${userid=='' }">
+				<li class="nav-item"><span class="text-darkgray">개발책방의 회원이 되시고 다양한 혜택을 즐겨보세요!</span></li>
+			</c:if>
+			<!-- 로그인했을때만 -->
+			<c:if test="${ userid!='' }">
+				<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user"></i>&nbsp;마이페이지</a></li>
+				<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i>&nbsp;장바구니&nbsp;<span class="badge badge-secondary bg-brown2">2</span></a></li>
+			</c:if>
+			<!-- 관리자메뉴 -->
+			<!-- 아이디가 admin일때 혹은 grade가 관리자등급일때 -->
+			<c:if test="${ usergrade==0 }">
+				<li class="nav-item ml-5"><span class="nav-link disabled"><i class="fas fa-cog"></i>관리</span></li>
+				<li class="nav-item"><a class="nav-link" href="home.do">도서 관리</a></li>
+				<li class="nav-item"><a class="nav-link" href="eventlist.do">이벤트 관리</a></li>
+			</c:if>
+
 		</ul>
-		
-		<!-- 관리자메뉴 -->
-		<!-- 아이디가 admin일때 혹은 grade가 관리자등급일때 -->
-		<ul class="navbar-nav">
-			<li class="nav-item"><span class="nav-link disabled"><i class="fas fa-cog"></i>&nbsp;관리자 메뉴</span></li>
-			<li class="nav-item"><a class="nav-link" href="home.do">도서 관리</a></li>
-			<li class="nav-item"><a class="nav-link" href="eventlist.do">이벤트 관리</a></li>
-		</ul>
+
+
+
 	</div>
 </nav>
 

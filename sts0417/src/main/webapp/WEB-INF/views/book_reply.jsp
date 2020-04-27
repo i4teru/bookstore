@@ -55,6 +55,9 @@
 			$(this).parent().children("a").removeClass("on");
 			$(this).addClass("on").prevAll("a").addClass("on");
 			$("#r_stars").val($(this).attr("value"));  //별 클릭 시 기본 value로 지정 되어 있던 0이 누른 별에 지정된 value로 바뀌게 된다
+			//0426 by kjr 별 클릭 했을 때 페이지 상단으로 올라가는 문제 해결하기 위해 추가해 줌. 
+			$("textarea.txtbox").focus();
+			return false;
 		});
 		
 	});	
@@ -87,7 +90,7 @@
 
 </head>
 <body>
-	<c:import url="header.jsp" />
+	<!-- 0425 여기 헤더 지움 by kjr -->
 	<br>
 	<table class="replytable" width="820px" align="center">
 		<tr style="border-bottom: 2px solid #D2B48C;">
@@ -216,7 +219,8 @@
 	<br>
 	<form action="replyInsert.do">
 		<div class="replybox">
-			<input type="hidden" name="bi_num" value="110"> <input type="hidden" name="r_id" value="sky"> <br>
+			<!-- 0425 by kjr value의 임시값 110을 ${bi_num}으로 바꿈 -->
+			<input type="hidden" name="bi_num" value="${dto.bi_num }"> <input type="hidden" name="r_id" value="sky"> <br>
 			<p id="star_grade">
 				&nbsp;&nbsp; 평가하기 
 				<a href="#" value="1">★</a> 
@@ -231,6 +235,6 @@
 		</div>
 	</form>
 	<br>
-	<c:import url="footer.jsp"></c:import>
+	<!-- 0425 footer도 지움 by kjr -->
 </body>
 </html>

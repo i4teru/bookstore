@@ -25,10 +25,11 @@ public class BookReplyDAO {
 		return list;
 	} */
 	
-	public List<BookReplyDTO> dbSelect(int start, int end) {
+	public List<BookReplyDTO> dbSelect(int start, int end, int data) {
 		BookReplyDTO dto = new BookReplyDTO();
 		dto.setStart(start);
 		dto.setEnd(end);
+		dto.setBi_num(data); //0425 Ãß°¡ by kjr
 		return temp.selectList("book_reply.select",dto);
 	}
 	

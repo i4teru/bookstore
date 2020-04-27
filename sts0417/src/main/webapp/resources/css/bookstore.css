@@ -305,6 +305,10 @@
 /* 회원가입 */
 
 
+/* 공지사항 */
+.noticetable td {
+	text-align:middle;
+}
 
 
 /* 이벤트리스트 */

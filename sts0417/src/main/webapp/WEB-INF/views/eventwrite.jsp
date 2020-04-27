@@ -35,7 +35,7 @@ th {
 </style>
 </head>
 <body>
-	<c:import url="header.jsp"></c:import>
+	<c:import url="/header.do"></c:import>
 	<div class="container-fluid bg-lightgray">
 		<div class="container pt-5 pb-5">
 			<div class="mainbox p-3">

@@ -21,11 +21,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	 추후 114부분 #{bi_num} 으로 수정해서 책 디테일번호 받아오기  --> 
 	 
-	 
+	<!-- 0425 by kjr bi_num이 일치하는 리뷰만 검색하기 위해서 where bi_num=#{bi_num} 부분 추가 --> 
 	<select id="select" parameterType="net.bs.spring.BookReplyDTO" resultType="net.bs.spring.BookReplyDTO"> 
 	 	select * from ( select br.*, rownum rn
  		from (select  bi_num, r_num, r_id, r_content, to_char(r_datetime, 'yyyy-mm-dd hh24:mi') as r_date, grp, seq, lvl, r_stars, r_hit
-		from bsreply ORDER BY grp DESC, seq ASC)br)
+		from bsreply where bi_num=#{bi_num} ORDER BY grp DESC, seq ASC)br)
 		where rn between #{start} and #{end}
 	</select>
 	

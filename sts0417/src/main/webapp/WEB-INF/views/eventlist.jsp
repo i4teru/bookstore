@@ -11,7 +11,7 @@
 
 </head>
 <body>
-	<c:import url="header.jsp"></c:import>
+	<c:import url="/header.do"></c:import>
 	<div class="container-fluid bg-lightgray">
 		<div class="container pt-5 pb-5">
 			<div class="mainbox p-3">
@@ -44,26 +44,26 @@
 						</tr>
 					</c:forEach>
 				</table>
-					<ul class="pagination justify-content-center p-5">
-						<c:if test="${ pagestart != 1 }">
-							<li class="page-item"><a class="page-link" href="eventlist.do?page=${pagestart-10}">이전</a></li>
-						</c:if>
-						<c:forEach begin="${pagestart}" end="${pageend}" var="p">
-							<c:choose>
-								<c:when test="${page==p}">
-									<li class="page-item active"><a class="page-link" href="eventlist.do?page=${p}">${p}</a></li>
-								</c:when>
-								<c:otherwise>
-									<li class="page-item"><a class="page-link" href="eventlist.do?page=${p}">${p}</a></li>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<c:if test="${pageend < pagecount}">
-							<li class="page-item"><a class="page-link" href="eventlist.do?page=${pageend+10}">다음</a></li>
-						</c:if>
-					</ul>
-				</div>
+				<ul class="pagination justify-content-center p-5">
+					<c:if test="${ pagestart != 1 }">
+						<li class="page-item"><a class="page-link" href="eventlist.do?page=${pagestart-10}">이전</a></li>
+					</c:if>
+					<c:forEach begin="${pagestart}" end="${pageend}" var="p">
+						<c:choose>
+							<c:when test="${page==p}">
+								<li class="page-item active"><a class="page-link" href="eventlist.do?page=${p}">${p}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="eventlist.do?page=${p}">${p}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:if test="${pageend < pagecount}">
+						<li class="page-item"><a class="page-link" href="eventlist.do?page=${pageend+10}">다음</a></li>
+					</c:if>
+				</ul>
 			</div>
+		</div>
 	</div>
 	<c:import url="footer.jsp"></c:import>
 </body>

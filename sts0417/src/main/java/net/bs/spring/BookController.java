@@ -1,6 +1,7 @@
 package net.bs.spring;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -83,8 +84,11 @@ public class BookController {
 	//===========책 디테일=========(0424 minji)
 	
 	@RequestMapping("/bookdetail.do")
-	public String book_detail( Model model) {
-		int idx=1;  //리스트랑 합칠때 idx는 파라메타로 값 받아와야 함(@RequestParam("idx")int idx, Model model)
+	//public String book_detail( Model model) {
+	//0425 임시 idx 주석처리하고 직접 받아오는걸로 수정 by kjr	
+	public String book_detail(@RequestParam("idx") int data, Model model) {
+		int idx=data;
+		//int idx=1;  //리스트랑 합칠때 idx는 파라메타로 값 받아와야 함(@RequestParam("idx")int idx, Model model)
 		model.addAttribute("dto", dao.dbDetail(idx));
 		return "bookDetail";
 	}

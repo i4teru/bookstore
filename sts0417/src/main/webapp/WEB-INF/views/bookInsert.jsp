@@ -135,7 +135,7 @@ li {
 </head>
 <body>
 	<!-- header 추가 -->
-	<c:import url="header.jsp"></c:import>
+	<c:import url="/header.do"></c:import>
 
 	<div class="bg-lightgray">
 		<div class="container pt-5 pb-5">

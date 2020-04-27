@@ -14,6 +14,7 @@ import java.io.File;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class MainController {
@@ -25,15 +26,33 @@ public class MainController {
 	@Autowired
 	private ServletContext application;
 
+	//header.do
+	@RequestMapping(value = "/header.do", method = RequestMethod.GET)
+	public String header(HttpSession session, Model model) {
+
+		String uid = (String) session.getAttribute("userid");
+		if (uid == null)
+			uid = "";
+		else {
+			//로그인했을때만 등급과 이름 세션에 기록
+			model.addAttribute("username", (String) session.getAttribute("username"));
+			model.addAttribute("usergrade", session.getAttribute("usergrade"));
+		}
+
+		System.out.println("[header.do] 세션 아이디 : " + uid);
+		model.addAttribute("userid", uid);
+
+		return "header";
+	}
+
 	//main.do
 	@RequestMapping(value = "/main.do", method = RequestMethod.GET)
 	public String mainDo(Model model) {
-		
-		
+
 		// 이벤트 목록 불러오기
 		model.addAttribute("mainEventCount", dao.mainEventCount());
 		model.addAttribute("mainEvents", dao.getMainEvents());
-		
+
 		// 신규 입고 도서 불러오기
 		model.addAttribute("newBooks", dao.getNewBooks());
 
@@ -53,19 +72,19 @@ public class MainController {
 		} catch (Exception e) {
 			page = 1;
 		}
-		
+
 		//전체 이벤트 개수 받아오기
-				int total = dao.eventCount();
+		int total = dao.eventCount();
 
-				int pagecount = ((total - 1) / maxcount) * maxcount + 1;
+		int pagecount = ((total - 1) / maxcount) * maxcount + 1;
 
-				if (page > pagecount)
-					page = pagecount;
-				System.out.println("전체페이지"+pagecount);
+		if (page > pagecount)
+			page = pagecount;
+		System.out.println("전체페이지" + pagecount);
 
 		int liststart = (page - 1) * maxcount + 1;
 		int listend = liststart + maxcount - 1;
-		
+
 		int pagestart = ((page - 1) / maxcount) * maxcount + 1;
 		int pageend = pagestart + 9;
 
@@ -123,4 +142,5 @@ public class MainController {
 		}
 		return "redirect:/eventlist.do";
 	}
+
 }

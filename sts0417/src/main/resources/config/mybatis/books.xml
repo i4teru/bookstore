@@ -12,44 +12,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="select_s1" resultType="net.bs.spring.BookinfoDTO">
-		select * from 
+		select b2.*, to_char(bi_price, '999,999') as bi_cprice from 
 			(select rownum rn, b.* from 
-				(select * from bookinfo where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드')) b order by bi_num desc) 
+				(select * from bookinfo where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드')) b order by bi_num desc) b2  
 		where rn between 1 and 5
 	</select> 
 	
 	<select id="select_s2" resultType="net.bs.spring.BookinfoDTO">
-	select * from 
+	select  b2.*, to_char(bi_price, '999,999') as bi_cprice  from 
 		(select rownum rn, b.* from 
 			(select * from bookinfo 
 				where regexp_like(bi_title||bi_content, '웹디자인|html|css|javascript|jQuery|bootstrap|자바스크립트|제이쿼리|부트스트랩', 'i')) b 
-				order by bi_num desc) 
+				order by bi_num desc) b2
 	where rn between 1 and 5
 	</select>
 	
 	<select id="select_s3" resultType="net.bs.spring.BookinfoDTO">
-	select * from 
+	select  b2.*, to_char(bi_price, '999,999') as bi_cprice  from 
 		(select rownum rn, b.* from 
 			(select * from bookinfo 
 				where regexp_like(bi_title||bi_content, '프로그래밍|C언어|java|자바|JSP|Ajax|xml' , 'i') 
 				 	and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i')) b 
-				order by bi_num desc)  
+				order by bi_num desc) b2  
 	where rn between 1 and 5
 	</select>
 	
 	<select id="select_s4" resultType="net.bs.spring.BookinfoDTO">
-	select * from 
+	select  b2.*, to_char(bi_price, '999,999') as bi_cprice  from 
 		(select rownum rn, b.* from 
 			(select * from bookinfo where regexp_like(bi_title||bi_content, '오라클|데이터베이스|db|mysql|oracle' , 'i')) b 
-				order by bi_num desc) 
+				order by bi_num desc) b2 
 	where rn between 1 and 5
 	</select>
 	
 	<select id="select_s5" resultType="net.bs.spring.BookinfoDTO">
-	select * from 
+	select b2.*, to_char(bi_price, '999,999') as bi_cprice  from 
 		(select rownum rn, b.* from 
 			(select * from bookinfo where regexp_like(bi_title||bi_content, '웹 서비스|스프링|프레임워크' , 'i')) b   
-				order by bi_num desc) 
+				order by bi_num desc) b2 
 	where rn between 1 and 5
 	</select>
 		
@@ -62,11 +62,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from bookinfo where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드')
 	</select>
 	
-	<select id="select_s1All" resultType="net.bs.spring.BookinfoDTO">
-		select * from 
-			(select rownum rn, b.* from 
-				(select * from bookinfo b where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드')) b ) 
-		where rn between 1 and 10			
+	<select id="select_s1All" resultType="net.bs.spring.BookinfoDTO">		
+		select * from (
+			select rownum rn, b.*, to_char(bi_price, '999,999') as bi_cprice, 
+    		(select count(*) from bsreply r where r.bi_num=b.bi_num) as rcnt, 
+    		ROUND(NVL((select sum(r_stars)/count(*) from bsreply r where r.bi_num=b.bi_num),0),1) as avpnt 
+				from (select * from bookinfo where regexp_like(bi_title||bi_content, '아두이노|안드로이드|임베디드')) b 
+		) where rn between 1 and 10		
 	</select> 
 	
 	<!-- 0424 ===========책 디테일 ================ by minji  -->
@@ -74,6 +76,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from bookinfo where bi_num = #{idx}   <!-- 나중에  리스트랑 연결 시킬때는  1을 #{idx}로 바꿔야 함 -->
 	</select>
 	
+	<!-- 0426 리뷰 달 때 별점이랑 리뷰갯수 업데이트 by kjr -->
+	<update id="add_ratings" parameterType="net.bs.spring.BookinfoDTO">
+		update bookinfo set bi_ratings=bi_ratings+1, bi_stars=bi_stars+ #{bi_stars} where bi_num= #{bi_num}
+	</update>
 </mapper>
 
 

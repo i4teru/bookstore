@@ -3,14 +3,17 @@
 <%@ page session="false"%>
 <html>
 <head>
-<title>개발서점</title>
+<title>개발책방</title>
 
-<script src="./resources/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="./resources/js/bootstrap.min.js"></script>
 
 <script>
-	var eventcount = ${mainEventCount};
+	var eventcount = $
+	{
+		mainEventCount
+	};
 	var currentevent = 1;
 
 	$(function() {
@@ -32,7 +35,7 @@
 <body>
 
 	<!-- 헤더 분리 -->
-	<c:import url="./header.jsp"></c:import>
+	<c:import url="/header.do"></c:import>
 
 	<!-- 메인화면 -->
 	<div class="container-fluid bg-lightgray pt-3 pb-3">
@@ -66,10 +69,10 @@
 									</c:when>
 									<c:otherwise>
 
-										<img class="e-img" id="e-img-${e.count}" style="display:none" src="./resources/event/${ mainEvent.image }">
+										<img class="e-img" id="e-img-${e.count}" style="display: none" src="./resources/event/${ mainEvent.image }">
 									</c:otherwise>
 								</c:choose>
-								
+
 							</c:forEach></td>
 					</tr>
 				</table>
@@ -133,7 +136,9 @@
 			<div class="row">
 				<!-- 최근 공지사항 -->
 				<div class="col h-100">
-					<div class="mainbox-title mt-4">공지사항</div>
+					<div class="mainbox-title mt-4">
+						공지사항 <a href="notice.do" class="text-brown3"><i class="fas fa-plus"></i></a>
+					</div>
 					<ul class="main-notice">
 						<c:forEach begin="1" end="7" var="i">
 							<li><span class="text-brown2">[2020-04-21] </span><span class="text-darkgray">신규 오픈 공지사항 ${ i }번째 이래도 공지가 짧다고 생각해?</span></li>
