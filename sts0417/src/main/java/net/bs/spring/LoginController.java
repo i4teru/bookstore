@@ -137,10 +137,8 @@ public class LoginController {
 
 	@RequestMapping("/notice_save.do")
 	public String notice_save(LoginDTO dto) {
-		logger.info("title: ", dto.getNotice_title());
-		logger.info("content: ", dto.getNotice_content());
 		dao.dbnoticeInsert(dto);
-		return "notice_finish";
+		return "redirect:/notice.do";
 	}
 
 	@RequestMapping("/noticeup.do")

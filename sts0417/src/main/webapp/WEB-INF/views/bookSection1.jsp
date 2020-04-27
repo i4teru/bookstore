@@ -66,18 +66,12 @@ ul.breadcrumb li a {color: #8C7B72;}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="./resources/js/bootstrap.min.js"></script>
 
-<script>
-$(document).ready(function(){
-	$("#checkAllBtn").on("click", function(){
-		alert("좀 되라..");
-});
-</script>
-
 <script type="text/javascript">
-function addToCart(){
-	alert("되나 안되나 확인");
-	$("#addform").submit();
+function addToCart(num){
+	var id = "addform"+num;
+	document.getElementById(id).submit();
 }
+
 </script>
 
 </head>
@@ -121,7 +115,7 @@ function addToCart(){
 					</tr>
 					<tr class="space">
 						<td class="right">
-						<button type="button" class="btn btn-outline-dark btn-sm" id="checkAllBtn" onclick=""> 전체선택 </button>
+						<button type="button" class="btn btn-outline-dark btn-sm" id="checkAllBtn" onclick="selectAll();"> 전체선택 </button>
 						<button type="button" class="btn btn-outline-dark btn-sm" onclick=""> 장바구니 </button>
 						<button type="button" class="btn btn-outline-dark btn-sm" onclick=""> 찜리스트 </button>
 						</td>
@@ -134,17 +128,17 @@ function addToCart(){
 				<div class="col-12">				
 				
 				<c:forEach var="dto" items="${S1L}" >
-					<form id="addform" action="pickInsert.do?idx=${dto.bi_isbn}&nidx=${dto.bi_num}&sidx=${dto.bi_status}" method="get">
+					<form id="addform${dto.bi_num }" action="pickInsert.do?idx=${dto.bi_isbn}&nidx=${dto.bi_num}&sidx=${dto.bi_status}" method="post">
 					<table class="table table-borderless">
 						<tr>
 						<td rowspan="5" style="padding-top: 20; padding-left: 20;"><a href="bookdetail.do?idx=${dto.bi_num}"><img src="${dto.bi_image}" /></a></td>
-						<td id="title"+${bi_num}> ${dto.bi_title } </td>
+						<td id="title${bi_num}"> ${dto.bi_title } </td>
 						<td rowspan="5" style="width: 200px; padding-right:30;">
 							<p>
-							<input type="checkbox" class="checkItem" value="${dto.bi_num }">
+							<input type="checkbox" name="bnum" value="${dto.bi_num }">
 							&nbsp;수량: <input type="number" name="amount" value="1" min="1" max="10" size="5">
 							</p>
-							<button type="button" class="btn btn-brown1 m-2" data-toggle="modal" data-target="#myModal">장바구니</button><br>
+							<button type="button" class="btn btn-brown1 m-2" data-toggle="modal" data-target="#myModal${dto.bi_num }">장바구니</button><br>
 							<button class="btn btn-brown1 m-2">찜리스트</button></td>
 						</tr>
 						<tr><td> ${dto.bi_writer } | ${dto.bi_publisher } | ${dto.bi_pdate } </td></tr>
@@ -199,16 +193,9 @@ function addToCart(){
 						<tr><td> ${dto.bi_content }
 						</td></tr>
 					</table>
-					</form>
-					<hr>
-				</c:forEach>					
-				
-				
-				</div>
-			</div>
-			
+					
 				<!-- Bootstrap Modal -->
-				<div class="modal" id="myModal">
+				<div class="modal" id="myModal${dto.bi_num }">
 					<div class="modal-dialog">
 						<div class="modal-content">
 
@@ -223,13 +210,20 @@ function addToCart(){
 
 							<!-- Modal footer -->
 							<div class="modal-footer">
-								<button type="button" class="btn btn-brown1" onclick="addToCart();">확인</button>
+								<button type="button" class="btn btn-brown1" onclick="addToCart(${dto.bi_num});">확인</button>
 								<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 							</div>
 
 						</div>
 					</div>
 				</div>
+					</form>
+					<hr>
+				</c:forEach>					
+				
+				
+				</div>
+			</div>
 			
 		</div>
 	</div>

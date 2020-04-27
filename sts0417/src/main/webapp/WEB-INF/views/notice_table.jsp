@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
@@ -16,7 +17,11 @@
 				</div>
 
 				<div class="aright pb-3">
-					<button class="btn btn-brown1" type="button" onclick="location.href='noticeup.do'">새 공지사항</button>
+					<!-- 관리자에게만 작성 버튼 노출 -->
+					<c:if test="${ usergrade==0 }">
+						<button class="btn btn-brown1" type="button"
+							onclick="location.href='noticeup.do'">새 공지사항</button>
+					</c:if>
 				</div>
 				<table class="table">
 					<tr>
@@ -36,20 +41,24 @@
 
 				<ul class="pagination justify-content-center p-5">
 					<c:if test="${ startpage != 1 }">
-						<li class="page-item"><a class="page-link" href="notice.do?pageNum=${startpage-10}">이전</a></li>
+						<li class="page-item"><a class="page-link"
+							href="notice.do?pageNum=${startpage-10}">이전</a></li>
 					</c:if>
 					<c:forEach begin="${startpage}" end="${endpage}" var="p">
 						<c:choose>
 							<c:when test="${pageNUM==p}">
-								<li class="page-item active"><a class="page-link" href="notice.do?pageNum=${p}">${p}</a></li>
+								<li class="page-item active"><a class="page-link"
+									href="notice.do?pageNum=${p}">${p}</a></li>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="notice.do?pageNum=${p}">${p}</a></li>
+								<li class="page-item"><a class="page-link"
+									href="notice.do?pageNum=${p}">${p}</a></li>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
 					<c:if test="${endpage < pagecount}">
-						<li class="page-item"><a class="page-link" href="notice.do?pageNum=${endpage+10}">다음</a></li>
+						<li class="page-item"><a class="page-link"
+							href="notice.do?pageNum=${endpage+10}">다음</a></li>
 					</c:if>
 				</ul>
 

@@ -64,7 +64,7 @@
 	<div class="container">
 		<!-- 메뉴 -->
 		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link active" href="#">Link 1</a></li>
+			<li class="nav-item"><a class="nav-link active" href="bookList.do">분야별 도서 보기</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">Link 2</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">Link 3</a></li>
 		</ul>
@@ -87,7 +87,7 @@
 			<!-- 아이디가 admin일때 혹은 grade가 관리자등급일때 -->
 			<c:if test="${ usergrade==0 }">
 				<li class="nav-item ml-5"><span class="nav-link disabled"><i class="fas fa-cog"></i>관리</span></li>
-				<li class="nav-item"><a class="nav-link" href="home.do">도서 관리</a></li>
+				<li class="nav-item"><a class="nav-link" href="bookRegister.do?msg=new">도서 관리</a></li>
 				<li class="nav-item"><a class="nav-link" href="eventlist.do">이벤트 관리</a></li>
 			</c:if>
 
