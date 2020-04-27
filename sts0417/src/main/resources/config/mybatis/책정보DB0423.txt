@@ -1,0 +1,47 @@
+drop table bookinfo;
+drop table bookinfo;
+drop sequence bookinfo_seq;
+create sequence bookinfo_seq;
+
+ -- 책정보 테이블 bookinfo
+create table bookinfo(
+	bi_num		number(3) primary key,	--책 등록번호
+	bi_isbn		varchar2(13) unique,	--책 ISBN
+	bi_title 	varchar2(150) not null,	--책 제목
+	bi_image	varchar2(200),		--도서 썸네일이미지url
+	bi_writer	varchar2(100),		--작가이름
+	bi_publisher	varchar2(30),		--출판사
+	bi_pdate	varchar2(15),		--출간일
+	bi_price	number(5),		--정가
+	bi_sprice	number(5),		--판매가
+	bi_content	varchar2(1000),		--책소개
+	bi_comment	varchar2(500),		--판매자멘트
+	bi_status	varchar2(2),		--책 상태(재고있음'is'/품절'so'/절판'oe')
+	bi_reco		number(1),		--추천도서여부(아님0/맞음1)
+	bi_stars	number(1,1),		--누적 별점점수
+	bi_ratings	number(3),		--누적 별점hit수
+	bi_event	number(1),		--이벤트적용여부(이벤트없음0/있으면이벤트번호#)
+	bi_rdate	date			--등록일
+);		
+
+
+
+
+
+
+
+
+변경사항
+
+insert를 하려고 했더니 작가 필드가 넘 작다고 한다
+alter table bookinfo modify (bi_writer varchar2(50));
+
+제목 필드도 긴 제목이 많으니 늘여야겠다.
+alter table bookinfo modify (bi_title varchar2(100));
+
+소개 필드도...
+alter table bookinfo modify (bi_content varchar2(1000));
+
+판매자멘트도 바꾸자
+alter table bookinfo modify (bi_comment varchar2(500));
+

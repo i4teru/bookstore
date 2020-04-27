@@ -1,30 +1,30 @@
-로그인 데이터;
+--로그인 데이터
 drop table account;
 create table account(
-	name		varchar2(10)	not null,
-	id		varchar2(10)	not null,
-	password	varchar2(10)	not null,
-	email		varchar2(20)	not null,
-	phone		varchar2(15)	not null,
-	birthday	date		not null,
-	gender		number(1)	not null,
-	zipcode		number(8)	not null,
-	address1	varchar2(100)	not null,
-	address2	varchar2(100)	not null,
-	grade		number(2)	not null,
-	signup_date	date		not null,
-	constraint account_pk primary key(id)
+  name    varchar2(10)  not null,
+  id    varchar2(10)  not null,
+  password  varchar2(10)  not null,
+  email    varchar2(20)  not null,
+  phone    varchar2(15)  not null,
+  birthday  date    not null,
+  gender    number(1)  not null,
+  zipcode    number(8)  not null,
+  address1  varchar2(100)  not null,
+  address2  varchar2(100)  not null,
+  grade    number(2)  not null,
+  signup_date  date    not null,
+  constraint account_pk primary key(id)
 );
 
-공지사항 데이터;
+--공지사항 데이터;
 drop sequence notice_seq;
 create sequence notice_seq
-	start with 1
-	increment by 1;
+  start with 1
+  increment by 1;
 drop table notice;
 create table notice(
-	notice_num	number(10)	not null,
-	notice_title	varchar2(30)	not null,
-	notice_content	varchar2(200)	not null,
-	upload_date	date		not null
+  notice_num  number(10)  not null,
+  notice_title  varchar2(30)  not null,
+  notice_content  varchar2(200)  not null,
+  upload_date  date    not null
 );

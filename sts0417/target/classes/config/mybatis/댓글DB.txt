@@ -1,0 +1,31 @@
+--댓글 DB
+
+drop table bsreply;
+drop sequence s_bs_reply_seq;
+
+create table bsreply(
+  bi_num number,    --책 디테일 글번호 
+  r_num number primary key,    --댓글 글번호
+  r_id varchar2(100) not null,    --아이디 
+  r_content varchar2(2000) not null,    --내용 
+  r_datetime timestamp,    --날짜와 시간
+  grp number,    --원댓글 번호
+  seq number default 1,    --답글 순서
+  lvl number default 0,    --계층
+  r_stars number default 0,    --별점
+  r_hit number default 0    --추천
+);
+
+create sequence s_bsreply_seq
+start with 1
+increment by 1;
+
+
+
+
+
+
+
+
+
+insert into bsreply values(114,s_bsreply_seq.nextval, 'sky','hihi',current_timestamp,s_bsreply_seq.nextval,1,0,0,0); 
