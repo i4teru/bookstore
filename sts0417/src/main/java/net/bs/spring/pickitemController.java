@@ -42,8 +42,19 @@ public class pickitemController {
 	@Autowired
 	private ServletContext application;
 	
-	@RequestMapping(value = "/pickInsert.do", method = RequestMethod.GET)
-	public String pick(pickitemDTO dto) {
+	@RequestMapping("/pickInsert.do")
+	public String pick(HttpServletRequest request, pickitemDTO dto) { //0427 by kjr 장바구니에 넣으려고 수정
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("userid");
+		String isbn = request.getParameter("idx");
+		int bnum = Integer.parseInt(request.getParameter("nidx"));
+		String status = request.getParameter("sidx");
+		//System.out.println(dto.getAmount()+", "+id);
+		dto.setUserid(id);
+		dto.setIsbn(isbn);
+		dto.setBnum(bnum);
+		dto.setStatus(status);
+		
 		dao.dbInsert(dto);
 		return "redirect:/pickList.do";
 	}
