@@ -131,5 +131,42 @@ public class orderController {
 		model.addAttribute("detail", dao.dbPdetail(dto.getOrdernum()));
 		return "orderDetail2";
 	}
+	
+	@RequestMapping("/myorder.do")
+	public String myorder(Model model, HttpServletRequest request, @ModelAttribute("pageNum") String pnum){
+		//마이페이지의 나의 주문보기 게시판
+		HttpSession session = request.getSession();
+		String userid = (String)session.getAttribute("userid");
+		
+		if(pnum == null || pnum == "" || pnum.equals("")) {pnum = "1";}
+		int pageNUM =Integer.parseInt(pnum);
+		int start, end, temp, startpage, endpage, pagecount;
+		
+		start = (pageNUM-1)*10 + 1;
+		end = start*10;
+		
+		temp = (pageNUM-1)%10;
+		startpage = pageNUM - temp;
+		endpage = startpage + 9;
+		
+		int total = dao.dbPcount(userid);
+		if(total%10 == 0) {pagecount = total/10;}
+		else {pagecount = (total/10) + 1;}
+		
+		if(endpage>pagecount) {endpage = pagecount;}
+		
+		orderDTO dto = new orderDTO();
+		dto.setStart(start); dto.setEnd(end); dto.setUserid(userid);
+		
+		model.addAttribute("myorder", dao.dbmyorder(dto));
+		model.addAttribute("pageNUM", pageNUM);
+		model.addAttribute("startpage", startpage);
+		model.addAttribute("endpage", endpage);
+		model.addAttribute("pagecount", pagecount);
+		model.addAttribute("total", total);
+		
+		return "myorder";
+	}
+	
 
 }// class END

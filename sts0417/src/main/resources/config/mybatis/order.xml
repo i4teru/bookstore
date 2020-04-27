@@ -46,13 +46,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectAll" resultType="net.bs.spring.orderDTO">
 		<!-- select * from purchase where ordernum = #{ordernum} -->
-		select ordernum, userid, to_char(buydate, 'yyyy-MM-dd mm:ss') as wdate, orderstatus, 
+		select ordernum, userid, to_char(buydate, 'yyyy-MM-DD HH24:MI') as wdate, orderstatus, 
 		totalprice, totalamount, receiver, contact, postcode, address1, address2
 		from purchase where ordernum = #{ordernum}
 	</select>
 	
 	<select id="loginDetail" resultType="net.bs.spring.LoginDTO">
 		select * from account where id = #{id}
+	</select>
+	
+	<select id="pcount" resultType="int">
+		select count(*) from purchase where userid = #{userid}
+	</select>
+	
+	<select id="myorder" parameterType="net.bs.spring.orderDTO" resultType="net.bs.spring.orderDTO">
+		select * from (
+		select rownum rn, p.* from purchase p where userid = #{userid}
+		) where rn between #{start} and #{end}
+		
 	</select>
 	
 </mapper>

@@ -41,11 +41,6 @@ public class orderDAO {
 		
 	}
 
-//	public int dbCount(String userid) {
-//
-//		return temp.selectOne("order.pcount", userid);
-//	}
-
 	public List<orderDTO> dbselectAll(String ordernum) {
 		return temp.selectList("order.selectAll", ordernum);
 	}
@@ -53,10 +48,6 @@ public class orderDAO {
 	public List<orderDTO> dbPdetail(String ordernum){
 		return temp.selectList("order.pdetail", ordernum);
 	}
-
-//	public List<orderDTO> dbOrderList(orderDTO dto) {
-//		return temp.selectList("order.pselect", dto);
-//	}
 
 	public int dbGetOseq() {
 		return temp.selectOne("order.oseq");
@@ -66,5 +57,14 @@ public class orderDAO {
 		
 		return temp.selectOne("order.loginDetail", id);
 	}
-
+	
+	public int dbPcount(String userid) {
+		
+		return temp.selectOne("order.pcount", userid);
+	}
+	
+	public List<orderDTO> dbmyorder(orderDTO dto) {
+		
+		return temp.selectList("order.myorder", dto);
+	}
 }// class END
