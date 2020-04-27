@@ -45,29 +45,45 @@ public class orderController {
 
 	@Autowired
 	private ServletContext application;
-	
+
 	@RequestMapping(value = "/order.do", method = RequestMethod.GET)
-	public String order(orderDTO dto, HttpServletRequest request) {
+	public String order(Model model, orderDTO dto, HttpServletRequest request, @RequestParam("p_bnum") int[] p_bnum,
+			@RequestParam("p_amount") int[] p_amount, @RequestParam("p_price") int[] p_price,
+			@RequestParam("tprice") int tprice, @RequestParam("tamount") int tamount) {
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
-		 int ok = dao.dbRcnt(userid);
-		 System.out.println("ok= "+ok);
-		 if (ok <= 0) {
-			 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			 Date date = new Date();
-			 String ordernum = sdf.format(date);
-			 String orderstatus = "is";
-			 
-			 System.out.println(ordernum);
-			 dto.setOrdernum(ordernum);
-			 dto.setOrderstatus(orderstatus);
-			 
-			 System.out.println(dto.getOrdernum());
-			 System.out.println(dto.getUserid());
-			 
-			 dao.dbRinsert(dto);
-			 dao.dbPinsert(dto);
-		 }
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
+		String ordernum = sdf.format(date);
+		String orderstatus = "확인예정";
+
+		int oseq = dao.dbGetOseq();
+
+		dto.setOrdernum(ordernum + oseq);
+		dto.setOrderstatus(orderstatus);
+		dto.setTotalamount(tamount);
+		dto.setTotalprice(tprice);
+		
+		// purchase테이블 저장
+		dao.dbPinsert(dto);
+
+		ArrayList<orderDTO> list = new ArrayList<orderDTO>();
+		for (int i = 0; i < p_bnum.length; i++) {
+			orderDTO odto = new orderDTO();
+			odto.setOrdernum(ordernum + oseq);
+			odto.setP_bnum(p_bnum[i]);
+			odto.setP_amount(p_amount[i]);
+			odto.setP_price(p_price[i]);
+			System.out.println("detail p_bnum : " + odto.getP_bnum());
+			list.add(odto);
+		}
+		// 장바구니에서 선택된 아이들 purchasedetail테이블에 저장(주문내역)
+		dao.dbPdetailInsert(list);
+
+		model.addAttribute("ordernum", dto.getOrdernum());
+	
+
 		return "redirect:/orderDetail.do";
 	}
 
@@ -84,26 +100,36 @@ public class orderController {
 
 			list.add(dto);
 		}
-
-		
+		// 주문 전 장바구니에 선택된 아이들 보여주기(purchase 테이블 리스트 출력)
 		model.addAttribute("order", dao.dbPreList(list));
 		model.addAttribute("userid", userid);
+		// 로그인 개인정보를 주문페이지의 배송지에 자동출력
 		model.addAttribute("login", dao.loginDetail(userid));
 
 		return "orderList";
 	}
-	
+
 	@RequestMapping("/orderDetail.do")
-	public String orderDetail(Model model) {
+	public String orderDetail(Model model, HttpServletRequest request) {
+		orderDTO dto = new orderDTO();
+		String ordernum = request.getParameter("ordernum");
+		dto.setOrdernum(ordernum);		
 		
-		model.addAttribute("od", dao.dbselectAll());
+		// 주문번호와 주문수량, 가격, 배송지정보 출력(purchase)
+		model.addAttribute("od", dao.dbselectAll(dto.getOrdernum()));
+		
 		return "orderDetail";
 	}
-	
+
 	@RequestMapping("/orderDetail2.do")
-	public String orderDetail2(Model model) {
+	public String orderDetail2(Model model, HttpServletRequest request) {
+		// 주문내역출력
+		String ordernum = request.getParameter("ordernum");
+		orderDTO dto = new orderDTO();
+		dto.setOrdernum(ordernum);
 		
+		model.addAttribute("detail", dao.dbPdetail(dto.getOrdernum()));
 		return "orderDetail2";
 	}
 
-}//class END
+}// class END

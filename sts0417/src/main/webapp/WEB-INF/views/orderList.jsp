@@ -19,10 +19,12 @@
 		
 		//주문하기 클릭 시
 		function orderClick(){	
+				//인풋히든 밸류 조정
+				$("#tamount").val(totalamount);
+				$("#tprice").val(totalprice);
 				
-					document.frm.action="order.do";
-					document.frm.submit();
-				
+				document.frm.action="order.do";
+				document.frm.submit();	
 		}
 
 		//연락처 체크
@@ -80,7 +82,7 @@
 </head>
 <body>
 <h1>주문정보</h1>
-
+<form name="frm">
 	<table style="width: 900px;">
 			<tr>
 				<th>책제목</th>
@@ -91,12 +93,21 @@
 			</tr>
 		<c:forEach var="pk" items="${order}">
 			<tr align="center">
-			<td> ${pk.bi_title} </td>
+			<td>
+			<input type="hidden" name="p_bnum" value="${pk.bnum}">
+			 ${pk.bi_title}
+		    </td>
 			<td> ${pk.bi_writer}
 			</td>
 			<td> ${pk.bi_publisher} </td>
-			<td> ${pk.amount}</td>
-			<td> ${pk.bi_price}원 </td>
+			<td> 
+			<input type="hidden" name="p_amount" value="${pk.amount}">
+			 ${pk.amount}
+			</td>
+			<td>
+			<input type="hidden" name="p_price" value="${pk.bi_price}">
+			 ${pk.bi_price}원 
+			</td>
 			</tr>
 			<script>
 					totalamount += ${pk.amount};
@@ -105,15 +116,19 @@
 		</c:forEach>
 			
 			<tr align="right">
-	<td colspan="5"><h3>주문수량 : <script>document.write(totalamount);</script> 개</h3></td>
+	<td colspan="5">
+		<h3>주문수량 : <script>document.write(totalamount);</script> 개</h3>
+		<input type="hidden" name="tamount" id="tamount">
+	</td>
 </tr>
 <tr align="right">
-	<td colspan="5"><h3>주문금액 : <script>document.write(totalprice);</script> 원</h3></td>
+	<td colspan="5">
+		<h3>주문금액 : <script>document.write(totalprice);</script> 원</h3>
+		<input type="hidden" name="tprice" id="tprice">
+	</td>
 </tr>
 </table>
 <br>
-
-<form name="frm">		
 <label>아이디</label><input type="text" name="userid" value="${userid}" readonly><br>
 <label>받는사람</label><input type="text" name="receiver" value="${login.name}"><br>
 <label>연락처</label>

@@ -13,43 +13,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="padd" parameterType="net.bs.spring.orderDTO">
 	  insert into purchase values(
-	    #{ordernum} + order_seq.nextval, #{userid}, sysdate, #{orderstatus}
+	    #{ordernum}, #{userid}, sysdate, #{orderstatus}, #{totalprice}, #{totalamount}, 
+	    #{receiver}, #{contact}, #{postcode}, #{address1}, #{address2} 
 	  )
 	</insert>
 	
-	<insert id="radd" parameterType="net.bs.spring.orderDTO">
-		insert into receiver values(
-			#{userid}, #{receiver}, #{contact}, #{postcode}, #{address1}, #{address2}
-			, rnum_seq.nextval
+	<insert id="pdetailInsert">
+		insert into purchasedetail values(
+			#{ordernum}, #{p_bnum}, #{p_price}, #{p_amount}
 		)
 	</insert>
 	
+	<select id="oseq" resultType="int">
+		select order_seq.nextval from dual
+	</select>
+	<!-- 
 	<select id="pcount" resultType="int">
 		select count(*) from purchase where userid = #{userid}
 	</select>
-	
+	 -->
+	<!-- 
 	<select id="pselect" resultType="net.bs.spring.orderDTO">
 		select * from (
-			select rownum rn, p. * from purchase where ordernum = #{ordernum}
+			select rownum rn, p.* from purchase p where ordernum = #{ordernum}
 		) where rn between 1 and #{end}
 	</select>
-	
-	<select id="rselect" resultType="net.bs.spring.orderDTO">
-		select * from receiver where userid = #{userid}
+	 -->
+	<select id="pdetail" resultType="net.bs.spring.orderDTO" parameterType="String">
+		select d.*, i.* from purchasedetail d inner join bookinfo i
+		on d.p_bnum = i.bi_num where ordernum = #{ordernum}
 	</select>
 	
 	<select id="selectAll" resultType="net.bs.spring.orderDTO">
-		select p.*, r.* from purchase p inner join receiver r
-		on p.userid = r.userid
+		<!-- select * from purchase where ordernum = #{ordernum} -->
+		select ordernum, userid, to_char(buydate, 'yyyy-MM-dd mm:ss') as wdate, orderstatus, 
+		totalprice, totalamount, receiver, contact, postcode, address1, address2
+		from purchase where ordernum = #{ordernum}
 	</select>
-	
-	<select id="rcnt" resultType="int">
-		select count(*) from receiver where userid = #{userid}
-	</select>
-	
-	<delete id="rdelete" parameterType="net.bs.spring.orderDTO">
-		delete from receiver where userid = #{userid} and rnum = #{rnum}
-	</delete>
 	
 	<select id="loginDetail" resultType="net.bs.spring.LoginDTO">
 		select * from account where id = #{id}

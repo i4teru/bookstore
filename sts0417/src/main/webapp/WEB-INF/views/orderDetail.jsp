@@ -20,6 +20,8 @@
 				<th>받는사람</th>
 				<th>배송지</th>
 				<th>주문일자</th>
+				<th>총주문수량</th>
+				<th>총주문금액</th>
 				<th>주문상태</th>
 			</tr>
 		<c:forEach var="od" items="${od}">
@@ -28,14 +30,18 @@
 			<td>${od.userid}</td>
 			<td>${od.receiver}</td>
 			<td>${od.address1}&nbsp;${od.address2}</td>
-			<td>${od.buydate}</td>
+			<td>${od.wdate}</td>
+			<th>${od.totalamount} 개</th>
+			<th>${od.totalprice} 원</th>
 			<td>${od.orderstatus}</td>
 			</tr>
 		</c:forEach>
 </table>
 </form>
 
+<br>
 
+<c:import url="/orderDetail2.do" />
 
 <input type="button" name="main" value="메인">
 </body>

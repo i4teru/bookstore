@@ -10,23 +10,6 @@ constraint bcart_fk foreign key(userid) references account(id) on delete cascade
 );
 
 
---배송지정보테이블 : orderDTO
-
-drop sequence rnum_seq.nextval;
-create sequence rnum_seq.nextval;   --삭제시(rnum)
-
-drop table receiver;
-create table receiver (
-userid varchar2(30) not null,
-receiver varchar2(30) not null,
-contact varchar2(15) not null,
-postcode varchar2(10) not null,
-address1 varchar2(100) not null,
-address2 varchar2(300) not null,
-rnum number(3) not null,
-constraint  receiver_fk foreign key(userid) references account(id) on delete cascade
-);
-
 --구매테이블 : orderDTO
 
 drop sequence order_seq;
@@ -36,9 +19,14 @@ create table purchase (
 ordernum varchar2(15) not null primary key,
 userid varchar2(30) not null,
 buydate date not null,
-orderstatus varchar2(3) null,
+orderstatus varchar2(20) null,
 totalprice number(10) not null,
 totalamount number(5) not null,
+receiver varchar2(30) not null,
+contact varchar2(15) not null,
+postcode varchar2(10) not null,
+address1 varchar2(100) not null,
+address2 varchar2(300) not null,
 constraint purchase_fk foreign key(userid) references account(id) on delete cascade
 );
 

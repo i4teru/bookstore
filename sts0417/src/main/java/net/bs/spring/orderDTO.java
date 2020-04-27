@@ -10,16 +10,19 @@ import lombok.Getter;
 @Getter
 public class orderDTO { 
 	//purchase table 주문
-	private String ordernum, userid, orderstatus ;
-	 private int amount;
+	private String ordernum, userid, orderstatus;
+	private int totalamount, totalprice;	
+	 private String receiver, contact, postcode, address1, address2;
 	 java.util.Date buydate;
 	 
-	 //purchasedetail table 주문내역
-	 private int bnum, price;
+	 private String wdate;
 	 
-	//receiver table 수취인 배송지 정보
-	 private String receiver, contact, postcode, address1, address2;
-	 private int rnum;
+	 //purchasedetail table 주문내역
+	 private int p_bnum, p_price, p_amount;
+	 
+	 //주문상세내역에 출력할 bookinfo 변수
+	 private String bi_image, bi_title, bi_writer, bi_publisher;
+	 private int bi_sprice;
 	 
 	 private int rn, rcnt;
 	 private int start, end, startpage, endpage;
