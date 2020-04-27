@@ -42,7 +42,7 @@
 		<div class="container">
 			<!-- 이벤트 이미지 -->
 
-			<div class="mainbox mt-1">
+			<div class="mt-3">
 				<table class="eventimage noppading nomargin">
 					<tr>
 						<td class="bg-brown1">

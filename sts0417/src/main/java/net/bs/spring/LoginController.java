@@ -2,6 +2,8 @@ package net.bs.spring;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -45,7 +48,7 @@ public class LoginController {
 			model.addAttribute("msg", "");
 
 		if (session.getAttribute("userid") != null) {
-			//이미 로그인이 되어있으면
+			// 이미 로그인이 되어있으면
 			return "redirect:/main.do";
 		} else {
 			return "login";
@@ -67,33 +70,36 @@ public class LoginController {
 	}
 
 	@RequestMapping("/signupcomplete.do")
-	public String signup_complete(LoginDTO dto) {
-		logger.info("넘어온 이름" + dto.getName());
-		logger.info("넘어온 아이디" + dto.getId());
-		logger.info("넘어온 비밀번호" + dto.getPassword());
-		logger.info("넘어온 데이터" + dto.getEmail());
-		logger.info("넘어온 데이터" + dto.getZipcode());
-		logger.info("넘어온 데이터" + dto.getAddress1());
-		logger.info("넘어온 데이터" + dto.getAddress2());
-		logger.info("넘어온 데이터" + dto.getPhone());
-		logger.info("넘어온 생년월일" + dto.getBirthday());
-		logger.info("넘어온 성별" + dto.getGender());
+	public String signup_complete(LoginDTO dto) throws UnsupportedEncodingException {
+
 		dao.dbAcInsert(dto);
-		logger.info("%사용자 생성 완료%");
+
+		return "redirect:/signupfinish.do?username=" + URLEncoder.encode(dto.getName(), "UTF-8") + "&userid="
+				+ dto.getId();
+	}
+
+	@RequestMapping("/signupfinish.do")
+	public String signup_complete(@RequestParam("username") String name, @RequestParam("userid") String id,
+			Model model) {
+
+		model.addAttribute("uname", name);
+		model.addAttribute("uid", id);
+
 		return "signup_finish";
 	}
 
 	@RequestMapping("/logincheck.do")
-	public String login_check(LoginDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+	public String login_check(LoginDTO dto, HttpServletRequest request, HttpServletResponse response,
+			HttpSession session) throws Exception {
 		response.setContentType("text/html; charset=utf-8");
 
 		String result = dao.dblogin(dto);
 
 		if (result == null) {
-			//로그인 실패시
+			// 로그인 실패시
 			return "redirect:/login.do?msg=err";
 		} else {
-			//로그인 성공시
+			// 로그인 성공시
 			LoginDTO ldto = dao.dbaccountdata(result);
 			session.setAttribute("userid", result);
 			session.setAttribute("username", ldto.getName());
@@ -113,7 +119,8 @@ public class LoginController {
 	}
 
 	@RequestMapping("/idcheck.do")
-	public void idcheck(@RequestParam String userid, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void idcheck(@RequestParam String userid, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		int result = dao.dbcheckid(userid);
 		String idchk = "";
 		if (result > 0) {

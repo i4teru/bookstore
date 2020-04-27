@@ -12,7 +12,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="./resources/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- 데이트피커 -->
 
+<link rel="stylesheet" href="./resources/css/bootstrap-datepicker.css">
+<script src="./resources/js/bootstrap-datepicker.min.js"></script>
+<script src="./resources/js/bootstrap-datepicker.ko.min.js"></script>
+<script>
+	$(function() {
+		$("#birthday").datepicker({
+			format : "yyyymmdd",
+			autoclose : "true",
+			language : "ko"
+		});
+	});
+</script>
 <style>
 </style>
 <script>
@@ -229,7 +242,7 @@
 						<i class="fas fa-user-plus text-brown1"></i> 회원 가입
 					</h2>
 				</div>
-				<form name="loginform" action="signupcomplete.do">
+				<form name="loginform" action="signupcomplete.do" method="post">
 					<table class="table table-borderless p-5">
 						<tbody>
 							<tr>
