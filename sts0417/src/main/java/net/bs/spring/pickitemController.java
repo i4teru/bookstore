@@ -100,13 +100,13 @@ public class pickitemController {
 	}//end
 	
 	@RequestMapping("/checkDel.do")
-	public String checkDel(HttpServletRequest request, @RequestParam("checkItem") String[] bnum, @RequestParam("userid") String[] userid, @RequestParam("amount") int[] amount) {
+	public String checkDel(HttpServletRequest request, @RequestParam("checkItem") int[] bnum, @RequestParam("userid") String[] userid, @RequestParam("amount") int[] amount) {
 		HttpSession session = request.getSession();
 		pickitemDTO dto = new pickitemDTO();
 		
-		for (String s : bnum) {
+		for (int s : bnum) {
 			System.out.println(s);
-			dto.setIsbn(s); 
+			dto.setBnum(s); 
 		}
 		for (String u : userid) {
 			System.out.println(u);

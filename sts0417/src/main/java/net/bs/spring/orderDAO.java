@@ -57,8 +57,14 @@ public class orderDAO {
 		return temp.selectOne("order.loginDetail", id);
 	}
 	
+	//주문완료시 장바구니 삭제 전 관련 bi_num의 주문상세내역 출력
+	public int dbDetailselect(orderDTO dto) {
+		
+		return temp.selectOne("order.detailselect", dto);
+	}
+	
 	public int dbPcount(String userid) {
-		System.out.println("OrderDAO pcount uid : " + userid);
+		
 		return temp.selectOne("order.pcount", userid);
 	}
 	

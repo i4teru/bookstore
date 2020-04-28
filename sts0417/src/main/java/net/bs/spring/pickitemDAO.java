@@ -26,14 +26,12 @@ public class pickitemDAO  {
 		}
 		
 		public void dbPickDel(pickitemDTO dto) {
-			System.out.println("DAO : "+dto.getIsbn());
-			System.out.println(dto.getUserid());
+			
 			temp.delete("pickitem.del", dto);
 		}
 		
 		public void dbpickDel2(pickitemDTO dto) {
-			System.out.println("DAO : "+dto.getIsbn());
-			System.out.println(dto.getUserid());
+			
 			temp.update("pickitem.del2", dto);
 		}
 		
