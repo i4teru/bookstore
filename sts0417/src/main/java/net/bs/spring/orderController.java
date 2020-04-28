@@ -67,9 +67,19 @@ public class orderController {
 		
 		// purchase테이블 저장
 		dao.dbPinsert(dto);
-
+		
+		
+		//asd
 		ArrayList<orderDTO> list = new ArrayList<orderDTO>();
 		for (int i = 0; i < p_bnum.length; i++) {
+
+			//주문완료시 장바구니에 저장된 해당 아이들 삭제
+			pickitemDTO pdto = new pickitemDTO();
+			pdto.setBnum(p_bnum[i]);
+			pdto.setUserid(userid);
+			
+			pdao.dbPickDel(pdto);
+						
 			orderDTO odto = new orderDTO();
 			odto.setOrdernum(ordernum + oseq);
 			odto.setP_bnum(p_bnum[i]);
@@ -113,28 +123,8 @@ public class orderController {
 	public String orderDetail(Model model, HttpServletRequest request) {
 		orderDTO dto = new orderDTO();
 		String ordernum = request.getParameter("ordernum");
+	
 		dto.setOrdernum(ordernum);
-		int p_bnum = Integer.parseInt(request.getParameter("p_bnum"));
-		HttpSession session = request.getSession();
-		String userid = (String)session.getAttribute("userid");
-		
-		dto.setOrdernum(ordernum);
-		dto.setP_bnum(p_bnum);
-		
-		pickitemDTO pdto = new pickitemDTO(); 
-		
-		pdto.setBnum(p_bnum);
-		pdto.setUserid(userid);
-		
-		//주문완료시 장바구니에 저장된 해당 아이들 삭제
-		//삭제 전 해당 품목 상세출력 (purchasedetail)
-		int p_amount = dao.dbDetailselect(dto);
-		//수량이 2이상일 경우 삭제
-		if(p_amount>1) {
-			pdao.dbpickDel2(pdto);
-		}else {//수량이 1일 경우 삭제
-			pdao.dbPickDel(pdto);
-		}
 		
 		// 주문번호와 주문수량, 가격, 배송지정보 출력(purchase)
 		model.addAttribute("od", dao.dbselectAll(dto.getOrdernum()));

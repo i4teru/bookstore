@@ -43,6 +43,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="loginDetail" resultType="net.bs.spring.LoginDTO">
 		select * from account where id = #{id}
 	</select>
+	<!-- 주문완료시 장바구니 삭제 전 관련 bi_num의 주문상세내역 출력 -->
+	<select id="detailselect" parameterType="net.bs.spring.LoginDTO" resultType="int">
+		select p_amount from purchasedetail where p_bnum = #{p_bnum} and ordernum = #{ordernum}
+	</select>
 	
 	<select id="pcount" resultType="int">
 		select count(*) from purchase where userid = #{userid}

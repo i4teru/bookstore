@@ -59,7 +59,7 @@ public class orderDAO {
 	
 	//주문완료시 장바구니 삭제 전 관련 bi_num의 주문상세내역 출력
 	public int dbDetailselect(orderDTO dto) {
-		
+		System.out.println("dao bnum, ordernum : "+dto.getP_bnum()+" "+dto.getOrdernum());
 		return temp.selectOne("order.detailselect", dto);
 	}
 	
