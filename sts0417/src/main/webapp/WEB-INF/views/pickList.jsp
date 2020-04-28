@@ -78,7 +78,7 @@
 			<div class="mainbox p-3">
 				<div class="pagetitle">
 					<h2 class="text-darkgray">
-						<i class="far fa-flag text-brown1"></i> 장바구니
+						<i class="fas fa-shopping-cart text-brown1"></i> 장바구니
 					</h2>
 				</div>
 				<form name="frm">

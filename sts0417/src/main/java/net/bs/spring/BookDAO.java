@@ -51,8 +51,29 @@ public class BookDAO {
 		return s1cnt;
 	}
 	
-	public List<BookinfoDTO> sc1SelectAll() {
-		return temp.selectList("books.select_s1All");
+	public List<BookinfoDTO> sc1SelectAll(int liststart, int listend, String sort) {
+		BookinfoDTO dto = new BookinfoDTO();
+		dto.setListstart(liststart);
+		dto.setListend(listend);
+		dto.setSort(sort);
+		return temp.selectList("books.select_s1All", dto);
+	}
+	
+	//0428 섹션번호에 따라 똑같은 객체 사용할 수 있도록 통합
+	public int scCount(String scnum) {
+		BookinfoDTO dto = new BookinfoDTO();
+		dto.setScnum(scnum);
+		int sccnt = temp.selectOne("books.count_sc", dto);
+		return sccnt;
+	}
+	
+	public List<BookinfoDTO> scSelectAll(String scnum, int liststart, int listend, String sort) {
+		BookinfoDTO dto = new BookinfoDTO();
+		dto.setScnum(scnum);
+		dto.setListstart(liststart);
+		dto.setListend(listend);
+		dto.setSort(sort);
+		return temp.selectList("books.select_scAll", dto);
 	}
 	
 	//0424 =================디테일============= by minji

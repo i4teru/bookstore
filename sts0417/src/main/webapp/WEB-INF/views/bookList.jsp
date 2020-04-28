@@ -59,7 +59,7 @@ a:hover {
 						<table class="w-100">
 							<tr>
 								<td><i class="fa fa-book text-primary" aria-hidden="true"></i> 모바일/임베디드 </td>
-								<td class="right"><a href="bookSection1.do">+더보기</a></td>
+								<td class="right"><a href="bookSection.do?scnum=1&page=&sort=">+더보기</a></td>
 							</tr>
 						</table>
 					</div>
@@ -95,7 +95,7 @@ a:hover {
 						<table class="w-100">
 							<tr>
 								<td><i class="fa fa-book text-secondary" aria-hidden="true"></i> 웹 디자인</td>
-								<td class="right"><a href="#">+더보기</a></td>
+								<td class="right"><a href="bookSection.do?scnum=2&page=&sort=">+더보기</a></td>
 							</tr>
 						</table>
 					</div>
@@ -132,7 +132,7 @@ a:hover {
 						<table class="w-100">
 							<tr>
 								<td><i class="fa fa-book text-success" aria-hidden="true"></i> 프로그래밍 언어</td>
-								<td class="right"><a href="#">+더보기</a></td>
+								<td class="right"><a href="bookSection.do?scnum=3&page=&sort=">+더보기</a></td>
 							</tr>
 						</table>
 					</div>
@@ -169,7 +169,7 @@ a:hover {
 						<table class="w-100">
 							<tr>
 								<td><i class="fa fa-book text-info" aria-hidden="true"></i> 데이터베이스</td>
-								<td class="right"><a href="#">+더보기</a></td>
+								<td class="right"><a href="bookSection.do?scnum=4&page=&sort=">+더보기</a></td>
 							</tr>
 						</table>
 					</div>
@@ -206,7 +206,7 @@ a:hover {
 						<table class="w-100">
 							<tr>
 								<td><i class="fa fa-book text-danger" aria-hidden="true"></i> 웹서비스 개발</td>
-								<td class="right"><a href="#">+더보기</a></td>
+								<td class="right"><a href="bookSection.do?scnum=5&page=&sort=">+더보기</a></td>
 							</tr>
 						</table>
 					</div>

@@ -82,7 +82,7 @@
 			<div class="mainbox p-3">
 				<div class="pagetitle">
 					<h2 class="text-darkgray">
-						<i class="far fa-flag text-brown1"></i> 주문내역
+						<i class="fas fa-clipboard-list text-brown1"></i> 주문내역
 					</h2>
 				</div>
 				<form name="frm">
@@ -184,7 +184,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" class="acenter"><input class="btn btn-brown1" type="button" name="orderOK" onclick="orderClick()" value="주문하기"> <input class="btn btn-secondary" type="reset" name="reset" value="다시작성"> <input class="btn btn-secondary" type="button" name="backcite" value="돌아가기" onclick="location.href='pickList.do'"></td>
+							<td colspan="2" class="acenter p-5"><input style="height:50px;width:150px" class="btn btn-brown1" type="button" name="orderOK" onclick="orderClick()" value="주문하기"> <input style="height:50px" class="btn btn-secondary" type="button" name="backcite" value="돌아가기" onclick="location.href='pickList.do'"></td>
 						</tr>
 					</table>
 				</form>

@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,11 +76,101 @@ public class BookController {
 	
 	//여기서부터 섹션별 리스트 추가 작업(0424 kjr)
 	@RequestMapping("/bookSection1.do")
-	public String book_Section1(Model model) {
-		List<BookinfoDTO> S1L = dao.sc1SelectAll();
+	public String book_Section1(HttpServletRequest request, Model model) {
+		
+		int maxcount = 10; //한 페이지에 출력되는 권수
+		int maxpage = 6; //최대 페이지 번호 갯수(범위 넘어가면 화살표 처리)
+		
+		//페이지 번호 받아오기
+		int page;
+		try {
+		page = 	Integer.parseInt(request.getParameter("page"));
+			} catch (Exception e) {
+				page = 1;
+			}
+		
+		//섹션 1의 전체 책 수 받아오기 
+		int total = dao.s1Count();
+		
+		//총 페이지번호 갯수 구하기
+		int pagecount; 
+		if(total%maxcount==0) {
+			pagecount=total/maxcount;
+		} else pagecount=total/maxcount+1;
+		
+		//페이지 맨 윗줄과 맨 아랫줄
+		int liststart = (page - 1) * maxcount + 1;
+		int listend = liststart + maxcount - 1; 
+		
+		//시작 페이지번호와 끝 페이지번호
+		int pagestart = ((page - 1) / maxpage) * maxpage + 1;
+		int pageend = pagestart + maxpage -1;
+
+		if (pageend > pagecount)
+			pageend = pagecount;
+		
+		String sort = request.getParameter("sort");
+		List<BookinfoDTO> S1L = dao.sc1SelectAll(liststart, listend, sort);
 		model.addAttribute("S1L", S1L);
-		model.addAttribute("S1Total", dao.s1Count());
+		model.addAttribute("S1Total", total);
+		model.addAttribute("page", page);
+		model.addAttribute("pagestart", pagestart);
+		model.addAttribute("pageend", pageend);
+		model.addAttribute("pagecount", pagecount);
+		model.addAttribute("sort", sort);
+		
 		return "bookSection1";
+	}
+	
+	@RequestMapping("/bookSection.do")
+	public String book_Section(HttpServletRequest request, Model model) {
+		//섹션 번호 받아오기
+		String scnum = request.getParameter("scnum");
+		System.out.println("섹션#는: "+scnum);
+		
+		int maxcount = 10; //한 페이지에 출력되는 권수
+		int maxpage = 6; //최대 페이지 번호 갯수(범위 넘어가면 화살표 처리)
+		
+		//페이지 번호 받아오기
+		int page;
+		try {
+		page = 	Integer.parseInt(request.getParameter("page"));
+			} catch (Exception e) {
+				page = 1;
+			}
+		
+		//해당섹션의 전체 책 수 받아오기 
+		int total = dao.scCount(scnum);
+		System.out.println("섹션#는: "+scnum+" "+"총 권 수는"+total);
+		
+		//총 페이지번호 갯수 구하기
+		int pagecount; 
+		if(total%maxcount==0) {
+			pagecount=total/maxcount;
+		} else pagecount=total/maxcount+1;
+		
+		//페이지 맨 윗줄과 맨 아랫줄
+		int liststart = (page - 1) * maxcount + 1;
+		int listend = liststart + maxcount - 1; 
+		
+		//시작 페이지번호와 끝 페이지번호
+		int pagestart = ((page - 1) / maxpage) * maxpage + 1;
+		int pageend = pagestart + maxpage -1;
+
+		if (pageend > pagecount)
+			pageend = pagecount;
+		
+		String sort = request.getParameter("sort");
+		List<BookinfoDTO> SL = dao.scSelectAll(scnum, liststart, listend, sort);
+		model.addAttribute("SL", SL);
+		model.addAttribute("STotal", total);
+		model.addAttribute("page", page);
+		model.addAttribute("pagestart", pagestart);
+		model.addAttribute("pageend", pageend);
+		model.addAttribute("pagecount", pagecount);
+		model.addAttribute("sort", sort);
+		model.addAttribute("scnum",scnum);
+		return "bookSection";
 	}
 	
 	//===========책 디테일=========(0424 minji)

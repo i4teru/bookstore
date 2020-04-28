@@ -62,14 +62,69 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from bookinfo where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드')
 	</select>
 	
-	<select id="select_s1All" resultType="net.bs.spring.BookinfoDTO">		
+	<select id="select_s1All" parameterType="net.bs.spring.BookinfoDTO" resultType="net.bs.spring.BookinfoDTO">		
 		select * from (
 			select rownum rn, b.*, to_char(bi_price, '999,999') as bi_cprice, 
-    		(select count(*) from bsreply r where r.bi_num=b.bi_num) as rcnt, 
-    		ROUND(NVL((select sum(r_stars)/count(*) from bsreply r where r.bi_num=b.bi_num),0),1) as avpnt 
-				from (select * from bookinfo where regexp_like(bi_title||bi_content, '아두이노|안드로이드|임베디드')) b 
-		) where rn between 1 and 10		
+    		(select count(*) from bsreply r where r.bi_num=b.bi_num and r.lvl=0 ) as rcnt, 
+    		ROUND(NVL((select sum(r_stars)/count(*) from bsreply r where r.bi_num=b.bi_num and r.lvl=0),0),1) as avpnt,
+    		(select NVL(sum(p_amount),0) from purchasedetail p where p.p_bnum = b.bi_num) as sales 
+				from (select * from bookinfo where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드')) b 
+			order by
+			<choose>
+				<when test="sort == 'publish_desc'"> bi_pdate desc </when>
+				<when test="sort == 'price_asc'"> bi_price asc </when>
+				<when test="sort == 'reviews_desc'"> rcnt desc </when>
+				<when test="sort == 'points_desc'"> avpnt desc </when>
+				<when test="sort == 'sales_desc'"> sales desc </when>
+				<otherwise> bi_num desc </otherwise>
+			</choose> 
+		) where rn between #{liststart} and #{listend}		
 	</select> 
+	
+	<!-- 0428 by kjr 섹션 번호에 따라서 같이 사용할 수 있도록 count_s1 수정해서 통합  -->
+	<select id="count_sc" parameterType="net.bs.spring.BookinfoDTO" resultType="int">
+		select count(*) from bookinfo   
+			<choose>
+				<when test="scnum == 1"> where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드') </when>
+				<when test="scnum == 2"> where regexp_like(bi_title||bi_content, '웹디자인|html|css|javascript|jQuery|bootstrap|자바스크립트|제이쿼리|부트스트랩', 'i' )</when>
+				<when test="scnum == 3"> where regexp_like(bi_title||bi_content, '프로그래밍|C언어|java|자바|JSP|Ajax|xml' , 'i') and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i' )</when>
+				<when test="scnum == 4"> where regexp_like(bi_title||bi_content, '오라클|데이터베이스|db|mysql|oracle' , 'i' ) </when>
+				<when test="scnum == 5"> where regexp_like(bi_title||bi_content, '웹 서비스|스프링|프레임워크' , 'i') </when>
+				<when test="scnum == 6"> where regexp_like(bi_title||bi_content, '자바' ) </when>
+				<otherwise></otherwise>
+			</choose>
+		
+	</select>
+	
+	<select id="select_scAll" parameterType="net.bs.spring.BookinfoDTO" resultType="net.bs.spring.BookinfoDTO">		
+		select * from (
+			select rownum rn, b.*, to_char(bi_price, '999,999') as bi_cprice, 
+    		(select count(*) from bsreply r where r.bi_num=b.bi_num and r.lvl=0 ) as rcnt, 
+    		ROUND(NVL((select sum(r_stars)/count(*) from bsreply r where r.bi_num=b.bi_num and r.lvl=0),0),1) as avpnt,
+    		(select NVL(sum(p_amount),0) from purchasedetail p where p.p_bnum = b.bi_num) as sales 
+				from (select * from bookinfo where regexp_like(bi_title||bi_content, 
+				<choose>
+					<when test="scnum == 1"> '아두이노|안드로이드|모바일|임베디드' </when>
+					<when test="scnum == 2"> '웹디자인|html|css|javascript|jQuery|bootstrap|자바스크립트|제이쿼리|부트스트랩', 'i' </when>
+					<when test="scnum == 3"> '프로그래밍|C언어|java|자바|JSP|Ajax|xml' , 'i') 
+											 	and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i' </when>
+					<when test="scnum == 4"> '오라클|데이터베이스|db|mysql|oracle' , 'i' </when>
+					<when test="scnum == 5"> '웹 서비스|스프링|프레임워크' , 'i' </when>
+					<when test="scnum == 6"> '나중에 #{query}로 수정' </when>
+					<otherwise> </otherwise>
+				</choose>				
+				)) b 
+			order by
+			<choose>
+				<when test="sort == 'publish_desc'"> bi_pdate desc </when>
+				<when test="sort == 'price_asc'"> bi_price asc </when>
+				<when test="sort == 'reviews_desc'"> rcnt desc </when>
+				<when test="sort == 'points_desc'"> avpnt desc </when>
+				<when test="sort == 'sales_desc'"> sales desc </when>
+				<otherwise> bi_num desc </otherwise>
+			</choose> 
+		) where rn between #{liststart} and #{listend}		
+	</select>
 	
 	<!-- 0424 ===========책 디테일 ================ by minji  -->
 	<select id="select_detail" resultType="net.bs.spring.BookinfoDTO">

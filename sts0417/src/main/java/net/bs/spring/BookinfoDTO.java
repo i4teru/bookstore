@@ -17,5 +17,11 @@ public class BookinfoDTO {
 	private String bi_cprice;
 	private int rcnt;
 	private double avpnt;
+	//0427 정렬 조건을 주려고 sort, order 추가
+	private String sort;
+	//0428 나중에 판매량 필드 추가하려고 (조인으로 select시) sales 추가/ 페이징하려고 liststart, listend 추가/ 섹션번호 scnum 추가
+	private int sales, liststart, listend;
+	private String scnum;
+	
 	
 }

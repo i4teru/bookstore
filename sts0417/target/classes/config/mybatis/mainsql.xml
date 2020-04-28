@@ -48,17 +48,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select rn, title, url, image from ( select rownum rn, e.* from (select * from bs_event where startdate <= sysdate and enddate >= sysdate) e) where rn <= 7
 		]]>
 	</select>
-	
+
 	<!-- 메인화면 이벤트 개수 (최대7) -->
 	<select id="mainEventCount" resultType="int">
 	<![CDATA[
 		select count(*) from ( select rownum rn, e.* from (select * from bs_event where startdate <= sysdate and enddate >= sysdate) e) where rn <= 7
 		]]>
 	</select>
-	
+
 	<!-- 장바구니 항목 개수 가져오기 -->
 	<select id="pickCount" resultType="int">
-		select count(*) from bookcart where userid=#{userid}
+		select count(*) from bookcart
+		where userid=#{userid}
+	</select>
+
+	<!-- BEST 상품 -->
+	<select id="getBestBooks" resultType="net.bs.spring.BookinfoDTO">
+		<!-- 전체기간 -->
+		select count(p_bnum) as cnt, p_bnum from purchasedetail group by p_bnum
+		order by cnt desc
+		
+		<!--  한달 전
+		select count(p_bnum) as cnt, p_bnum from (select d.ordernum, d.p_bnum, p.buydate from purchasedetail d join purchase p on d.ordernum = p.ordernum where p.buydate >= add_months(sysdate,-1)) group by p_bnum order by cnt desc;
+		-->
+		
+		<!--  일주일 전
+		select count(p_bnum) as cnt, p_bnum from (select d.ordernum, d.p_bnum, p.buydate from purchasedetail d join purchase p on d.ordernum = p.ordernum where p.buydate >= sysdate-1) group by p_bnum order by cnt desc;
+		-->
+	</select>
+	
+	<!-- 최근 댓글 2건-->
+	<select id="newReplies" resultType="net.bs.spring.BookReplyDTO">
+		select * from (select rownum rn, r.* from bsreply r order by r_datetime) where rn between 1 and 2;
 	</select>
 </mapper>
 
