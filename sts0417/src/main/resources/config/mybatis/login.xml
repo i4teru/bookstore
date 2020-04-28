@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="login">	
 	
-	<insert id="dbaccountinsert" parameterType="net.tis.aaa.LoginDTO">
+	<insert id="dbaccountinsert" parameterType="net.bs.spring.LoginDTO">
 		insert into account values(#{name}, #{id}, #{password}, #{email}, #{phone}, to_date(#{birthday},'yyyymmdd'), #{gender}, #{zipcode}, #{address1}, #{address2}, 1, sysdate)
 	</insert>
 	
@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into notice values( #{notice_title}, #{notice_content}, sysdate)
 	</insert>
 	
-	<select id="dbshownotice"  resultType="net.tis.aaa.LoginDTO">
+	<select id="dbshownotice"  resultType="net.bs.spring.LoginDTO">
 		select * from (select rownum rn, n.* from notice n) where rn between #{start} and #{end} 
 	</select>
 	
@@ -29,11 +29,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from notice
 	</select>
 	
-	<select id="dbshownotice_detail"  resultType="net.tis.aaa.LoginDTO">
+	<select id="dbshownotice_detail"  resultType="net.bs.spring.LoginDTO">
 		select * from (select rownum rn, n.* from notice n) where notice_num=#{num}
 	</select>
 	
-	<update id="dbupdatenotice" parameterType="net.tis.aaa.LoginDTO">
+	<update id="dbupdatenotice" parameterType="net.bs.spring.LoginDTO">
 		 update notice set notice_title=#{notice_title}, notice_content=#{notice_content} where notice_num=#{notice_num}
 	</update>
 	
@@ -41,11 +41,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete notice where notice_num=#{num}
 	</delete>
 	
-	<select id="dbaccountdata" resultType="net.tis.aaa.LoginDTO">
+	<select id="dbaccountdata" resultType="net.bs.spring.LoginDTO">
 		select name, id, password, email, phone, to_char(birthday, 'yyyy-mm-dd')as birthday, gender, zipcode, address1, address2, grade, signup_date from account where id=#{id} 
 	</select>
 	
-	<update id="dbeditaccount" parameterType="net.tis.aaa.LoginDTO">
+	<update id="dbeditaccount" parameterType="net.bs.spring.LoginDTO">
 		update account set name=#{name}, email=#{email}, phone=#{phone}, birthday=to_date(#{birthday}, 'yyyy-mm-dd'), zipcode=#{zipcode}, address1=#{address1}, address2=#{address2} where id=#{id}
 	</update>
 	

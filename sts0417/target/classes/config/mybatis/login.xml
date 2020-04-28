@@ -18,11 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="dbnoticeinsert">
-		insert into notice values( notice_seq.nextval, #{notice_title}, #{notice_content}, sysdate)
+		insert into notice values( #{notice_title}, #{notice_content}, sysdate)
 	</insert>
 	
 	<select id="dbshownotice"  resultType="net.bs.spring.LoginDTO">
-		select * from (select rownum rn, n.* from notice n order by notice_num desc) where rn between #{start} and #{end} 
+		select * from (select rownum rn, n.* from notice n) where rn between #{start} and #{end} 
 	</select>
 	
 	<select id="dbcountnotice" resultType="int">
@@ -48,10 +48,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="dbeditaccount" parameterType="net.bs.spring.LoginDTO">
 		update account set name=#{name}, email=#{email}, phone=#{phone}, birthday=to_date(#{birthday}, 'yyyy-mm-dd'), zipcode=#{zipcode}, address1=#{address1}, address2=#{address2} where id=#{id}
 	</update>
-	
-	
-	<!-- 추가했습니다 -->
-	<!--  -->
 	
 </mapper>
 
