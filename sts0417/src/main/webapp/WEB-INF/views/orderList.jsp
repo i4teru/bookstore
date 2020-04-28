@@ -103,7 +103,7 @@
 								<td class="align-middle">${pk.bi_writer}</td>
 								<td class="align-middle">${pk.bi_publisher}</td>
 								<td class="align-middle"><input type="hidden" name="p_amount" value="${pk.amount}"> ${pk.amount}</td>
-								<td class="align-middle"><input type="hidden" name="p_price" value="${pk.bi_price}"> <small class="text-brown2"><del>${pk.bi_price}원</del></small><br>${pk.bi_sprice}원</td>
+								<td class="align-middle"><input type="hidden" name="p_price" value="${pk.bi_sprice}"> <small class="text-brown2"><del>${pk.bi_price}원</del></small><br>${pk.bi_sprice}원</td>
 							</tr>
 							<script>
 								totalamount += ${pk.amount};
@@ -154,7 +154,7 @@
 							<td>
 
 								<div class="input-group " style="max-width: 250px">
-									<input type="text" class="form-control " name="zipcode" id="zipcode" value="${login.zipcode }" readonly required>
+									<input type="text" class="form-control " name="postcode" id="postcode" value="${login.zipcode }" readonly required>
 									<div class="input-group-append">
 										<input class="btn btn-brown1" type="button" onclick="postCode()" value="우편번호 검색">
 									</div>

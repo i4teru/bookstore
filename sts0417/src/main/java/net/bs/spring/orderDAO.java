@@ -27,7 +27,6 @@ public class orderDAO {
 	}
 	
 	public void dbPinsert(orderDTO dto) {
-		
 		temp.insert("order.padd", dto);
 	}// end
 	

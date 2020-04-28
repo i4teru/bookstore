@@ -52,14 +52,14 @@ public class orderController {
 			@RequestParam("tprice") int tprice, @RequestParam("tamount") int tamount) {
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
-
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Date date = new Date();
 		String ordernum = sdf.format(date);
 		String orderstatus = "확인예정";
 
 		int oseq = dao.dbGetOseq();
-
+		dto.setUserid(userid);
 		dto.setOrdernum(ordernum + oseq);
 		dto.setOrderstatus(orderstatus);
 		dto.setTotalamount(tamount);
