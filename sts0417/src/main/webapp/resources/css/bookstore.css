@@ -146,6 +146,10 @@
 	text-align: right;
 }
 
+.vmiddle {
+	vertical-align: middle !important;
+}
+
 .title {
 	vertical-align: middle !important;
 	height: 160px;

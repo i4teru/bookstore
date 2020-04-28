@@ -55,6 +55,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from ( select rownum rn, e.* from (select * from bs_event where startdate <= sysdate and enddate >= sysdate) e) where rn <= 7
 		]]>
 	</select>
+	
+	<!-- 장바구니 항목 개수 가져오기 -->
+	<select id="pickCount" resultType="int">
+		select count(*) from bookcart where userid=#{userid}
+	</select>
 </mapper>
 
 

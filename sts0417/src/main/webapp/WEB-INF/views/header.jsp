@@ -81,7 +81,7 @@
 			<!-- 로그인했을때만 -->
 			<c:if test="${ userid!='' }">
 				<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user"></i>&nbsp;마이페이지</a></li>
-				<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i>&nbsp;장바구니&nbsp;<span class="badge badge-secondary bg-brown2">2</span></a></li>
+				<li class="nav-item"><a class="nav-link" href="pickList.do"><i class="fas fa-shopping-cart"></i>&nbsp;장바구니&nbsp;<span class="badge badge-secondary bg-brown2">${pickCount}</span></a></li>
 			</c:if>
 			<!-- 관리자메뉴 -->
 			<!-- 아이디가 admin일때 혹은 grade가 관리자등급일때 -->

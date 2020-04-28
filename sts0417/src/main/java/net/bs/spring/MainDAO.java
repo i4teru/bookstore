@@ -52,5 +52,9 @@ public class MainDAO {
 	public int mainEventCount() {
 		return temp.selectOne("mainsql.mainEventCount");
 	}
+	
+	public int pickCount(String userid) {
+		return temp.selectOne("mainsql.pickCount", userid);
+	}
 
 }//

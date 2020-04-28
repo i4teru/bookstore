@@ -41,6 +41,9 @@ public class MainController {
 
 		System.out.println("[header.do] 세션 아이디 : " + uid);
 		model.addAttribute("userid", uid);
+		
+		//내 장바구니 개수
+		model.addAttribute("pickCount", dao.pickCount(uid));
 
 		return "header";
 	}
@@ -55,7 +58,7 @@ public class MainController {
 
 		// 신규 입고 도서 불러오기
 		model.addAttribute("newBooks", dao.getNewBooks());
-
+		
 		return "main";
 	}
 
