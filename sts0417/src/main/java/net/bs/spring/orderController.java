@@ -150,6 +150,8 @@ public class orderController {
 		endpage = startpage + 9;
 		
 		int total = dao.dbPcount(userid);
+		System.out.println("myorder.do total : " + total);
+		
 		if(total%10 == 0) {pagecount = total/10;}
 		else {pagecount = (total/10) + 1;}
 		

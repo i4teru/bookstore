@@ -58,7 +58,7 @@ public class orderDAO {
 	}
 	
 	public int dbPcount(String userid) {
-		
+		System.out.println("OrderDAO pcount uid : " + userid);
 		return temp.selectOne("order.pcount", userid);
 	}
 	
