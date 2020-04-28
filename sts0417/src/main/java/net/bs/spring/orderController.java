@@ -113,6 +113,7 @@ public class orderController {
 	public String orderDetail(Model model, HttpServletRequest request) {
 		orderDTO dto = new orderDTO();
 		String ordernum = request.getParameter("ordernum");
+		dto.setOrdernum(ordernum);
 		int p_bnum = Integer.parseInt(request.getParameter("p_bnum"));
 		HttpSession session = request.getSession();
 		String userid = (String)session.getAttribute("userid");
