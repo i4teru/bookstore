@@ -173,7 +173,7 @@ public class BookController {
 		return "bookSection";
 	}
 	
-	//===========책 디테일=========(0424 minji)
+	//===========책 디테일=========(0428 minji)
 	
 	@RequestMapping("/bookdetail.do")
 	//public String book_detail( Model model) {
@@ -181,6 +181,8 @@ public class BookController {
 	public String book_detail(@RequestParam("idx") int data, Model model) {
 		int idx=data;
 		//int idx=1;  //리스트랑 합칠때 idx는 파라메타로 값 받아와야 함(@RequestParam("idx")int idx, Model model)
+		model.addAttribute("reply_cnt", dao.dbreplycnt(idx));
+		model.addAttribute("staravg", dao.dbStaravg(idx));
 		model.addAttribute("dto", dao.dbDetail(idx));
 		return "bookDetail";
 	}

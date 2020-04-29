@@ -30,6 +30,14 @@
 	
 	<context:component-scan base-package="net.bs.*" />
 	
-	
+	<!-- 0427월요일 intercept 추가 -->
+	<beans:bean id="LoginInterceptio" class="net.bs.spring.LoginInterceptor"/>
+	<interceptors>
+	  <interceptor>
+	    <mapping path="/replyInsert.do"/>
+	    <mapping path="/reply_reInsert.do"/>
+	    <beans:ref bean="LoginInterceptio"/>
+	  </interceptor>
+	</interceptors>
 	
 </beans:beans>

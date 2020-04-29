@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
 <html>
 <head>
 <title>개발서점</title>
 
+<script src="./resources/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="./resources/js/bootstrap.min.js"></script>
 
 <style type="text/css">
 img.border-shadow {
@@ -22,31 +23,55 @@ img.border-shadow {
 	<!-- 헤더 분리 -->
 	<c:import url="/header.do"></c:import>
 	<div class="container">
-		<br>
-		<br>
-		<br>
+		<br> <br> <br>
 
-		<table class="acenter" style="width: 100%; height: 550px;">
+		<table align="center" style="width: 100%; height: 550px;">
 			<tr style="border-bottom: 1px solid #BBBBBB; border-top: 1px solid #BBBBBB;">
 				<td rowspan="2" width="27%" style="border-right: 1px solid #BBBBBB;"><img class="border-shadow" alt="image" src="${dto.bi_image}" width="90%" height="90%"></td>
 				<td height="250px;">
-					<h1>${dto.bi_title}</h1> 
-					&nbsp; <font style="font-size: 11pt; color: #696969">ISBN : ${dto.bi_isbn}</font>
-					<br> &nbsp; <font style="color: #444444;"> ${dto.bi_writer} | ${dto.bi_publisher} | ${dto.bi_pdate}<br>
-					<br> &nbsp; 별점<font class="text-bsyellow" size="2pt"> <i class="fas fa-star "></i> <c:forEach begin="2" end="5">
-								<i class="far fa-star"></i>
-							</c:forEach>
-					</font> ${dto.bi_stars}점 &nbsp;&nbsp;리뷰 0개
+					<h1>${dto.bi_title}</h1> &nbsp; <font style="font-size: 11pt; color: #696969">ISBN : ${dto.bi_isbn}</font> <br> &nbsp; <font style="color: #444444;"> ${dto.bi_writer} | ${dto.bi_publisher} | ${dto.bi_pdate}<br> <br> &nbsp; 
+					별점<font class="text-bsyellow" size="2pt"> <c:if
+								test="${staravg eq 0 }">
+								<c:forEach begin="1" end="5">
+									<i class="far fa-star text-bsyellow"></i>
+								</c:forEach>
+							</c:if> 
+							<c:if test="${staravg eq 1 }">
+								<i class="fas fa-star text-bsyellow"></i>
+								<c:forEach begin="2" end="5">
+									<i class="far fa-star text-bsyellow"></i>
+								</c:forEach>
+							</c:if><c:if test="${staravg eq 2 }">
+								<c:forEach begin="1" end="2">
+									<i class="fas fa-star text-bsyellow"></i>
+								</c:forEach>
+								<c:forEach begin="3" end="5">
+									<i class="far fa-star text-bsyellow"></i>
+								</c:forEach>
+							</c:if> <c:if test="${staravg eq 3 }">
+								<c:forEach begin="1" end="3">
+									<i class="fas fa-star text-bsyellow"></i>
+								</c:forEach>
+								<c:forEach begin="4" end="5">
+									<i class="far fa-star text-bsyellow"></i>
+								</c:forEach>
+							</c:if><c:if test="${staravg eq 4 }">
+								<c:forEach begin="1" end="4">
+									<i class="fas fa-star text-bsyellow"></i>
+								</c:forEach>
+								<i class="far fa-star text-bsyellow"></i>
+							</c:if> <c:if test="${staravg eq 5 }">
+								<c:forEach begin="1" end="5">
+									<i class="fas fa-star text-bsyellow"></i>
+								</c:forEach>
+							</c:if>
+					</font>${staravg}점 &nbsp;&nbsp;리뷰 ${reply_cnt} 개
 				</font><br>
 				</td>
 			</tr>
 			<tr style="border-bottom: 1px solid #BBBBBB;">
-				<td>&nbsp; 판매가 : <font style="color: #F08080; font-size: 15pt; font-weight: bold">${dto.bi_price}원</font> 
-				<br>
-				<br>
-				&nbsp;
-				<!-- 장바구니 넘어갈때 bi_num이랑 수량(디비에서 이름 확인)해서 &로 같이 넘어가게 할 것 -->
-				<a href="#"><i class="fas fa-shopping-cart"></i>장바구니 담기 / 수량 : <input type="number" min="1" max="100" name="amount"/></a>
+				<td>&nbsp; 판매가 : <font style="color: #F08080; font-size: 15pt; font-weight: bold"><fmt:formatNumber value="${dto.bi_price}" pattern="#,###,###" />원</font> <br> <br> &nbsp; <!-- 장바구니 넘어갈때 bi_num이랑 수량(디비에서 이름 확인)해서 &로 같이 넘어가게 할 것 status랑 isbn도 같이 넘길것  / bi_status가 is면 재고 있음이라는 뜻-->
+					<a href="#"><i class="fas fa-shopping-cart"></i>장바구니 담기</a>&nbsp; 수량 : <input type="number" min="1" max="100" name="amount" value="1" />
 				</td>
 			</tr>
 			<tr style="border-bottom: 1px solid #BBBBBB;">

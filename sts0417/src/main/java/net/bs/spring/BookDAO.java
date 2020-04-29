@@ -81,6 +81,14 @@ public class BookDAO {
 		return temp.selectOne("books.select_detail", idx);
 	}
 	
+	public int dbStaravg(int idx) {   //디테일 별점 평균
+		return temp.selectOne("books.star_avg", idx);
+	}  
+	
+	public int dbreplycnt(int idx) {  //디테일 리뷰 갯수
+		return temp.selectOne("books.reply_cnt", idx);
+	}
+	
 	/*public BookinfoDTO dbDetail(int idx) {   리스트에서 디테일 페이지로 넘어올때 사용 할 부분
 		return temp.selectOne("books.select_detail", idx);
 	}*/

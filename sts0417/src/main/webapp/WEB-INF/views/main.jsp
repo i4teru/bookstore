@@ -120,7 +120,7 @@
 						<c:forEach items="${newBooks}" var="newBook">
 							<table class="mt-2 mb-1 mauto">
 								<tr>
-									<td><img src="${ newBook.bi_image }"></td>
+									<td><a href="bookdetail.do?idx=${newBook.bi_num}"><img src="${ newBook.bi_image }"></a></td>
 									<td class="text-darkgray"><b>${ newBook.bi_title }</b><br> <small class="text-brown2">${ newBook.bi_writer } / ${ newBook.bi_publisher }</small></td>
 								</tr>
 							</table>

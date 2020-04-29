@@ -19,40 +19,35 @@ public class BookReplyDAO {
 	public void dbReinsert(BookReplyDTO dto) {
 		temp.insert("book_reply.readd", dto);
 	}
-	
-/*	public List<BookReplyDTO> dbSelect(BookReplyDTO dto) {
-		List<BookReplyDTO> list = temp.selectList("book_reply.select",dto);
-		return list;
-	} */
-	
+
 	public List<BookReplyDTO> dbSelect(int start, int end, int data) {
 		BookReplyDTO dto = new BookReplyDTO();
 		dto.setStart(start);
 		dto.setEnd(end);
 		dto.setBi_num(data); //0425 추가 by kjr
 		return temp.selectList("book_reply.select",dto);
-	}
-	
+	}	
 	
 	public int dbDelete(int ridx) {
 		return temp.delete("book_reply.delete", ridx);
-	}
-	
+	}  
+
 	public void dbEdit(BookReplyDTO dto) {
 		temp.update("book_reply.edit", dto);
 	}
 	
 	public void dbHit(int ridx) {
 		temp.update("book_reply.rehit",ridx);
+	}  
+	
+	public int dbReplycnt(int idx) {   //대댓포함 총 카운트
+		return temp.selectOne("book_reply.replycnt", idx);
 	}
 	
-	public int dbReplycnt() {   //대댓포함 총 카운트
-		return temp.selectOne("book_reply.replycnt");
+	public int dbReplycount(int idx) {  //원댓글만 있는 카운트
+		return temp.selectOne("book_reply.replycount", idx);
 	}
 	
-	public int dbReplycount() {  //원댓글만 있는 카운트
-		return temp.selectOne("book_reply.replycount");
-	}
 	
 	
 	/*

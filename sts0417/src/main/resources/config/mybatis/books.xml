@@ -126,10 +126,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		) where rn between #{liststart} and #{listend}		
 	</select>
 	
-	<!-- 0424 ===========책 디테일 ================ by minji  -->
+	<!-- 0428 ===========책 디테일 ================ by minji  -->
 	<select id="select_detail" resultType="net.bs.spring.BookinfoDTO">
 		select * from bookinfo where bi_num = #{idx}   <!-- 나중에  리스트랑 연결 시킬때는  1을 #{idx}로 바꿔야 함 -->
 	</select>
+	
+ 	<select id="star_avg" resultType="int">	
+	  select round(NVL(avg(r_stars),0),1) as avpnt from bsreply where bi_num= #{idx} and lvl=0 
+		  <!--  select round ((select sum(r_stars)/count(*) from bsreply where bi_num = #{idx} and lvl=0),1) as avpnt from bsreply-->  
+	</select>
+	
+	<select id="reply_cnt" parameterType="int" resultType="int">
+		select count(*) from bsreply where bi_num = #{idx} and lvl = 0
+	</select>
+	<!-- ================================================ -->
 	
 	<!-- 0426 리뷰 달 때 별점이랑 리뷰갯수 업데이트 by kjr -->
 	<update id="add_ratings" parameterType="net.bs.spring.BookinfoDTO">

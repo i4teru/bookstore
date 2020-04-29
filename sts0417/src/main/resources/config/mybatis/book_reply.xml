@@ -29,24 +29,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where rn between #{start} and #{end}
 	</select>
 	
-	<delete id="delete" parameterType="int">
-		delete from bsreply where r_num = #{ridx}
+	<delete id="delete" parameterType="int"  >
+		delete from bsreply where r_num = #{ridx} 
 	</delete>
 	
 	<update id="edit" parameterType="net.bs.spring.BookReplyDTO">
-		update bsreply set r_content = #{r_content}, r_datetime = current_timestamp, r_stars = #{r_stars} where r_num = #{ridx} and bi_num = 110  <!-- 110 부분은 나중에 #{bi_num}으로 변경 -->
+		update bsreply set r_content = #{r_content}, r_datetime = current_timestamp, r_stars = #{r_stars} where r_num = #{r_num} and bi_num = #{bi_num}  <!-- 110 부분은 나중에 #{bi_num}으로 변경 -->
 	</update>
 	
 	<update id="rehit" parameterType="net.bs.spring.BookReplyDTO">  <!-- 리뷰 추천 -->
-		update bsreply set r_hit = r_hit + 1 where r_num = #{r_num} and bi_num = 110  <!-- 110 부분은 나중에 #{bi_num}으로 변경 -->
+		update bsreply set r_hit = r_hit + 1 where r_num = #{ridx}   <!--and bi_num = #{bi_num} 110 부분은 나중에 #{bi_num}으로 변경 -->
 	</update>
 	
-	<select id="replycnt" resultType="int">
-		select count(*) from bsreply where bi_num = 110
+	<select id="replycnt" parameterType="int" resultType="int">
+		select count(*) from bsreply where bi_num = #{idx}
 	</select>
 	
 	<select id="replycount" resultType="int">
-		select count(*) from bsreply where bi_num = 110 and lvl = 0
+		select count(*) from bsreply where bi_num = #{idx} and lvl = 0
 	</select>
 	
 </mapper>
