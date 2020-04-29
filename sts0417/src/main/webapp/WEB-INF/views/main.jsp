@@ -11,11 +11,12 @@
 <script src="./resources/js/bootstrap.min.js"></script>
 
 <script>
-	var eventcount = ${mainEventCount};
+	var eventcount = ${	mainEventCount};
 	var currentevent = 1;
 
 	$(function() {
-		setInterval(function() {
+
+		function changeEvent() {
 			currentevent += 1;
 			if (currentevent > eventcount)
 				currentevent = 1;
@@ -24,13 +25,28 @@
 
 			$(".e-img").css("display", "none");
 			$("#e-img-" + currentevent).css("display", "block");
-
-		}, 500);
-
-		if ($("#mainbox-new").height() > $("#mainbox-best").height())
+		}
+		var eventTimer = setInterval(changeEvent, 3000);
+	
+		/*if ($("#mainbox-new").height() > $("#mainbox-best").height())
 			$(("#mainbox-best").height($("#mainbox-new").height()));
 		else
-			$(("#mainbox-new").height($("#mainbox-best").height()));
+			$(("#mainbox-new").height($("#mainbox-best").height()));*/
+
+		$(".e-li").click(function(){
+			var idx = $(".e-li").index(this) + 1;
+
+			currentevent = idx;
+
+			$(".e-li").removeClass("event-active");
+			$("#e-li-" + currentevent).addClass("event-active");
+
+			$(".e-img").css("display", "none");
+			$("#e-img-" + currentevent).css("display", "block");
+
+			clearInterval(eventTimer);
+			eventTimer = setInterval(changeEvent, 3000);
+		});
 	});
 </script>
 </head>
@@ -130,14 +146,14 @@
 						<span class="badge bg-bsyellow text-light">NEW</span> 신규 입고
 					</div>
 					<div class="mainbox main-new" id="mainbox-new">
-						<c:forEach items="${newBooks}" var="newBook">
-							<table class="mt-2 mb-1 mauto">
+						<table class="main-new-item">
+							<c:forEach items="${newBooks}" var="newBook">
 								<tr>
 									<td><a href="bookdetail.do?idx=${newBook.bi_num}"><img src="${ newBook.bi_image }"></a></td>
 									<td class="text-darkgray"><b>${ newBook.bi_title }</b><br> <small class="text-brown2">${ newBook.bi_writer } / ${ newBook.bi_publisher }</small></td>
 								</tr>
-							</table>
-						</c:forEach>
+							</c:forEach>
+						</table>
 					</div>
 				</div>
 
