@@ -56,8 +56,17 @@ public class MainController {
 		model.addAttribute("mainEventCount", dao.mainEventCount());
 		model.addAttribute("mainEvents", dao.getMainEvents());
 
+		// 베스트 게시물 불러오기
+		model.addAttribute("bestBooks", dao.getBestBooks());
+		
 		// 신규 입고 도서 불러오기
 		model.addAttribute("newBooks", dao.getNewBooks());
+		
+		// 최근 공지사항 불러오기
+		model.addAttribute("notice", dao.getNotice());
+		
+		// 최근 댓글 불러오기
+		model.addAttribute("newReplies", dao.getNewReplies());
 		
 		return "main";
 	}

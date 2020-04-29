@@ -63,23 +63,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<!-- BEST 상품 -->
-	<select id="getBestBooks" resultType="net.bs.spring.BookinfoDTO">
+	<select id="bestBooks" resultType="net.bs.spring.BookinfoDTO">
 		<!-- 전체기간 -->
-		select count(p_bnum) as cnt, p_bnum from purchasedetail group by p_bnum
-		order by cnt desc
-		
-		<!--  한달 전
-		select count(p_bnum) as cnt, p_bnum from (select d.ordernum, d.p_bnum, p.buydate from purchasedetail d join purchase p on d.ordernum = p.ordernum where p.buydate >= add_months(sysdate,-1)) group by p_bnum order by cnt desc;
-		-->
-		
-		<!--  일주일 전
-		select count(p_bnum) as cnt, p_bnum from (select d.ordernum, d.p_bnum, p.buydate from purchasedetail d join purchase p on d.ordernum = p.ordernum where p.buydate >= sysdate-1) group by p_bnum order by cnt desc;
-		-->
+		select p.*, b.* from (select * from ( select rownum rn, t.* from (select count(p_bnum) as
+		cnt, p_bnum from purchasedetail group by p_bnum order by cnt desc) t)
+		where rn between 1 and 3) p join bookinfo b on p.p_bnum = b.bi_num
+		<!-- 한달 전 select * from ( select rownum rn, t.* from ( select count(p_bnum) 
+			as cnt, p_bnum from (select d.ordernum, d.p_bnum, p.buydate from purchasedetail 
+			d join purchase p on d.ordernum = p.ordernum where p.buydate >= add_months(sysdate,-1)) 
+			group by p_bnum order by cnt desc) t) where rn between 1 and 3; -->
+
+		<!-- 일주일 전 select * from ( select rownum rn, t.* from ( select count(p_bnum) 
+			as cnt, p_bnum from (select d.ordernum, d.p_bnum, p.buydate from purchasedetail 
+			d join purchase p on d.ordernum = p.ordernum where p.buydate >= sysdate-1) 
+			group by p_bnum order by cnt desc) t) where rn between 1 and 3; -->
+	</select>
+
+	<!-- 최근 댓글 2건 -->
+	<select id="newReplies" resultType="net.bs.spring.BookinfoDTO">
+		select * from (select rownum
+		rn,b.bi_num, b.bi_title, b.bi_image, b.bi_writer, b.bi_publisher,
+		r.r_content as bi_comment, r.r_stars as bi_stars from bsreply r join
+		bookinfo b on r.bi_num = b.bi_num order by r.r_datetime) where rn
+		between 1 and 2
 	</select>
 	
-	<!-- 최근 댓글 2건-->
-	<select id="newReplies" resultType="net.bs.spring.BookReplyDTO">
-		select * from (select rownum rn, r.* from bsreply r order by r_datetime) where rn between 1 and 2;
+	<!-- 최근 공지사항 7건-->
+	<select id="newNotice" resultType="net.bs.spring.LoginDTO">
+		select * from (select rownum rn, n.* from notice n) where rn between 1 and 7 
 	</select>
 </mapper>
 

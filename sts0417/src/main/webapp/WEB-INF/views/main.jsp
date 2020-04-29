@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page session="false"%>
 <html>
 <head>
@@ -10,10 +11,7 @@
 <script src="./resources/js/bootstrap.min.js"></script>
 
 <script>
-	var eventcount = $
-	{
-		mainEventCount
-	};
+	var eventcount = ${mainEventCount};
 	var currentevent = 1;
 
 	$(function() {
@@ -27,8 +25,13 @@
 			$(".e-img").css("display", "none");
 			$("#e-img-" + currentevent).css("display", "block");
 
-		}, 3000);
+		}, 500);
 
+
+		if ($("#mainbox-new").height()>$("#mainbox-best").height())
+			$(("#mainbox-best").height($("#mainbox-new").height()));
+		else
+			$(("#mainbox-new").height($("#mainbox-best").height()));
 	});
 </script>
 </head>
@@ -43,7 +46,7 @@
 			<!-- 이벤트 이미지 -->
 
 			<div class="mt-3">
-				<table class="eventimage noppading nomargin">
+				<table class="eventimage">
 					<tr>
 						<td class="bg-brown1">
 							<ul>
@@ -59,6 +62,14 @@
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
+								<c:if test="${mainEventCount==0}">
+									<li>
+										<p class="event-active">
+											<i class="fas fa-exclamation-triangle"></i>
+										</p>
+										<p>현재 진행중인<br>이벤트가 없습니다</p>
+									</li>
+								</c:if>
 							</ul>
 						</td>
 						<td class="bg-brown2" style="width: 880px"><c:forEach items="${mainEvents}" varStatus="e" var="mainEvent">
@@ -73,7 +84,9 @@
 									</c:otherwise>
 								</c:choose>
 
-							</c:forEach></td>
+							</c:forEach> <c:if test="${mainEventCount==0}">
+								<img src="./resources/images/noevent.png">
+							</c:if></td>
 					</tr>
 				</table>
 
@@ -87,22 +100,22 @@
 					<div class="mainbox-title mt-4">
 						<i class="fas fa-crown text-bsyellow"></i> 이번 주 BEST
 					</div>
-					<div class="mainbox pb-3 pt-3" id="mainbox-best">
+					<div class="mainbox p-3 pt-4 align-middle" id="mainbox-best">
 						<div class="row">
-							<c:forEach begin="1" end="3">
+							<c:forEach items="${bestBooks}" var="book">
 								<div class="col">
-									<table class="main-best">
+									<table class="main-best mauto">
 										<tr>
-											<td style="text-align: center"><img src="./resources/images/bookimg1.jpg"></td>
+											<td style="text-align: center"><img src="${book.bi_image}"></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray"><b>모두의 아두이노</b></td>
+											<td class="text-darkgray"><b>${book.bi_title }</b></td>
 										</tr>
 										<tr>
-											<td class="text-brown2"><small>다카모토 다카요리 / 길벗</small></td>
+											<td class="text-brown2"><small>${book.bi_writer } / ${book.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">14,400원</td>
+											<td class="text-darkgray" style="text-align: right">${book.bi_sprice }원</td>
 										</tr>
 									</table>
 
@@ -116,11 +129,11 @@
 					<div class="mainbox-title mt-4">
 						<span class="badge bg-bsyellow text-light">NEW</span> 신규 입고
 					</div>
-					<div class="mainbox main-new">
+					<div class="mainbox main-new" id="mainbox-new">
 						<c:forEach items="${newBooks}" var="newBook">
 							<table class="mt-2 mb-1 mauto">
 								<tr>
-									<td><a href="bookdetail.do?idx=${newBook.bi_num}"><img src="${ newBook.bi_image }"></a></td>
+									<td><img src="${ newBook.bi_image }"></td>
 									<td class="text-darkgray"><b>${ newBook.bi_title }</b><br> <small class="text-brown2">${ newBook.bi_writer } / ${ newBook.bi_publisher }</small></td>
 								</tr>
 							</table>
@@ -140,8 +153,8 @@
 						공지사항 <a href="notice.do" class="text-brown3"><i class="fas fa-plus"></i></a>
 					</div>
 					<ul class="main-notice">
-						<c:forEach begin="1" end="7" var="i">
-							<li><span class="text-brown2">[2020-04-21] </span><span class="text-darkgray">신규 오픈 공지사항 ${ i }번째 이래도 공지가 짧다고 생각해?</span></li>
+						<c:forEach items="${notice}" var="nt">
+							<li><span class="text-brown2">[${nt.upload_date}] </span><span class="text-darkgray"><a href="notice_detail.do?num=${nt.notice_num}">${nt.notice_title}</a></span></li>
 						</c:forEach>
 
 					</ul>
@@ -151,17 +164,17 @@
 				<div class="col h-100">
 					<div class="mainbox-title mt-4">최신 리뷰</div>
 					<!-- 리뷰 2건 출력 -->
-					<c:forEach begin="1" end="2" var="i">
+					<c:forEach items="${newReplies}" var="reply">
 						<table class="table-sm table-borderless mb-2 main-review">
 							<tr>
-								<td rowspan="3" class="pl-2"><img src="./resources/images/bookimg1.jpg" class="main-review-img"></td>
-								<td><span class="text-darkgray"><b>모두의 아두이노</b></span><span class="text-brown2"><br> <small>다카모토 다카요리 / 길벗</small></span></td>
+								<td rowspan="3" class="pl-2"><img src="${reply.bi_image}" class="main-review-img"></td>
+								<td><span class="text-darkgray"><b>${ reply.bi_title }</b></span><span class="text-brown2"><br> <small>${reply.bi_writer } / ${reply.bi_publisher }</small></span></td>
 							</tr>
 							<!-- 별점 -->
 							<tr>
-								<td><span class="text-bsyellow"> <c:forEach begin="1" end="3">
+								<td><span class="text-bsyellow"> <c:forEach begin="1" end="${reply.bi_stars}">
 											<i class="fas fa-star"></i>
-										</c:forEach> <c:forEach begin="4" end="5">
+										</c:forEach> <c:forEach begin="${reply.bi_stars + 1}" end="5">
 											<i class="far fa-star"></i>
 										</c:forEach>
 								</span></td>
@@ -169,7 +182,7 @@
 							<tr>
 								<td>
 									<p class="text-darkgray">
-										<small>하루종일 저항색만 찾고 있어요. 책이 너무 구리고 정신에 해롭네요.</small>
+										<small>${reply.bi_comment}</small>
 									</p>
 								</td>
 							</tr>

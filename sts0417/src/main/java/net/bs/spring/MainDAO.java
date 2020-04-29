@@ -56,5 +56,17 @@ public class MainDAO {
 	public int pickCount(String userid) {
 		return temp.selectOne("mainsql.pickCount", userid);
 	}
+	
+	public List<BookReplyDTO> getNewReplies(){
+		return temp.selectList("mainsql.newReplies");
+	}
+	
+	public List<BookinfoDTO> getBestBooks() {
+		return temp.selectList("mainsql.bestBooks");
+	}
+	
+	public List<LoginDTO> getNotice() {
+		return temp.selectList("mainsql.newNotice");
+	}
 
 }//
