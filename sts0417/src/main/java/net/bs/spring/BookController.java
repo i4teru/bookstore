@@ -123,10 +123,11 @@ public class BookController {
 	}
 	
 	@RequestMapping("/bookSection.do")
-	public String book_Section(HttpServletRequest request, Model model) {
+	public String book_Section(HttpServletRequest request, Model model, BookinfoDTO dto) {
 		//섹션 번호 받아오기
 		String scnum = request.getParameter("scnum");
 		System.out.println("섹션#는: "+scnum);
+		dto.setScnum(scnum);
 		
 		int maxcount = 10; //한 페이지에 출력되는 권수
 		int maxpage = 6; //최대 페이지 번호 갯수(범위 넘어가면 화살표 처리)
@@ -138,9 +139,20 @@ public class BookController {
 			} catch (Exception e) {
 				page = 1;
 			}
+				
+		//검색화면에서 정렬할 때 query조건 받아오기
+		String query = request.getParameter("query");
+		if(query != null && query !="") {
+			dto.setQuery(query);
+		}
 		
 		//해당섹션의 전체 책 수 받아오기 
-		int total = dao.scCount(scnum);
+		int total;
+//		String query = dto.getQuery();
+//		System.out.println(query);
+//		if(scnum.equals("6")) { total = dao.scCount(scnum, dto.getQuery());
+//		} else {total = dao.scCount(scnum);}
+		total = dao.scCount(dto);
 		System.out.println("섹션#는: "+scnum+" "+"총 권 수는"+total);
 		
 		//총 페이지번호 갯수 구하기
@@ -152,6 +164,9 @@ public class BookController {
 		//페이지 맨 윗줄과 맨 아랫줄
 		int liststart = (page - 1) * maxcount + 1;
 		int listend = liststart + maxcount - 1; 
+		//섹션번호, 리스트시작번호, 리스트끝번호, 정렬조건 DTO에 넣기
+		dto.setListstart(liststart);
+		dto.setListend(listend);
 		
 		//시작 페이지번호와 끝 페이지번호
 		int pagestart = ((page - 1) / maxpage) * maxpage + 1;
@@ -160,8 +175,12 @@ public class BookController {
 		if (pageend > pagecount)
 			pageend = pagecount;
 		
+		//정렬조건
 		String sort = request.getParameter("sort");
-		List<BookinfoDTO> SL = dao.scSelectAll(scnum, liststart, listend, sort);
+		dto.setSort(sort);
+				
+		//List<BookinfoDTO> SL = dao.scSelectAll(scnum, liststart, listend, sort);
+		List<BookinfoDTO> SL = dao.scSelectAll(dto);
 		model.addAttribute("SL", SL);
 		model.addAttribute("STotal", total);
 		model.addAttribute("page", page);
@@ -170,6 +189,7 @@ public class BookController {
 		model.addAttribute("pagecount", pagecount);
 		model.addAttribute("sort", sort);
 		model.addAttribute("scnum",scnum);
+		model.addAttribute("query", query);
 		return "bookSection";
 	}
 	

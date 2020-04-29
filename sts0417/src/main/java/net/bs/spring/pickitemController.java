@@ -42,20 +42,26 @@ public class pickitemController {
 	@Autowired
 	private ServletContext application;
 	
+	//0429 by kjr 장바구니에 넣기 전에 이미 항목이 있는지 체크하도록 수정
 	@RequestMapping("/pickInsert.do")
-	public String pick(HttpServletRequest request, pickitemDTO dto) { //0427 by kjr 장바구니에 넣으려고 수정
+	public String pre_insert(HttpServletRequest request, pickitemDTO dto) {
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("userid");
 		String isbn = request.getParameter("idx");
 		int bnum = Integer.parseInt(request.getParameter("nidx"));
 		String status = request.getParameter("sidx");
-		//System.out.println(dto.getAmount()+", "+id);
+		
 		dto.setUserid(id);
 		dto.setIsbn(isbn);
 		dto.setBnum(bnum);
 		dto.setStatus(status);
 		
-		dao.dbInsert(dto);
+		int chk;
+		chk = dao.chkCart(bnum);
+		if(chk == 0) {
+			dao.dbInsert(dto);		
+		} else { dao.dbUpdate(dto); }
+		
 		return "redirect:/pickList.do";
 	}
 	

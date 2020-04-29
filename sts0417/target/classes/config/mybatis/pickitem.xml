@@ -29,11 +29,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update bookcart set amount = amount-1 where bnum = #{bnum} and userid = #{userid}
 	</update>
 
-<insert id="add">
+	<insert id="add">
 	  insert into bookcart values(
 	      #{userid}, #{isbn}, #{amount}, #{status}, #{bnum}
 	  )
 	</insert>
+	
+	<!-- 0429 by kjr 장바구니 입력 수정 위해 추가 -->
+	<select id="pre_count" parameterType="int" resultType="int">
+		select count(*) from bookcart where bnum= #{bnum}
+	</select>
+	
+	<update id="add_amount" parameterType="net.bs.spring.pickitemDTO">
+		update bookcart set amount=amount+#{amount} where bnum=#{bnum}
+	</update>
 	
 </mapper>
 

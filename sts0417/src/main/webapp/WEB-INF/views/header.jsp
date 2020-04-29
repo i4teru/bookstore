@@ -12,6 +12,13 @@
 <!-- 폰트어썸 -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
+<script type="text/javascript">
+function goSearch(){
+	var a = document.searchform.scnum.value();
+	alert(a);
+}
+</script>
+
 <div class="title pt-5">
 	<div class="container mb-3">
 		<div class="row">
@@ -20,15 +27,19 @@
 				<a href="main.do"><img class="mainlogo" src="./resources/images/logo.png"></a>
 			</div>
 			<!-- 검색창 -->
+		
 			<div class="col-6 acenter">
+			<form action="bookSection.do">
 				<div class="input-group mainsearch-group">
-					<input class="form-control mainsearch" type="text">
+					<input class="form-control mainsearch" type="text" name="query">
+					<input type="hidden" name="scnum" value="6">
 					<div class="input-group-append">
 						<button class="btn" type="submit">
 							<i class="fas fa-search text-brown1"></i>
 						</button>
 					</div>
 				</div>
+			</form>
 			</div>
 			<!-- 로그인 -->
 			<div class="col-3 aright">

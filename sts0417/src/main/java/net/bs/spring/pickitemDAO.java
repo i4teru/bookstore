@@ -35,4 +35,13 @@ public class pickitemDAO  {
 			temp.update("pickitem.del2", dto);
 		}
 		
+		//0429 by kjr 장바구니에 중복된 항목이 있으면 수량만 증가시키기 위해 추가한 항목
+		public int chkCart(int bnum) {
+			return temp.selectOne("pre_count", bnum);
+		}
+		
+		public void dbUpdate(pickitemDTO dto) {
+			temp.update("pickitem.add_amount", dto);
+		}
+		
 }//class END

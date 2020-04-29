@@ -22,6 +22,7 @@ public class BookinfoDTO {
 	//0428 나중에 판매량 필드 추가하려고 (조인으로 select시) sales 추가/ 페이징하려고 liststart, listend 추가/ 섹션번호 scnum 추가
 	private int sales, liststart, listend;
 	private String scnum;
-	
+	//0429 검색하려고 query 추가
+	private String query;
 	
 }

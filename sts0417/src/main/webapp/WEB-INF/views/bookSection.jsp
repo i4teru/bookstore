@@ -102,11 +102,11 @@ function addToCart(num){
 					<tr>
 						<td> 
 							<ul class="breadcrumb justify-content-center">
-							  <li><a href="bookSection.do?scnum=${scnum }&page=&sort=publish_desc">출간일순</a></li>
-							  <li><a href="bookSection.do?scnum=${scnum }&page=&sort=price_asc">최저가순</a></li>
-							  <li><a href="bookSection.do?scnum=${scnum }&page=&sort=sales_desc">판매량순</a></li>
-							  <li><a href="bookSection.do?scnum=${scnum }&page=&sort=points_desc">평점순</a></li>
-							  <li><a href="bookSection.do?scnum=${scnum }&page=&sort=reviews_desc">리뷰순</a></li>
+							  <li><a href="bookSection.do?scnum=${scnum }&page=&sort=publish_desc&query=${query}">출간일순</a></li>
+							  <li><a href="bookSection.do?scnum=${scnum }&page=&sort=price_asc&query=${query}">최저가순</a></li>
+							  <li><a href="bookSection.do?scnum=${scnum }&page=&sort=sales_desc&query=${query}">판매량순</a></li>
+							  <li><a href="bookSection.do?scnum=${scnum }&page=&sort=points_desc&query=${query}">평점순</a></li>
+							  <li><a href="bookSection.do?scnum=${scnum }&page=&sort=reviews_desc&query=${query}">리뷰순</a></li>
 							</ul>
 						</td></tr>
 					<tr>

@@ -67,6 +67,19 @@ public class BookDAO {
 		return sccnt;
 	}
 	
+	public int scCount(String scnum, String query) {
+		BookinfoDTO dto = new BookinfoDTO();
+		dto.setScnum(scnum);
+		dto.setQuery(query);
+		int sccnt = temp.selectOne("books.count_sc", dto);
+		return sccnt;
+	}
+	
+	public int scCount(BookinfoDTO dto) {
+		int sccnt = temp.selectOne("books.count_sc", dto);
+		return sccnt;
+	}
+	
 	public List<BookinfoDTO> scSelectAll(String scnum, int liststart, int listend, String sort) {
 		BookinfoDTO dto = new BookinfoDTO();
 		dto.setScnum(scnum);
@@ -75,6 +88,12 @@ public class BookDAO {
 		dto.setSort(sort);
 		return temp.selectList("books.select_scAll", dto);
 	}
+	
+	public List<BookinfoDTO> scSelectAll(BookinfoDTO dto) {
+		return temp.selectList("books.select_scAll", dto);
+	}
+	
+	
 	
 	//0424 =================µðÅ×ÀÏ============= by minji
 	public BookinfoDTO dbDetail(int idx) {

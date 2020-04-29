@@ -1,5 +1,7 @@
 package net.bs.spring;
 
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -34,8 +36,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		}else{
 		  response.setContentType("text/html; charset=utf-8");
 		  response.getWriter().append("<script>"
-					+ "alert('LoginInterceptor인셉션 로그인이필요합니다');"
-		       		+ "location.href='login.do';"
+		       		+ "location.href='login.do?msg="+URLEncoder.encode("로그인이 필요합니다.","UTF-8")+"';"
 				    + "</script>").flush();
 		 flag=false;
 		}

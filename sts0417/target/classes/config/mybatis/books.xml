@@ -90,8 +90,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<when test="scnum == 3"> where regexp_like(bi_title||bi_content, '프로그래밍|C언어|java|자바|JSP|Ajax|xml' , 'i') and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i' )</when>
 				<when test="scnum == 4"> where regexp_like(bi_title||bi_content, '오라클|데이터베이스|db|mysql|oracle' , 'i' ) </when>
 				<when test="scnum == 5"> where regexp_like(bi_title||bi_content, '웹 서비스|스프링|프레임워크' , 'i') </when>
-				<when test="scnum == 6"> where regexp_like(bi_title||bi_content, '자바' ) </when>
-				<otherwise></otherwise>
+				<when test="scnum == 6"> where regexp_like(bi_title||bi_content, #{query} , 'i' ) </when> 
+				<otherwise>   </otherwise>
 			</choose>
 		
 	</select>
@@ -110,8 +110,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 											 	and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i' </when>
 					<when test="scnum == 4"> '오라클|데이터베이스|db|mysql|oracle' , 'i' </when>
 					<when test="scnum == 5"> '웹 서비스|스프링|프레임워크' , 'i' </when>
-					<when test="scnum == 6"> '나중에 #{query}로 수정' </when>
-					<otherwise> </otherwise>
+					<when test="scnum == 6"> #{query} , 'i' </when>
+					<otherwise>  </otherwise>
 				</choose>				
 				)) b 
 			order by
