@@ -27,13 +27,13 @@
 						<table class="table table-borderless table-sm">
 							<tr>
 								<td>제목</td>
-								<td><input type="text" class="form-control" id="title"
+								<td><input type="text" class="form-control" id="notice_title"
 									name="notice_title"></td>
 							</tr>
 							<tr>
 								<td>내용</td>
 								<td><textarea rows="10" cols="30" class="form-control"
-										id="content" name="notice_content"></textarea></td>
+										id="notice_content" name="notice_content"></textarea></td>
 							</tr>
 							<tr>
 								<td colspan="2" class="acenter pt-5 pb-3"><button

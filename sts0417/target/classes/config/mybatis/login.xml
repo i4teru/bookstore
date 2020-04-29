@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="dbnoticeinsert">
-		insert into notice values( #{notice_title}, #{notice_content}, sysdate)
+		insert into notice values(notice_seq.nextval ,#{notice_title}, #{notice_content}, sysdate)
 	</insert>
 	
 	<select id="dbshownotice"  resultType="net.bs.spring.LoginDTO">
