@@ -81,10 +81,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 최근 댓글 2건 -->
 	<select id="newReplies" resultType="net.bs.spring.BookinfoDTO">
-		select * from (select rownum
-		rn,b.bi_num, b.bi_title, b.bi_image, b.bi_writer, b.bi_publisher,
+		select * from (select rownum rn, br.* from (select b.bi_num, b.bi_title, b.bi_image, b.bi_writer, b.bi_publisher,
 		r.r_content as bi_comment, r.r_stars as bi_stars from bsreply r join
-		bookinfo b on r.bi_num = b.bi_num order by r.r_datetime) where rn
+		bookinfo b on r.bi_num = b.bi_num order by r.r_datetime desc) br) where rn
 		between 1 and 2
 	</select>
 	

@@ -56,8 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (
 		select rownum rn, p.ordernum, p.userid, to_char(p.buydate, 'yyyy-MM-DD HH24:MI') as wdate,
 		p.orderstatus, p.totalprice, p.totalamount, p.receiver, p.contact, p.postcode, p.address1, p.address2
-	    from purchase p where p.userid = #{userid}
-		)where rn between #{start} and #{end}
+	    from (select * from purchase order by buydate desc) p where p.userid = #{userid}
+		)where rn between #{start} and #{end} 
 	</select>
 	
 </mapper>

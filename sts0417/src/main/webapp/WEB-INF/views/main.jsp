@@ -27,8 +27,7 @@
 
 		}, 500);
 
-
-		if ($("#mainbox-new").height()>$("#mainbox-best").height())
+		if ($("#mainbox-new").height() > $("#mainbox-best").height())
 			$(("#mainbox-best").height($("#mainbox-new").height()));
 		else
 			$(("#mainbox-new").height($("#mainbox-best").height()));
@@ -44,7 +43,6 @@
 	<div class="container-fluid bg-lightgray pt-3 pb-3">
 		<div class="container">
 			<!-- 이벤트 이미지 -->
-
 			<div class="mt-3">
 				<table class="eventimage">
 					<tr>
@@ -67,23 +65,25 @@
 										<p class="event-active">
 											<i class="fas fa-exclamation-triangle"></i>
 										</p>
-										<p>현재 진행중인<br>이벤트가 없습니다</p>
+										<p>
+											현재 진행중인<br>이벤트가 없습니다
+										</p>
 									</li>
 								</c:if>
 							</ul>
 						</td>
 						<td class="bg-brown2" style="width: 880px"><c:forEach items="${mainEvents}" varStatus="e" var="mainEvent">
-								<c:choose>
-									<c:when test="${e.count ==1 }">
+								<a href="${mainEvent.url}"> <c:choose>
+										<c:when test="${e.count ==1 }">
 
-										<img class="e-img" id="e-img-${e.count}" src="./resources/event/${ mainEvent.image }">
-									</c:when>
-									<c:otherwise>
+											<img class="e-img" id="e-img-${e.count}" src="./resources/event/${ mainEvent.image }">
+										</c:when>
+										<c:otherwise>
 
-										<img class="e-img" id="e-img-${e.count}" style="display: none" src="./resources/event/${ mainEvent.image }">
-									</c:otherwise>
-								</c:choose>
-
+											<img class="e-img" id="e-img-${e.count}" style="display: none" src="./resources/event/${ mainEvent.image }">
+										</c:otherwise>
+									</c:choose>
+								</a>
 							</c:forEach> <c:if test="${mainEventCount==0}">
 								<img src="./resources/images/noevent.png">
 							</c:if></td>
@@ -106,7 +106,7 @@
 								<div class="col">
 									<table class="main-best mauto">
 										<tr>
-											<td style="text-align: center"><img src="${book.bi_image}"></td>
+											<td style="text-align: center"><a href="bookdetail.do?idx=${book.bi_num}"><img src="${book.bi_image}"></a></td>
 										</tr>
 										<tr>
 											<td class="text-darkgray"><b>${book.bi_title }</b></td>
@@ -133,7 +133,7 @@
 						<c:forEach items="${newBooks}" var="newBook">
 							<table class="mt-2 mb-1 mauto">
 								<tr>
-									<td><img src="${ newBook.bi_image }"></td>
+									<td><a href="bookdetail.do?idx=${newBook.bi_num}"><img src="${ newBook.bi_image }"></a></td>
 									<td class="text-darkgray"><b>${ newBook.bi_title }</b><br> <small class="text-brown2">${ newBook.bi_writer } / ${ newBook.bi_publisher }</small></td>
 								</tr>
 							</table>
@@ -167,7 +167,7 @@
 					<c:forEach items="${newReplies}" var="reply">
 						<table class="table-sm table-borderless mb-2 main-review">
 							<tr>
-								<td rowspan="3" class="pl-2"><img src="${reply.bi_image}" class="main-review-img"></td>
+								<td rowspan="3" class="pl-2"><a href="bookdetail.do?idx=${reply.bi_num}"><img src="${reply.bi_image}" class="main-review-img"></a></td>
 								<td><span class="text-darkgray"><b>${ reply.bi_title }</b></span><span class="text-brown2"><br> <small>${reply.bi_writer } / ${reply.bi_publisher }</small></span></td>
 							</tr>
 							<!-- 별점 -->
