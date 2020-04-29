@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<title>로그인</title>
+<title>오류</title>
 <!-- js import -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="./resources/js/bootstrap.min.js"></script>
@@ -21,27 +21,10 @@
 	<c:import url="/header.do"></c:import>
 	<div class="container-fluid bg-lightgray">
 		<div class="container pt-5 pb-5">
-			<div class="mainbox loginbox">
-				<p class="logintitle text-brown1 mt-3 mb-3">
-					<i class="fas fa-user"></i>&nbsp;로그인
-				</p>
-				<hr>
-				<form name="loginform" action="logincheck.do">
-					<table class="table table-borderless mt-3">
-						<tr>
-							<td><label for="id" class="text-darkgray">아이디</label><input class="form-control" type="text" name="id" value="books"></td>
-						</tr>
-						<tr>
-							<td><label for="password" class="text-darkgray">비밀번호</label><input class="form-control" type="password" name="password" value="1234"></td>
-						</tr>
-						<tr>
-							<td><button class="btn btn-brown1" type="submit" style="width: 100%; height: 60px">로그인</button></td>
-						</tr>
-						<tr>
-							<td style="text-align: center;"><span class="text-darkgray">아직 회원이 아니신가요? <a href="signup.do">회원가입</a></span></td>
-						</tr>
-					</table>
-				</form>
+			<div class="mainbox p-5">
+				<h1 class="p-5 acenter"><i class="fas fa-exclamation-triangle text-brown1"></i></h1>
+				<h3 class="text-darkgray acenter">처리 중 오류가 발생했습니다.</h3>
+				<p class="text-brown1 pt-3 pb-5 acenter">${msg}</p>
 			</div>
 		</div>
 	</div>

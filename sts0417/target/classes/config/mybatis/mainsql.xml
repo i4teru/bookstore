@@ -41,6 +41,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from (select rownum rn, e.* from (select * from bs_event order by num
 		desc) e) where rn between #{liststart} and #{listend}
 	</select>
+	
+	<!-- 이벤트 삭제 -->
+	<delete id="deleteEvent" parameterType="int">
+		delete from bs_event where num = #{num}
+	</delete>
 
 	<!-- 메인화면 이벤트 불러오기 -->
 	<select id="getMainEvents" resultType="net.bs.spring.EventDTO">
@@ -89,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 최근 공지사항 7건-->
 	<select id="newNotice" resultType="net.bs.spring.LoginDTO">
-		select * from (select rownum rn, n.* from notice n) where rn between 1 and 7 
+		select * from (select rownum rn, n.* from (select * from notice order by notice_num desc) n) where rn between 1 and 7 
 	</select>
 </mapper>
 

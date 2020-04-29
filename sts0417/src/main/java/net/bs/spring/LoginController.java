@@ -42,10 +42,12 @@ public class LoginController {
 	public String login_table(HttpSession session, Model model, HttpServletRequest request) throws Exception {
 
 		String msg = request.getParameter("msg");
-		if (msg != null && msg.equals("err"))
+		if (msg == null)
+			model.addAttribute("msg", "");
+		else if (msg.equals("err"))
 			model.addAttribute("msg", "로그인에 실패했습니다.<br>아이디와 비밀번호를 확인해주세요.");
 		else
-			model.addAttribute("msg", "");
+			model.addAttribute("msg", msg);
 
 		if (session.getAttribute("userid") != null) {
 			// 이미 로그인이 되어있으면

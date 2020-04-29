@@ -4,8 +4,8 @@
 <head>
 <title>이벤트 관리</title>
 <!-- js import -->
-<script src="./resources/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="./resources/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
 
@@ -20,9 +20,12 @@
 						<i class="far fa-flag text-brown1"></i> 이벤트 관리
 					</h2>
 				</div>
-				<div class="aright pb-3">
-					<button class="btn btn-brown1" type="button" onclick="location.href='eventwrite.do'">새 이벤트 작성</button>
-				</div>
+				<!-- 관리자에게만 작성 버튼 노출 -->
+				<c:if test="${ usergrade==0 }">
+					<div class="aright pb-3">
+						<button class="btn btn-brown1" type="button" onclick="location.href='eventwrite.do'">새 이벤트 작성</button>
+					</div>
+				</c:if>
 				<table class="table eventtable">
 					<tr>
 						<th>번호</th>
@@ -30,6 +33,10 @@
 						<th>url</th>
 						<th>시작일</th>
 						<th>종료일</th>
+						<!-- 관리자에게만 삭제 버튼 노출 -->
+						<c:if test="${ usergrade==0 }">
+							<th>삭제</th>
+						</c:if>
 					</tr>
 					<c:forEach items="${ events }" var="event">
 						<tr>
@@ -38,6 +45,34 @@
 							<td>${ event.url }</td>
 							<td rowspan="2">${ event.startdate }</td>
 							<td rowspan="2">${ event.enddate }</td>
+							<!-- 관리자에게만 삭제 버튼 노출 -->
+							<c:if test="${ usergrade==0 }">
+								<td rowspan="2">
+									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal${event.num}">삭제</button>
+									<div class="modal" id="myModal${event.num}">
+										<div class="modal-dialog">
+											<div class="modal-content">
+
+												<!-- Modal Header -->
+												<div class="modal-header">
+													<h4 class="modal-title">삭제확인</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+
+												<!-- Modal body -->
+												<div class="modal-body">이벤트를 삭제하시겠습니까?</div>
+
+												<!-- Modal footer -->
+												<div class="modal-footer">
+													<button class="btn btn-danger" type="button" onclick="location.href='deleteEvent.do?num=${event.num}'">삭제</button>
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</td>
+							</c:if>
 						</tr>
 						<tr>
 							<td colspan="2"><img src="./resources/event/${ event.image }"></td>

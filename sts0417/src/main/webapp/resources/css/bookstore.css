@@ -127,9 +127,11 @@
 }
 
 .container-fluid {
-	min-width: 100%;
+	min-width: 1200px;
 }
-
+.navbar {
+	min-width:1200px;
+}
 .aleft {
 	text-align: left;
 }

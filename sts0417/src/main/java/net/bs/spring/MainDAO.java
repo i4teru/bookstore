@@ -32,6 +32,10 @@ public class MainDAO {
 		temp.insert("mainsql.insertEvent", edto);
 	}
 	
+	public void deleteEvent(int num) {
+		temp.delete("mainsql.deleteEvent", num);
+	}
+	
 	public int eventCount() {
 		return temp.selectOne("mainsql.eventCount");
 	}

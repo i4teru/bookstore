@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,14 @@ public class MainController {
 	MainDAO dao;
 	@Autowired
 	private ServletContext application;
+
+	//에러
+	@RequestMapping("/error.do")
+	public String error(@RequestParam("msg") String msg, Model model) {
+
+		model.addAttribute("msg", msg);
+		return "error";
+	}
 
 	//header.do
 	@RequestMapping(value = "/header.do", method = RequestMethod.GET)
@@ -41,7 +51,7 @@ public class MainController {
 
 		System.out.println("[header.do] 세션 아이디 : " + uid);
 		model.addAttribute("userid", uid);
-		
+
 		//내 장바구니 개수
 		model.addAttribute("pickCount", dao.pickCount(uid));
 
@@ -58,16 +68,16 @@ public class MainController {
 
 		// 베스트 게시물 불러오기
 		model.addAttribute("bestBooks", dao.getBestBooks());
-		
+
 		// 신규 입고 도서 불러오기
 		model.addAttribute("newBooks", dao.getNewBooks());
-		
+
 		// 최근 공지사항 불러오기
 		model.addAttribute("notice", dao.getNotice());
-		
+
 		// 최근 댓글 불러오기
 		model.addAttribute("newReplies", dao.getNewReplies());
-		
+
 		return "main";
 	}
 
@@ -155,4 +165,24 @@ public class MainController {
 		return "redirect:/eventlist.do";
 	}
 
+	//이벤트 삭제
+	@RequestMapping(value = "/deleteEvent.do")
+	public String deleteEvent(@RequestParam("num") int num, Model model, HttpSession session) throws Exception {
+		
+		//권한 없는 계정 URL 직접 접근 차단
+		String userid = (String) session.getAttribute("userid");
+		
+		if (userid == null) {
+			return "redirect:/error.do?msg="+URLEncoder.encode("권한이 없습니다.", "UTF-8");
+		} else {
+			int grade = (Integer) session.getAttribute("usergrade");
+			if (grade!=0)
+				return "redirect:/error.do?msg="+URLEncoder.encode("권한이 없습니다.", "UTF-8");
+		}
+		
+		
+		dao.deleteEvent(num);
+		
+		return "redirect:/eventlist.do";
+	}
 }
