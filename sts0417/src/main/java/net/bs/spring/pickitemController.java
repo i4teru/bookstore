@@ -24,9 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -58,11 +60,37 @@ public class pickitemController {
 		
 		int chk;
 		chk = dao.chkCart(bnum);
+		System.out.println("chk="+chk);
 		if(chk == 0) {
 			dao.dbInsert(dto);		
 		} else { dao.dbUpdate(dto); }
 		
 		return "redirect:/pickList.do";
+	}
+	
+	//0502 장바구니에 여러개 추가하기 기능 구현
+	@RequestMapping("/multiInsert.do")
+	@ResponseBody
+	public void multi_insert(HttpServletRequest request, @RequestBody pickitemDTO[] jsonArr) {
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("userid");
+		
+		for(pickitemDTO dto: jsonArr) {
+			pickitemDTO vo = new pickitemDTO();
+			vo.setUserid(id);
+			vo.setAmount(1);
+			int bnum = dto.getBnum();
+			vo.setBnum(bnum);
+			vo.setIsbn(dto.getIsbn());
+			vo.setStatus(dto.getStatus());
+			
+			int chk;
+			chk = dao.chkCart(bnum);
+			if(chk == 0) {
+				dao.dbInsert(vo);		
+			} else { dao.dbUpdate(vo); }
+		}
+		//return "redirect:/pickList.do";
 	}
 	
 	@RequestMapping("/pickList.do")

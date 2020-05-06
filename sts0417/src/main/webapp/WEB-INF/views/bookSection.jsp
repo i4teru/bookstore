@@ -66,10 +66,75 @@ ul.breadcrumb li a {color: #8C7B72;}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="./resources/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
+<script>
+//전체선택 버튼을 눌렀을 때 모든 체크박스 체크, 전체해제 버튼을 눌렀을 때 모든 체크박스 체크 해제
+$(document).ready(function(){
+	$("#checkAllBtn").on("click", function(){
+		if($(this).html() == '전체선택'){
+			$("input:checkbox[name='chkbox']").prop("checked", true);
+			$(this).html('전체해제');
+		} else {
+			$("input:checkbox[name='chkbox']").prop("checked", false);
+			$(this).html('전체선택');
+		}		
+	});	
+});
+
+//각 아이템 옆의 장바구니 버튼을 클릭했을 때 선택된 수량만큼 장바구니에 넣기 
 function addToCart(num){
 	var id = "addform"+num;
 	document.getElementById(id).submit();
+}
+
+//상단 전체선택(전체해제) 옆 장바구니 버튼을 누르면 선택된 항목만 장바구니에 추가될 수 있도록
+function multiInsert(){
+	var selectedItems = new Array;
+	var jasonAry;
+	var cnt = 0;
+	$("input:checkbox[name='chkbox']").each(function(){
+		if($(this).is(":checked")){
+			//alert($(this).val());
+			selectedItems.push($(this).val());
+		} else cnt++;
+	});
+	if(cnt==10) {
+		alert("선택된 아이템이 없습니다.");
+		return false;
+	} else { //배열을 JSON형식으로 
+		jsonAry=toJson(selectedItems);
+	}
+
+	$.ajax({ //JSON array를 컨트롤러로 보냄
+		url: "multiInsert.do",
+		type: "post",
+		data: JSON.stringify(jsonAry),
+		dataType: "json",
+		contentType: "application/json",
+	});
+	//현재 페이지에 남아있을지 장바구니로 이동할지 알림창 open
+	 $("#cartModal").modal("show");
+	//location.href="pickList.do";
+}
+
+//checkbox에 선택된 배열 형식의 값을 JSON형식으로 바꾸는 함수
+function toJson(arr){
+	var len = arr.length;
+	var jsonArr = [];
+	
+	for(var i=0;i<len;i++){
+		var arrData = {bnum:"", isbn:"", status:""};
+		var arrIdx = 0;
+		for(var key in arrData){
+			var value = arr[i].split('&')[arrIdx];
+			arrData[key] = value;
+			arrIdx++;
+			console.log("key="+key+"/value="+value);
+		}//loop end
+		if(arrData.bnum){ //빈 배열을 전송하는 것을 방지
+			jsonArr[i] = arrData;
+		}
+	}//for문 end
+	return jsonArr;	
 }
 
 </script>
@@ -84,7 +149,7 @@ function addToCart(num){
 	<div class="container-fluid bg-lightgray pt-3 pb-3">
 		<div class="container">
 
-			<!-- 센션타이틀/섹션total/정렬옵션/페이징/전체선택 및 전체장바구니 버튼-->
+			<!-- 센션타이틀/섹션total/정렬옵션/페이징/전체선택 및 선택된 아이템 장바구니 넣기 버튼-->
 			<div class="mt-1">
 				<table class="w-100 noppading nomargin">
 					<tr><td><h3>
@@ -113,28 +178,28 @@ function addToCart(num){
 						<td>
 							<div class="pagination justify-content-center">
 							  <c:if test="${pagestart ne 1 }">
-							  <a href="bookSection.do?scnum=${scnum }&page=${page-6 }&sort=${sort}">&laquo;</a>
+							  <a href="bookSection.do?scnum=${scnum }&page=${page-6 }&sort=${sort}&query=${query}">&laquo;</a>
 							  </c:if>
 							  <c:forEach begin="${pagestart }" end="${pageend }" var="p">
 							  	<c:choose>
 								  	<c:when test="${page eq p }">
-								  		<a href="bookSection.do?scnum=${scnum }&page=${p }&sort=${sort}" class="active">${p }</a>
+								  		<a href="bookSection.do?scnum=${scnum }&page=${p }&sort=${sort}&query=${query}" class="active">${p }</a>
 								  	</c:when>
 								  	<c:otherwise>
-								  		<a href="bookSection.do?scnum=${scnum }&page=${p }&sort=${sort}">${p }</a>
+								  		<a href="bookSection.do?scnum=${scnum }&page=${p }&sort=${sort}&query=${query}">${p }</a>
 								  	</c:otherwise>
 							  	</c:choose>
 							  </c:forEach>
 							  <c:if test="${pageend < pagecount }">
-							  <a href="bookSection.do?scnum=${scnum }&page=${page+6 }&sort=${sort}">&raquo;</a>
+							  <a href="bookSection.do?scnum=${scnum }&page=${page+6 }&sort=${sort}&query=${query}">&raquo;</a>
 							  </c:if>
 							</div>
 						</td>
 					</tr>
 					<tr class="space">
 						<td class="right">
-						<button type="button" class="btn btn-outline-dark btn-sm" id="checkAllBtn" onclick="selectAll();"> 전체선택 </button>
-						<button type="button" class="btn btn-outline-dark btn-sm" onclick=""> 장바구니 </button>
+						<button type="button" class="btn btn-outline-dark btn-sm" id="checkAllBtn"> 전체선택 </button>
+						<button type="button" class="btn btn-outline-dark btn-sm" onclick="multiInsert();"> 장바구니 </button>
 						<button type="button" class="btn btn-outline-dark btn-sm" onclick=""> 찜리스트 </button>
 						</td>
 					</tr>
@@ -153,7 +218,7 @@ function addToCart(num){
 						<td id="title${bi_num}"> ${dto.bi_title } </td>
 						<td rowspan="5" style="width: 200px; padding-right:30;">
 							<p>
-							<input type="checkbox" name="bnum" value="${dto.bi_num }">
+							<input type="checkbox" name="chkbox" class="chkbox" value="${dto.bi_num }&${dto.bi_isbn}&${dto.bi_status}">
 							&nbsp;수량: <input type="number" name="amount" value="1" min="1" max="10" size="5">
 							</p>
 							<button type="button" class="btn btn-brown1 m-2" data-toggle="modal" data-target="#myModal${dto.bi_num }">장바구니</button><br>
@@ -238,9 +303,27 @@ function addToCart(num){
 					</form>
 					<hr>
 				</c:forEach>					
-				
-				
+								
 				</div>
+			</div>
+			
+			<!-- Modal -->
+			<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h4 class="modal-title" id="myModalLabel">장바구니에 담겼습니다.</h4>
+			      	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			      </div>
+			      <div class="modal-body">
+			         	쇼핑을 계속하시려면 '쇼핑 계속'을, 장바구니로 이동하시려면 '장바구니로' 버튼을 누르세요.
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-dark" data-dismiss="modal">쇼핑 계속</button>
+			        <button type="button" class="btn btn-brown1" onclick="location.href='pickList.do'">장바구니로</button>
+			      </div>
+			    </div>
+			  </div>
 			</div>
 			
 		</div>

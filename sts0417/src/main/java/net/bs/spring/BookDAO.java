@@ -100,7 +100,7 @@ public class BookDAO {
 		return temp.selectOne("books.select_detail", idx);
 	}
 	
-	public int dbStaravg(int idx) {   //디테일 별점 평균
+	public double dbStaravg(int idx) {   //디테일 별점 평균
 		return temp.selectOne("books.star_avg", idx);
 	}  
 	

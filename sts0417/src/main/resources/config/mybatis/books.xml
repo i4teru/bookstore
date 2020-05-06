@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select  b2.*, to_char(bi_price, '999,999') as bi_cprice  from 
 		(select rownum rn, b.* from 
 			(select * from bookinfo 
-				where regexp_like(bi_title||bi_content, '프로그래밍|C언어|java|자바|JSP|Ajax|xml' , 'i') 
+				where regexp_like(bi_title||bi_content, '프로그래밍|C언어|java|자바|jsp|Ajax|xml' , 'i') 
 				 	and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i')) b 
 				order by bi_num desc) b2  
 	where rn between 1 and 5
@@ -87,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<choose>
 				<when test="scnum == 1"> where regexp_like(bi_title||bi_content, '아두이노|안드로이드|모바일|임베디드') </when>
 				<when test="scnum == 2"> where regexp_like(bi_title||bi_content, '웹디자인|html|css|javascript|jQuery|bootstrap|자바스크립트|제이쿼리|부트스트랩', 'i' )</when>
-				<when test="scnum == 3"> where regexp_like(bi_title||bi_content, '프로그래밍|C언어|java|자바|JSP|Ajax|xml' , 'i') and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i' )</when>
+				<when test="scnum == 3"> where regexp_like(bi_title||bi_content, '프로그래밍|C언어|java|자바|jsp|Ajax|xml' , 'i') and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i' )</when>
 				<when test="scnum == 4"> where regexp_like(bi_title||bi_content, '오라클|데이터베이스|db|mysql|oracle' , 'i' ) </when>
 				<when test="scnum == 5"> where regexp_like(bi_title||bi_content, '웹 서비스|스프링|프레임워크' , 'i') </when>
 				<when test="scnum == 6"> where regexp_like(bi_title||bi_content, #{query} , 'i' ) </when> 
@@ -106,7 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<choose>
 					<when test="scnum == 1"> '아두이노|안드로이드|모바일|임베디드' </when>
 					<when test="scnum == 2"> '웹디자인|html|css|javascript|jQuery|bootstrap|자바스크립트|제이쿼리|부트스트랩', 'i' </when>
-					<when test="scnum == 3"> '프로그래밍|C언어|java|자바|JSP|Ajax|xml' , 'i') 
+					<when test="scnum == 3"> '프로그래밍|C언어|java|자바|jsp|Ajax|xml' , 'i') 
 											 	and not regexp_like(bi_title, '자바스크립트|javascript|웹', 'i' </when>
 					<when test="scnum == 4"> '오라클|데이터베이스|db|mysql|oracle' , 'i' </when>
 					<when test="scnum == 5"> '웹 서비스|스프링|프레임워크' , 'i' </when>
@@ -131,7 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from bookinfo where bi_num = #{idx}   <!-- 나중에  리스트랑 연결 시킬때는  1을 #{idx}로 바꿔야 함 -->
 	</select>
 	
- 	<select id="star_avg" resultType="int">	
+ 	<select id="star_avg" resultType="double">	
 	  select round(NVL(avg(r_stars),0),1) as avpnt from bsreply where bi_num= #{idx} and lvl=0 
 		  <!--  select round ((select sum(r_stars)/count(*) from bsreply where bi_num = #{idx} and lvl=0),1) as avpnt from bsreply-->  
 	</select>
