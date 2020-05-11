@@ -38,7 +38,7 @@ public class MainController {
 
 	//header.do
 	@RequestMapping(value = "/header.do", method = RequestMethod.GET)
-	public String header(HttpSession session, Model model) {
+	public String header(HttpSession session, Model model, HttpServletRequest request) {
 
 		String uid = (String) session.getAttribute("userid");
 		if (uid == null)
@@ -54,7 +54,9 @@ public class MainController {
 
 		//내 장바구니 개수
 		model.addAttribute("pickCount", dao.pickCount(uid));
-
+		
+		//검색어쿼리 있을 때
+		model.addAttribute("search_query", (String) request.getParameter("query"));
 		return "header";
 	}
 

@@ -106,12 +106,12 @@
 								<td class="align-middle">${pk.bi_title}</td>
 								<td class="align-middle">${pk.bi_writer}</td>
 								<td class="align-middle">${pk.bi_publisher}</td>
-								<td class="align-middle"><small class="text-brown2"><del>${pk.bi_price}원</del></small><br>${pk.bi_sprice}원<input type="hidden" name="price" value="${pk.bi_price}">
+								<td class="align-middle">${pk.bi_price}원<input type="hidden" name="price" value="${pk.bi_price}">
 								</td>
 							</tr>
 							<script>
 								totalamount += ${pk.amount};
-								totalprice += ${pk.bi_sprice};
+								totalprice += ${pk.bi_price * pk.amount};
 							</script>
 						</c:forEach>
 						<c:if test="${fn:length(pick)==0}">

@@ -31,7 +31,7 @@ function goSearch(){
 			<div class="col-6 acenter">
 			<form action="bookSection.do">
 				<div class="input-group mainsearch-group">
-					<input class="form-control mainsearch" type="text" name="query">
+					<input class="form-control mainsearch" type="text" name="query" value="${search_query}">
 					<input type="hidden" name="scnum" value="6">
 					<div class="input-group-append">
 						<button class="btn" type="submit">
@@ -91,9 +91,9 @@ function goSearch(){
 			</c:if>
 			<!-- 로그인했을때만 -->
 			<c:if test="${ userid!='' }">
-				<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user disabled"></i>&nbsp;마이페이지</a></li>
+				<li class="nav-item"><a class="nav-link disabled" href="#"><i class="fas fa-user"></i>&nbsp;마이페이지</a></li>
 				<li class="nav-item"><a class="nav-link" href="myorder.do"><i class="far fa-list-alt"></i></i>&nbsp;내 주문</a></li>
-				<li class="nav-item"><a class="nav-link" href="pickList.do"><i class="fas fa-shopping-cart"></i>&nbsp;장바구니&nbsp;<span class="badge badge-secondary bg-brown2">${pickCount}</span></a></li>
+				<li class="nav-item"><a class="nav-link" href="pickList.do"><i class="fas fa-shopping-cart"></i>&nbsp;장바구니&nbsp;<c:if test="${pickCount!=0}"><span class="badge badge-secondary bg-brown2">${pickCount}</span></c:if></a></li>
 			</c:if>
 			<!-- 관리자메뉴 -->
 			<!-- 아이디가 admin일때 혹은 grade가 관리자등급일때 -->
