@@ -18,30 +18,9 @@ create table bookinfo(
 	bi_comment	varchar2(500),		--판매자멘트
 	bi_status	varchar2(2),		--책 상태(재고있음'is'/품절'so'/절판'oe')
 	bi_reco		number(1),		--추천도서여부(아님0/맞음1)
-	bi_stars	number(1,1),		--누적 별점점수
+	bi_stars	number(5),		--누적 별점점수
 	bi_ratings	number(3),		--누적 별점hit수
 	bi_event	number(1),		--이벤트적용여부(이벤트없음0/있으면이벤트번호#)
 	bi_rdate	date			--등록일
-);		
-
-
-
-
-
-
-
-
-변경사항
-
-insert를 하려고 했더니 작가 필드가 넘 작다고 한다
-alter table bookinfo modify (bi_writer varchar2(50));
-
-제목 필드도 긴 제목이 많으니 늘여야겠다.
-alter table bookinfo modify (bi_title varchar2(100));
-
-소개 필드도...
-alter table bookinfo modify (bi_content varchar2(1000));
-
-판매자멘트도 바꾸자
-alter table bookinfo modify (bi_comment varchar2(500));
+);
 

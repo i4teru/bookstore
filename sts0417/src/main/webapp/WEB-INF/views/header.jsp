@@ -75,9 +75,9 @@ function goSearch(){
 	<div class="container">
 		<!-- 메뉴 -->
 		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link active" href="bookList.do">분야별 도서 보기</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Link 2</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Link 3</a></li>
+			<li class="nav-item"><a class="nav-link" href="bookList.do">분야별 도서 보기</a></li>
+			<li class="nav-item"><a class="nav-link disabled" href="#">스터디 룸 예약</a></li>
+			<li class="nav-item"><a class="nav-link" href="notice.do">공지사항</a></li>
 		</ul>
 
 
@@ -91,7 +91,8 @@ function goSearch(){
 			</c:if>
 			<!-- 로그인했을때만 -->
 			<c:if test="${ userid!='' }">
-				<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user"></i>&nbsp;마이페이지</a></li>
+				<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user disabled"></i>&nbsp;마이페이지</a></li>
+				<li class="nav-item"><a class="nav-link" href="myorder.do"><i class="far fa-list-alt"></i></i>&nbsp;내 주문</a></li>
 				<li class="nav-item"><a class="nav-link" href="pickList.do"><i class="fas fa-shopping-cart"></i>&nbsp;장바구니&nbsp;<span class="badge badge-secondary bg-brown2">${pickCount}</span></a></li>
 			</c:if>
 			<!-- 관리자메뉴 -->

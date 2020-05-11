@@ -131,7 +131,7 @@
 											<td class="text-brown2"><small>${book.bi_writer } / ${book.bi_publisher }</small></td>
 										</tr>
 										<tr>
-											<td class="text-darkgray" style="text-align: right">${book.bi_sprice }원</td>
+											<td class="text-darkgray" style="text-align: right">${book.bi_price }원</td>
 										</tr>
 									</table>
 

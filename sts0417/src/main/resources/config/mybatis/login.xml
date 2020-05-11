@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="dbshownotice"  resultType="net.bs.spring.LoginDTO">
-		select * from (select rownum rn, n.* from notice n) where rn between #{start} and #{end} 
+		select * from (select rownum rn, n.* from ( select * from notice order by notice_num desc) n) where rn between #{start} and #{end} 
 	</select>
 	
 	<select id="dbcountnotice" resultType="int">

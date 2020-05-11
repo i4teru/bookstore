@@ -249,7 +249,7 @@
 								<td style="width: 180px">이름</td>
 								<td>
 									<div class="input-group" style="max-width: 300px">
-										<input type="text" class="form-control" name="name" id="name" value="이름" required>
+										<input type="text" class="form-control" name="name" id="name" required>
 									</div>
 									<div id="namechk"></div>
 								</td>
@@ -261,7 +261,7 @@
 								<td>아이디</td>
 								<td>
 									<div class="input-group" style="max-width: 450px">
-										<input type="text" class="form-control " name="id" id="id" value="aaa" required>
+										<input type="text" class="form-control " name="id" id="id" required>
 										<div class="input-group-append" style="width: 150px">
 											<button class="btn btn-brown1" type="button" id="check">중복 확인</button>
 										</div>
@@ -277,7 +277,7 @@
 								<td>
 
 									<div class="input-group " style="max-width: 300px">
-										<input type="password" class="form-control " name="password" id="pwd" value="12345678" placeholder="8~20자리" required>
+										<input type="password" class="form-control " name="password" id="pwd" placeholder="8~20자리" required>
 
 									</div>
 								</td>
@@ -287,7 +287,7 @@
 								<td>
 
 									<div class="input-group " style="max-width: 300px">
-										<input type="password" class="form-control " id="pwdc" value="12345678" placeholder="비밀번호를 다시 입력하십시오" required>
+										<input type="password" class="form-control " id="pwdc" placeholder="비밀번호를 다시 입력하십시오" required>
 									</div>
 
 									<div id="pwdchk"></div>
@@ -301,7 +301,7 @@
 								<td>
 
 									<div class="input-group " style="max-width: 450px">
-										<input type="text" class="form-control " name="email" id="email" value="xxx@xxx.com" placeholder="ex) xxx@xxx.com" pattern="[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]" required>
+										<input type="text" class="form-control " name="email" id="email" placeholder="ex) xxx@xxx.com" pattern="[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]" required>
 									</div>
 
 									<div id="emailchk"></div>
@@ -315,7 +315,7 @@
 								<td>
 
 									<div class="input-group " style="max-width: 450px">
-										<input type="text" class="form-control " name="phone" id="phone" value="010-1234-1234" placeholder="ex) 010-xxxx-xxxx" required>
+										<input type="text" class="form-control " name="phone" id="phone" placeholder="ex) 010-xxxx-xxxx" required>
 									</div>
 
 									<div id="phonechk"></div>
@@ -382,7 +382,7 @@
 								<td>
 
 									<div class="input-group " style="max-width: 500px">
-										<input type="text" class="form-control " name="address2" id="address2" value=".apt 402호" required>
+										<input type="text" class="form-control " name="address2" id="address2"  required>
 									</div>
 
 									<div id="addresschk"></div>

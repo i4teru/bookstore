@@ -29,10 +29,10 @@
 				<form name="loginform" action="logincheck.do">
 					<table class="table table-borderless mt-3">
 						<tr>
-							<td><label for="id" class="text-darkgray">아이디</label><input class="form-control" type="text" name="id" value="books"></td>
+							<td><label for="id" class="text-darkgray">아이디</label><input class="form-control" type="text" name="id"></td>
 						</tr>
 						<tr>
-							<td><label for="password" class="text-darkgray">비밀번호</label><input class="form-control" type="password" name="password" value="1234"></td>
+							<td><label for="password" class="text-darkgray">비밀번호</label><input class="form-control" type="password" name="password"></td>
 						</tr>
 						<tr>
 							<td><button class="btn btn-brown1" type="submit" style="width: 100%; height: 60px">로그인</button></td>
