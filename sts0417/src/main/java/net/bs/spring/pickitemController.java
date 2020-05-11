@@ -134,25 +134,19 @@ public class pickitemController {
 	}//end
 	
 	@RequestMapping("/checkDel.do")
-	public String checkDel(HttpServletRequest request, @RequestParam("checkItem") int[] bnum, @RequestParam("userid") String[] userid, @RequestParam("amount") int[] amount) {
+	public String checkDel(HttpServletRequest request, @RequestParam("checkItem") int[] bnum,
+			@RequestParam("amount") int[] amount) {
 		HttpSession session = request.getSession();
 		pickitemDTO dto = new pickitemDTO();
+		String userid = (String) session.getAttribute("userid");
+		dto.setUserid(userid);
 		
-		for (int s : bnum) {
-			System.out.println(s);
-			dto.setBnum(s); 
-		}
-		for (String u : userid) {
-			System.out.println(u);
-			dto.setUserid(u);
-		}
+		for (int i=0; i<bnum.length;i++) {
 			
-		for (int a : amount) {
-			System.out.println("amount : "+a);
-			if(a>1) {
-				dao.dbpickDel2(dto); break;
-			}
-			else if(a<2) {dao.dbPickDel(dto);}
+			dto.setBnum(bnum[i]);
+			dto.setAmount(amount[i]);
+		
+			dao.dbPickDel(dto);		
 		}
 		return "redirect:/pickList.do";
 	}
